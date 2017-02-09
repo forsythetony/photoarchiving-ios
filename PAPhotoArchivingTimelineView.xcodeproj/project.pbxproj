@@ -1,0 +1,817 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2506A2261DD2ABB00033EEDD /* PAIncrementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2506A2251DD2ABB00033EEDD /* PAIncrementView.swift */; };
+		2506A2281DD2BE940033EEDD /* PAPhotographCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */; };
+		250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B3A2B1DE8EF91002CE391 /* Helpers.swift */; };
+		250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */; };
+		2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */; };
+		2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */; };
+		255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C4F031DE9120400EBD24C /* PAMainImageViewController.swift */; };
+		255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C4F051DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift */; };
+		2568E9DD1DD27CB200FE911E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2568E9DC1DD27CB200FE911E /* GoogleService-Info.plist */; };
+		2568E9DF1DD27D5100FE911E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9DE1DD27D5100FE911E /* Constants.swift */; };
+		2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E01DD27DC900FE911E /* ContentAddSelectorViewController.swift */; };
+		2568E9E31DD281A300FE911E /* PADataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E21DD281A300FE911E /* PADataManager.swift */; };
+		2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */; };
+		2583CA4B1DD38003004711DC /* PAPhotoInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */; };
+		2583CA4E1DD387D0004711DC /* TFPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */; };
+		2583CA501DD3B546004711DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2583CA4F1DD3B546004711DC /* CoreLocation.framework */; };
+		2583CA521DD3B5D2004711DC /* PAPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA511DD3B5D2004711DC /* PAPerson.swift */; };
+		2583CA541DD3B644004711DC /* PALocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA531DD3B644004711DC /* PALocation.swift */; };
+		2583CA561DD3B6CC004711DC /* PAPhotograph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA551DD3B6CC004711DC /* PAPhotograph.swift */; };
+		2583CA581DD3B748004711DC /* PARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA571DD3B748004711DC /* PARepository.swift */; };
+		2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA591DD3B7F1004711DC /* PAStory.swift */; };
+		2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */; };
+		25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BA51DC19DAE00045988 /* AppDelegate.swift */; };
+		25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BA71DC19DAE00045988 /* PARepositoryViewController.swift */; };
+		25D03BAB1DC19DAE00045988 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D03BA91DC19DAE00045988 /* Main.storyboard */; };
+		25D03BAD1DC19DAE00045988 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25D03BAC1DC19DAE00045988 /* Assets.xcassets */; };
+		25D03BB01DC19DAE00045988 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D03BAE1DC19DAE00045988 /* LaunchScreen.storyboard */; };
+		25D03BBB1DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BBA1DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.swift */; };
+		25D03BC71DC19EC500045988 /* PARepositoryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BC61DC19EC500045988 /* PARepositoryInfo.swift */; };
+		25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BC91DC19FAB00045988 /* PATimelineView.swift */; };
+		25D03BCD1DC19FE900045988 /* PADateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BCC1DC19FE900045988 /* PADateManager.swift */; };
+		25D87CF71DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87CF61DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift */; };
+		25D87CFA1DE98B53000D2160 /* PAAddRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87CF91DE98B53000D2160 /* PAAddRecordingViewController.swift */; };
+		25D87CFC1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87CFB1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift */; };
+		25D87CFE1DE98C21000D2160 /* PATimeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87CFD1DE98C21000D2160 /* PATimeLabel.swift */; };
+		25D87D001DE99393000D2160 /* PAAudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87CFF1DE99393000D2160 /* PAAudioManager.swift */; };
+		25D87D021DE993BE000D2160 /* PAFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D011DE993BE000D2160 /* PAFileManager.swift */; };
+		25D87D041DE993CE000D2160 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D87D031DE993CE000D2160 /* AVFoundation.framework */; };
+		25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D051DE9C085000D2160 /* PATextEditView.swift */; };
+		25D87D0C1DE9DAC9000D2160 /* PAAutoLayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D0B1DE9DAC9000D2160 /* PAAutoLayoutExtension.swift */; };
+		25D87D0E1DE9FC5F000D2160 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D87D0D1DE9FC5F000D2160 /* GoogleCast.framework */; };
+		25D87D151DE9FEF2000D2160 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D87D141DE9FEF2000D2160 /* MediaAccessibility.framework */; };
+		25D87D171DEA1511000D2160 /* PAChromecaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D161DEA1511000D2160 /* PAChromecaster.swift */; };
+		25E8AD8F1DE673FF00ADD015 /* TFLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */; };
+		25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */; };
+		25EC9C7D1DFB7A6700C30604 /* PARepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */; };
+		25EC9C7F1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */; };
+		25EC9C811DFB8A0500C30604 /* PARepositoriesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */; };
+		25EC9C841DFBADFB00C30604 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */; };
+		25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C851DFBE01A00C30604 /* PAAboutPageViewController.swift */; };
+		33B4360600DA7A14E6FA6545 /* Pods_PAPhotoArchivingTimelineViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B184F863C949FF0663A20DCE /* Pods_PAPhotoArchivingTimelineViewUITests.framework */; };
+		8F3AC47D254722331AE32DC5 /* Pods_PAPhotoArchivingTimelineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45CFA5D02464BCB7876B0498 /* Pods_PAPhotoArchivingTimelineView.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25D03BB71DC19DAE00045988 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25D03B9A1DC19DAE00045988 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25D03BA11DC19DAE00045988;
+			remoteInfo = PAPhotoArchivingTimelineView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		136D67FD9F4E483185F1462A /* Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineViewUITests/Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1793483C239C679094F3E7B3 /* Pods-PAPhotoArchivingTimelineView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineView.release.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineView/Pods-PAPhotoArchivingTimelineView.release.xcconfig"; sourceTree = "<group>"; };
+		2506A2251DD2ABB00033EEDD /* PAIncrementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAIncrementView.swift; sourceTree = "<group>"; };
+		2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotographCell.swift; sourceTree = "<group>"; };
+		250B3A2B1DE8EF91002CE391 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PAApplicationImages.xcassets; sourceTree = "<group>"; };
+		2539ED5B1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAPhotoArchivingModel.xcdatamodel; sourceTree = "<group>"; };
+		2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoUploadForm.swift; sourceTree = "<group>"; };
+		255C4F031DE9120400EBD24C /* PAMainImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAMainImageViewController.swift; sourceTree = "<group>"; };
+		255C4F051DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoDateTableViewCell.swift; sourceTree = "<group>"; };
+		2568E9DC1DD27CB200FE911E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2568E9DE1DD27D5100FE911E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2568E9E01DD27DC900FE911E /* ContentAddSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentAddSelectorViewController.swift; sourceTree = "<group>"; };
+		2568E9E21DD281A300FE911E /* PADataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PADataManager.swift; sourceTree = "<group>"; };
+		2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimelineManager.swift; sourceTree = "<group>"; };
+		2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationViewController.swift; sourceTree = "<group>"; };
+		2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFPhotoInfo.swift; sourceTree = "<group>"; };
+		2583CA4F1DD3B546004711DC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2583CA511DD3B5D2004711DC /* PAPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPerson.swift; sourceTree = "<group>"; };
+		2583CA531DD3B644004711DC /* PALocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PALocation.swift; sourceTree = "<group>"; };
+		2583CA551DD3B6CC004711DC /* PAPhotograph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotograph.swift; sourceTree = "<group>"; };
+		2583CA571DD3B748004711DC /* PARepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepository.swift; sourceTree = "<group>"; };
+		2583CA591DD3B7F1004711DC /* PAStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStory.swift; sourceTree = "<group>"; };
+		2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoRegularTableViewCell.swift; sourceTree = "<group>"; };
+		25D03BA21DC19DAE00045988 /* PAPhotoArchivingTimelineView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAPhotoArchivingTimelineView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D03BA51DC19DAE00045988 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		25D03BA71DC19DAE00045988 /* PARepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARepositoryViewController.swift; sourceTree = "<group>"; };
+		25D03BAA1DC19DAE00045988 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		25D03BAC1DC19DAE00045988 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		25D03BAF1DC19DAE00045988 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		25D03BB11DC19DAE00045988 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25D03BB61DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAPhotoArchivingTimelineViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D03BBA1DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PAPhotoArchivingTimelineViewUITests.swift; sourceTree = "<group>"; };
+		25D03BBC1DC19DAE00045988 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25D03BC61DC19EC500045988 /* PARepositoryInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryInfo.swift; sourceTree = "<group>"; };
+		25D03BC91DC19FAB00045988 /* PATimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimelineView.swift; sourceTree = "<group>"; };
+		25D03BCC1DC19FE900045988 /* PADateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PADateManager.swift; sourceTree = "<group>"; };
+		25D87CF61DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoLocationTableViewCell.swift; sourceTree = "<group>"; };
+		25D87CF91DE98B53000D2160 /* PAAddRecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAddRecordingViewController.swift; sourceTree = "<group>"; };
+		25D87CFB1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAudioPlayerControlBar.swift; sourceTree = "<group>"; };
+		25D87CFD1DE98C21000D2160 /* PATimeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimeLabel.swift; sourceTree = "<group>"; };
+		25D87CFF1DE99393000D2160 /* PAAudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAudioManager.swift; sourceTree = "<group>"; };
+		25D87D011DE993BE000D2160 /* PAFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAFileManager.swift; sourceTree = "<group>"; };
+		25D87D031DE993CE000D2160 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		25D87D051DE9C085000D2160 /* PATextEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATextEditView.swift; sourceTree = "<group>"; };
+		25D87D0B1DE9DAC9000D2160 /* PAAutoLayoutExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAutoLayoutExtension.swift; sourceTree = "<group>"; };
+		25D87D0D1DE9FC5F000D2160 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = lib/GoogleCast.framework; sourceTree = "<group>"; };
+		25D87D101DE9FDC8000D2160 /* PAPhotoArchivingTimelineView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PAPhotoArchivingTimelineView-Bridging-Header.h"; sourceTree = "<group>"; };
+		25D87D141DE9FEF2000D2160 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
+		25D87D161DEA1511000D2160 /* PAChromecaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAChromecaster.swift; sourceTree = "<group>"; };
+		25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFLogger.swift; path = lib/TFLogger.swift; sourceTree = "<group>"; };
+		25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
+		25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoriesViewController.swift; sourceTree = "<group>"; };
+		25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoriesContainer.swift; sourceTree = "<group>"; };
+		25EC9C821DFBADFB00C30604 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		25EC9C851DFBE01A00C30604 /* PAAboutPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAboutPageViewController.swift; sourceTree = "<group>"; };
+		38FA2E907F510E51B8FC8E0F /* Pods-PAPhotoArchivingTimelineView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineView/Pods-PAPhotoArchivingTimelineView.debug.xcconfig"; sourceTree = "<group>"; };
+		45CFA5D02464BCB7876B0498 /* Pods_PAPhotoArchivingTimelineView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PAPhotoArchivingTimelineView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76714CFBC854414433CB05D6 /* Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineViewUITests/Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B184F863C949FF0663A20DCE /* Pods_PAPhotoArchivingTimelineViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PAPhotoArchivingTimelineViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		25D03B9F1DC19DAE00045988 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D87D151DE9FEF2000D2160 /* MediaAccessibility.framework in Frameworks */,
+				25D87D0E1DE9FC5F000D2160 /* GoogleCast.framework in Frameworks */,
+				25D87D041DE993CE000D2160 /* AVFoundation.framework in Frameworks */,
+				2583CA501DD3B546004711DC /* CoreLocation.framework in Frameworks */,
+				8F3AC47D254722331AE32DC5 /* Pods_PAPhotoArchivingTimelineView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D03BB31DC19DAE00045988 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33B4360600DA7A14E6FA6545 /* Pods_PAPhotoArchivingTimelineViewUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2583CA4C1DD387BD004711DC /* Photo Info */ = {
+			isa = PBXGroup;
+			children = (
+				255C4F031DE9120400EBD24C /* PAMainImageViewController.swift */,
+				2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */,
+				2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */,
+				2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */,
+				255C4F051DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift */,
+				25D87CF61DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift */,
+			);
+			name = "Photo Info";
+			sourceTree = "<group>";
+		};
+		25D03B991DC19DAE00045988 = {
+			isa = PBXGroup;
+			children = (
+				2568E9DC1DD27CB200FE911E /* GoogleService-Info.plist */,
+				25D03BA41DC19DAE00045988 /* PAPhotoArchivingTimelineView */,
+				25D03BB91DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests */,
+				25D03BA31DC19DAE00045988 /* Products */,
+				D718B8ACA843CCD6901870B7 /* Frameworks */,
+				2D1DD28B27F4549346D5B62E /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		25D03BA31DC19DAE00045988 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25D03BA21DC19DAE00045988 /* PAPhotoArchivingTimelineView.app */,
+				25D03BB61DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25D03BA41DC19DAE00045988 /* PAPhotoArchivingTimelineView */ = {
+			isa = PBXGroup;
+			children = (
+				25D87D0D1DE9FC5F000D2160 /* GoogleCast.framework */,
+				25EC9C821DFBADFB00C30604 /* UIImage+ImageEffects.h */,
+				25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */,
+				25EC9C7B1DFB7A4C00C30604 /* Repositories View */,
+				25D03BCB1DC19FD800045988 /* Singletons */,
+				25D03BC51DC19EB100045988 /* Data Entities */,
+				25D03BC81DC19F9200045988 /* Timeline View */,
+				25D03BA51DC19DAE00045988 /* AppDelegate.swift */,
+				25D03BA71DC19DAE00045988 /* PARepositoryViewController.swift */,
+				25D03BA91DC19DAE00045988 /* Main.storyboard */,
+				25D03BAC1DC19DAE00045988 /* Assets.xcassets */,
+				250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */,
+				25D03BAE1DC19DAE00045988 /* LaunchScreen.storyboard */,
+				25D03BB11DC19DAE00045988 /* Info.plist */,
+				2568E9DE1DD27D5100FE911E /* Constants.swift */,
+				250B3A2B1DE8EF91002CE391 /* Helpers.swift */,
+				2568E9E01DD27DC900FE911E /* ContentAddSelectorViewController.swift */,
+				25D87D0B1DE9DAC9000D2160 /* PAAutoLayoutExtension.swift */,
+				25D87D101DE9FDC8000D2160 /* PAPhotoArchivingTimelineView-Bridging-Header.h */,
+				25EC9C851DFBE01A00C30604 /* PAAboutPageViewController.swift */,
+				2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */,
+				2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */,
+			);
+			path = PAPhotoArchivingTimelineView;
+			sourceTree = "<group>";
+		};
+		25D03BB91DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests */ = {
+			isa = PBXGroup;
+			children = (
+				25D03BBA1DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.swift */,
+				25D03BBC1DC19DAE00045988 /* Info.plist */,
+			);
+			path = PAPhotoArchivingTimelineViewUITests;
+			sourceTree = "<group>";
+		};
+		25D03BC51DC19EB100045988 /* Data Entities */ = {
+			isa = PBXGroup;
+			children = (
+				25D03BC61DC19EC500045988 /* PARepositoryInfo.swift */,
+				2583CA511DD3B5D2004711DC /* PAPerson.swift */,
+				2583CA531DD3B644004711DC /* PALocation.swift */,
+				2583CA551DD3B6CC004711DC /* PAPhotograph.swift */,
+				2583CA571DD3B748004711DC /* PARepository.swift */,
+				2583CA591DD3B7F1004711DC /* PAStory.swift */,
+				25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */,
+			);
+			name = "Data Entities";
+			sourceTree = "<group>";
+		};
+		25D03BC81DC19F9200045988 /* Timeline View */ = {
+			isa = PBXGroup;
+			children = (
+				25D87CF81DE98B3F000D2160 /* Add Recording */,
+				2583CA4C1DD387BD004711DC /* Photo Info */,
+				25D03BC91DC19FAB00045988 /* PATimelineView.swift */,
+				2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */,
+				2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */,
+				2506A2251DD2ABB00033EEDD /* PAIncrementView.swift */,
+				25D87D051DE9C085000D2160 /* PATextEditView.swift */,
+			);
+			name = "Timeline View";
+			sourceTree = "<group>";
+		};
+		25D03BCB1DC19FD800045988 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */,
+				25D03BCC1DC19FE900045988 /* PADateManager.swift */,
+				2568E9E21DD281A300FE911E /* PADataManager.swift */,
+				25D87CFF1DE99393000D2160 /* PAAudioManager.swift */,
+				25D87D011DE993BE000D2160 /* PAFileManager.swift */,
+				25D87D161DEA1511000D2160 /* PAChromecaster.swift */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		25D87CF81DE98B3F000D2160 /* Add Recording */ = {
+			isa = PBXGroup;
+			children = (
+				25D87CF91DE98B53000D2160 /* PAAddRecordingViewController.swift */,
+				25D87CFB1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift */,
+				25D87CFD1DE98C21000D2160 /* PATimeLabel.swift */,
+			);
+			name = "Add Recording";
+			sourceTree = "<group>";
+		};
+		25EC9C7B1DFB7A4C00C30604 /* Repositories View */ = {
+			isa = PBXGroup;
+			children = (
+				25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */,
+				25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */,
+				25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */,
+			);
+			name = "Repositories View";
+			sourceTree = "<group>";
+		};
+		2D1DD28B27F4549346D5B62E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				38FA2E907F510E51B8FC8E0F /* Pods-PAPhotoArchivingTimelineView.debug.xcconfig */,
+				1793483C239C679094F3E7B3 /* Pods-PAPhotoArchivingTimelineView.release.xcconfig */,
+				76714CFBC854414433CB05D6 /* Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig */,
+				136D67FD9F4E483185F1462A /* Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D718B8ACA843CCD6901870B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25D87D141DE9FEF2000D2160 /* MediaAccessibility.framework */,
+				25D87D031DE993CE000D2160 /* AVFoundation.framework */,
+				2583CA4F1DD3B546004711DC /* CoreLocation.framework */,
+				45CFA5D02464BCB7876B0498 /* Pods_PAPhotoArchivingTimelineView.framework */,
+				B184F863C949FF0663A20DCE /* Pods_PAPhotoArchivingTimelineViewUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		25D03BA11DC19DAE00045988 /* PAPhotoArchivingTimelineView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25D03BBF1DC19DAE00045988 /* Build configuration list for PBXNativeTarget "PAPhotoArchivingTimelineView" */;
+			buildPhases = (
+				FD93D197799622772A1A3F71 /* [CP] Check Pods Manifest.lock */,
+				25D03B9E1DC19DAE00045988 /* Sources */,
+				25D03B9F1DC19DAE00045988 /* Frameworks */,
+				25D03BA01DC19DAE00045988 /* Resources */,
+				98E7E61F35C1A9030C97F2C5 /* [CP] Embed Pods Frameworks */,
+				B41013068C1E12C3BDD98BCA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PAPhotoArchivingTimelineView;
+			productName = PAPhotoArchivingTimelineView;
+			productReference = 25D03BA21DC19DAE00045988 /* PAPhotoArchivingTimelineView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		25D03BB51DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25D03BC21DC19DAE00045988 /* Build configuration list for PBXNativeTarget "PAPhotoArchivingTimelineViewUITests" */;
+			buildPhases = (
+				C656FC188B9A2BAD4B72024D /* [CP] Check Pods Manifest.lock */,
+				25D03BB21DC19DAE00045988 /* Sources */,
+				25D03BB31DC19DAE00045988 /* Frameworks */,
+				25D03BB41DC19DAE00045988 /* Resources */,
+				C37853B6F539B2E56485BF77 /* [CP] Embed Pods Frameworks */,
+				940BCBE729E58A754FE89107 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25D03BB81DC19DAE00045988 /* PBXTargetDependency */,
+			);
+			name = PAPhotoArchivingTimelineViewUITests;
+			productName = PAPhotoArchivingTimelineViewUITests;
+			productReference = 25D03BB61DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25D03B9A1DC19DAE00045988 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Tony Forsythe";
+				TargetAttributes = {
+					25D03BA11DC19DAE00045988 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = CB6W4HNRCM;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+					25D03BB51DC19DAE00045988 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = CB6W4HNRCM;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 25D03BA11DC19DAE00045988;
+					};
+				};
+			};
+			buildConfigurationList = 25D03B9D1DC19DAE00045988 /* Build configuration list for PBXProject "PAPhotoArchivingTimelineView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 25D03B991DC19DAE00045988;
+			productRefGroup = 25D03BA31DC19DAE00045988 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				25D03BA11DC19DAE00045988 /* PAPhotoArchivingTimelineView */,
+				25D03BB51DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		25D03BA01DC19DAE00045988 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D03BB01DC19DAE00045988 /* LaunchScreen.storyboard in Resources */,
+				250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */,
+				2568E9DD1DD27CB200FE911E /* GoogleService-Info.plist in Resources */,
+				25D03BAD1DC19DAE00045988 /* Assets.xcassets in Resources */,
+				25D03BAB1DC19DAE00045988 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D03BB41DC19DAE00045988 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		940BCBE729E58A754FE89107 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PAPhotoArchivingTimelineViewUITests/Pods-PAPhotoArchivingTimelineViewUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98E7E61F35C1A9030C97F2C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PAPhotoArchivingTimelineView/Pods-PAPhotoArchivingTimelineView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B41013068C1E12C3BDD98BCA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PAPhotoArchivingTimelineView/Pods-PAPhotoArchivingTimelineView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C37853B6F539B2E56485BF77 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PAPhotoArchivingTimelineViewUITests/Pods-PAPhotoArchivingTimelineViewUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C656FC188B9A2BAD4B72024D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FD93D197799622772A1A3F71 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25D03B9E1DC19DAE00045988 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */,
+				25D03BC71DC19EC500045988 /* PARepositoryInfo.swift in Sources */,
+				25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */,
+				255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */,
+				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
+				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
+				25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */,
+				2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */,
+				25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */,
+				2583CA521DD3B5D2004711DC /* PAPerson.swift in Sources */,
+				2568E9E31DD281A300FE911E /* PADataManager.swift in Sources */,
+				2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */,
+				2583CA581DD3B748004711DC /* PARepository.swift in Sources */,
+				2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */,
+				2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */,
+				25D87CF71DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift in Sources */,
+				25D87CFE1DE98C21000D2160 /* PATimeLabel.swift in Sources */,
+				25D03BCD1DC19FE900045988 /* PADateManager.swift in Sources */,
+				25E8AD8F1DE673FF00ADD015 /* TFLogger.swift in Sources */,
+				2568E9DF1DD27D5100FE911E /* Constants.swift in Sources */,
+				25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */,
+				2583CA561DD3B6CC004711DC /* PAPhotograph.swift in Sources */,
+				250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */,
+				255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */,
+				2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */,
+				25EC9C841DFBADFB00C30604 /* UIImage+ImageEffects.m in Sources */,
+				25D87CFC1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift in Sources */,
+				25D87D021DE993BE000D2160 /* PAFileManager.swift in Sources */,
+				2583CA4B1DD38003004711DC /* PAPhotoInformationViewController.swift in Sources */,
+				25D87D001DE99393000D2160 /* PAAudioManager.swift in Sources */,
+				2506A2261DD2ABB00033EEDD /* PAIncrementView.swift in Sources */,
+				25EC9C7D1DFB7A6700C30604 /* PARepositoriesViewController.swift in Sources */,
+				25EC9C811DFB8A0500C30604 /* PARepositoriesContainer.swift in Sources */,
+				25EC9C7F1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift in Sources */,
+				25D87D0C1DE9DAC9000D2160 /* PAAutoLayoutExtension.swift in Sources */,
+				2583CA541DD3B644004711DC /* PALocation.swift in Sources */,
+				25D87CFA1DE98B53000D2160 /* PAAddRecordingViewController.swift in Sources */,
+				2583CA4E1DD387D0004711DC /* TFPhotoInfo.swift in Sources */,
+				25D87D171DEA1511000D2160 /* PAChromecaster.swift in Sources */,
+				2506A2281DD2BE940033EEDD /* PAPhotographCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D03BB21DC19DAE00045988 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D03BBB1DC19DAE00045988 /* PAPhotoArchivingTimelineViewUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25D03BB81DC19DAE00045988 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25D03BA11DC19DAE00045988 /* PAPhotoArchivingTimelineView */;
+			targetProxy = 25D03BB71DC19DAE00045988 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		25D03BA91DC19DAE00045988 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25D03BAA1DC19DAE00045988 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		25D03BAE1DC19DAE00045988 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25D03BAF1DC19DAE00045988 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		25D03BBD1DC19DAE00045988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		25D03BBE1DC19DAE00045988 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		25D03BC01DC19DAE00045988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38FA2E907F510E51B8FC8E0F /* Pods-PAPhotoArchivingTimelineView.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = CB6W4HNRCM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PAPhotoArchivingTimelineView/lib",
+				);
+				INFOPLIST_FILE = PAPhotoArchivingTimelineView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tony.PAPhotoArchivingTimelineView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PAPhotoArchivingTimelineView/PAPhotoArchivingTimelineView-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = "arm7 arm7s arm64 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		25D03BC11DC19DAE00045988 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1793483C239C679094F3E7B3 /* Pods-PAPhotoArchivingTimelineView.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = CB6W4HNRCM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PAPhotoArchivingTimelineView/lib",
+				);
+				INFOPLIST_FILE = PAPhotoArchivingTimelineView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tony.PAPhotoArchivingTimelineView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PAPhotoArchivingTimelineView/PAPhotoArchivingTimelineView-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = "arm7 arm7s arm64 armv7 armv7s";
+			};
+			name = Release;
+		};
+		25D03BC31DC19DAE00045988 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76714CFBC854414433CB05D6 /* Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = CB6W4HNRCM;
+				INFOPLIST_FILE = PAPhotoArchivingTimelineViewUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tony.PAPhotoArchivingTimelineViewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = PAPhotoArchivingTimelineView;
+			};
+			name = Debug;
+		};
+		25D03BC41DC19DAE00045988 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 136D67FD9F4E483185F1462A /* Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = CB6W4HNRCM;
+				INFOPLIST_FILE = PAPhotoArchivingTimelineViewUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tony.PAPhotoArchivingTimelineViewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = PAPhotoArchivingTimelineView;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		25D03B9D1DC19DAE00045988 /* Build configuration list for PBXProject "PAPhotoArchivingTimelineView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25D03BBD1DC19DAE00045988 /* Debug */,
+				25D03BBE1DC19DAE00045988 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25D03BBF1DC19DAE00045988 /* Build configuration list for PBXNativeTarget "PAPhotoArchivingTimelineView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25D03BC01DC19DAE00045988 /* Debug */,
+				25D03BC11DC19DAE00045988 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25D03BC21DC19DAE00045988 /* Build configuration list for PBXNativeTarget "PAPhotoArchivingTimelineViewUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25D03BC31DC19DAE00045988 /* Debug */,
+				25D03BC41DC19DAE00045988 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2539ED5B1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodel */,
+			);
+			currentVersion = 2539ED5B1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodel */;
+			path = PAPhotoArchivingModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 25D03B9A1DC19DAE00045988 /* Project object */;
+}

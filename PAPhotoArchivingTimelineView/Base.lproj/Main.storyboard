@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YVx-b2-PR9">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Repositories View Controller-->
+        <scene sceneID="6pH-rQ-IOm">
+            <objects>
+                <viewController id="GKX-19-j5k" customClass="PARepositoriesViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IZj-qD-rjj"/>
+                        <viewControllerLayoutGuide type="bottom" id="N9F-0v-r9j"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c7D-ga-brN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hpH-Nn-GLh">
+                                <rect key="frame" x="16" y="64" width="343" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oM2-Gq-wLm">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PARepositoryCollectionViewCellReuseIdentifier" id="nha-II-4fM" customClass="PARepositoryCollectionViewCell" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hpH-Nn-GLh" firstAttribute="top" secondItem="IZj-qD-rjj" secondAttribute="bottom" id="883-Kq-1Eb"/>
+                            <constraint firstItem="hpH-Nn-GLh" firstAttribute="leading" secondItem="c7D-ga-brN" secondAttribute="leadingMargin" id="Gcz-89-ovp"/>
+                            <constraint firstItem="N9F-0v-r9j" firstAttribute="top" secondItem="hpH-Nn-GLh" secondAttribute="bottom" id="OVt-E4-1e1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hpH-Nn-GLh" secondAttribute="trailing" id="qQU-AT-7CT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Jb7-w1-qVx"/>
+                    <connections>
+                        <outlet property="RepositoriesCollectionView" destination="hpH-Nn-GLh" id="H3v-QS-1wD"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="SegueFromRepositoriesToTimelineView" id="WyA-0e-8Qs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FEu-Kg-SiV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="46" y="158"/>
+        </scene>
+        <!--Repository View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="PARepositoryViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="myK-GQ-6RM" kind="presentation" identifier="showPhotoInformation" id="jxw-oG-Txk"/>
+                        <segue destination="47L-pF-CDr" kind="presentation" identifier="SegueFromTimelineToAddPhotograph" id="KzS-Q1-xir"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1076" y="158"/>
+        </scene>
+        <!--Content Add Selector View Controller-->
+        <scene sceneID="S7W-iQ-w5k">
+            <objects>
+                <viewController id="qQs-J4-uy0" customClass="ContentAddSelectorViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mtm-dy-DkJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="797-D2-blo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="R81-J1-8Xw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aW8-N7-EJY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContentAddScreenChooseCell" rowHeight="60" id="axM-Xc-ubA">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="axM-Xc-ubA" id="jby-ed-3el">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vFF-YB-7DN"/>
+                    <connections>
+                        <outlet property="mainTableView" destination="aW8-N7-EJY" id="kGu-aG-SfK"/>
+                        <segue destination="5Bn-RK-72h" kind="show" identifier="segueToAddRecording" id="5gN-WE-TIe"/>
+                        <segue destination="qVX-Le-N1a" kind="show" identifier="segueToAddPhotograph" id="YoH-6P-wjU"/>
+                        <segue destination="sbc-Ka-gh3" kind="show" identifier="segueToAddUser" id="IAh-Da-YrH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y5e-Hp-n4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1041" y="1540"/>
+        </scene>
+        <!--Add Recording-->
+        <scene sceneID="NAQ-HG-Ga7">
+            <objects>
+                <viewController title="Add Recording" id="5Bn-RK-72h" customClass="PAAddRecordingViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uye-WI-EY4"/>
+                        <viewControllerLayoutGuide type="bottom" id="HsI-UV-JWk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="quj-ss-1d3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZzK-dU-1ph" customClass="PATimeLabel" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target">
+                                <rect key="frame" x="50" y="99" width="105" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I6p-50-Y1c" customClass="PATimeLabel" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target">
+                                <rect key="frame" x="223" y="99" width="105" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFP-zX-lWJ">
+                                <rect key="frame" x="46" y="257" width="113" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Begin Recording"/>
+                                <connections>
+                                    <action selector="DidTapBeginRecording:" destination="5Bn-RK-72h" eventType="touchUpInside" id="End-fV-zdm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JFx-nO-5sN">
+                                <rect key="frame" x="222" y="257" width="106" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Stop Recording"/>
+                                <connections>
+                                    <action selector="DidTapStopRecording:" destination="5Bn-RK-72h" eventType="touchUpInside" id="cUW-zZ-5gq"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3p-HD-5K4">
+                                <rect key="frame" x="50" y="307" width="278" height="103"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fiJ-bf-vn5">
+                                <rect key="frame" x="151" y="465" width="72" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play Audio"/>
+                                <connections>
+                                    <action selector="DidTapPlayAudio:" destination="5Bn-RK-72h" eventType="touchUpInside" id="d28-an-3Pv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="filePathLabel" destination="s3p-HD-5K4" id="GZd-IW-kAj"/>
+                        <outlet property="runningTimeLabel" destination="ZzK-dU-1ph" id="wCb-g8-iUt"/>
+                        <outlet property="totalTimeLabel" destination="I6p-50-Y1c" id="0Cm-2q-Kd0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kaf-3g-vTp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3478" y="158"/>
+        </scene>
+        <!--Add Photograph-->
+        <scene sceneID="4di-2O-4ok">
+            <objects>
+                <viewController title="Add Photograph" id="qVX-Le-N1a" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bRD-lo-pJm"/>
+                        <viewControllerLayoutGuide type="bottom" id="7YO-tr-cQJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fDB-6k-LdA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Zi-Yx-7fd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2710" y="1923"/>
+        </scene>
+        <!--Photo Information View Controller-->
+        <scene sceneID="6RV-8U-kxm">
+            <objects>
+                <viewController id="myK-GQ-6RM" customClass="PAPhotoInformationViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Umq-aD-QwJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="8rT-eU-I99"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nOS-9g-mRu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udQ-qy-JB9">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuS-vI-Mtx">
+                                        <rect key="frame" x="16" y="8" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Exit"/>
+                                        <connections>
+                                            <action selector="ExitDidTap:" destination="myK-GQ-6RM" eventType="touchUpInside" id="j9h-bL-23A"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGK-Tf-QqQ">
+                                        <rect key="frame" x="337" y="7" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Add">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="AddDidTap:" destination="myK-GQ-6RM" eventType="touchUpInside" id="Mvd-NH-VQC"/>
+                                            <segue destination="5Bn-RK-72h" kind="show" identifier="SegueFromPhotoInfoToAddRecording" id="uOs-uO-6rG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lQK-8S-WUB">
+                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="mainTableView" destination="lQK-8S-WUB" id="zkc-kg-BSB"/>
+                        <outlet property="view" destination="nOS-9g-mRu" id="d7c-op-qEl"/>
+                        <segue destination="5Pk-8G-yFC" kind="presentation" identifier="segueFromPhotoInfoToMainImageViewer" id="FHd-6N-Kkf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jd9-fo-DPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2103" y="158"/>
+        </scene>
+        <!--Main Image View Controller-->
+        <scene sceneID="eDn-15-gGj">
+            <objects>
+                <viewController id="5Pk-8G-yFC" customClass="PAMainImageViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bub-yM-4h7"/>
+                        <viewControllerLayoutGuide type="bottom" id="upP-Nl-JwN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WgR-U7-5KH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3cU-jf-jJ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3478" y="-623"/>
+        </scene>
+        <!--Add User-->
+        <scene sceneID="oYk-Jv-mBE">
+            <objects>
+                <viewController title="Add User" id="sbc-Ka-gh3" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d0A-IA-Mix"/>
+                        <viewControllerLayoutGuide type="bottom" id="lTE-wX-RZ4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a9J-BE-UZV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kq4-VY-V85" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2710" y="1198"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HtE-26-8ah">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bqw-UT-6ov" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mb4-x0-MBp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qQs-J4-uy0" kind="relationship" relationship="rootViewController" id="t9p-YC-wpb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W1v-4u-h8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="46" y="1540"/>
+        </scene>
+        <!--Photo Upload Form-->
+        <scene sceneID="chg-EB-Cha">
+            <objects>
+                <viewController id="47L-pF-CDr" customClass="PAPhotoUploadForm" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Um9-RV-8cu"/>
+                        <viewControllerLayoutGuide type="bottom" id="lIe-sZ-KDg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CHg-6Q-r6f">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8lF-19-vh5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2102" y="-677"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wZR-L8-naL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YVx-b2-PR9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Nr-r5-gab">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GKX-19-j5k" kind="relationship" relationship="rootViewController" id="mBg-rJ-8E3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xk4-QA-o6E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-889" y="158"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="uOs-uO-6rG"/>
+    </inferredMetricsTieBreakers>
+</document>
