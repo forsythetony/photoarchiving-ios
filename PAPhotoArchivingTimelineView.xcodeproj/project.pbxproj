@@ -29,6 +29,8 @@
 		2583CA581DD3B748004711DC /* PARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA571DD3B748004711DC /* PARepository.swift */; };
 		2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA591DD3B7F1004711DC /* PAStory.swift */; };
 		2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */; };
+		25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */; };
+		25CFCD5D1E4D34BF00263353 /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5B1E4D34BF00263353 /* RegisterPageViewController.swift */; };
 		25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BA51DC19DAE00045988 /* AppDelegate.swift */; };
 		25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BA71DC19DAE00045988 /* PARepositoryViewController.swift */; };
 		25D03BAB1DC19DAE00045988 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D03BA91DC19DAE00045988 /* Main.storyboard */; };
@@ -96,6 +98,8 @@
 		2583CA571DD3B748004711DC /* PARepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepository.swift; sourceTree = "<group>"; };
 		2583CA591DD3B7F1004711DC /* PAStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStory.swift; sourceTree = "<group>"; };
 		2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoRegularTableViewCell.swift; sourceTree = "<group>"; };
+		25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		25CFCD5B1E4D34BF00263353 /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 		25D03BA21DC19DAE00045988 /* PAPhotoArchivingTimelineView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAPhotoArchivingTimelineView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D03BA51DC19DAE00045988 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25D03BA71DC19DAE00045988 /* PARepositoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PARepositoryViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +177,23 @@
 			name = "Photo Info";
 			sourceTree = "<group>";
 		};
+		25CFCD541E4D308F00263353 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25CFCD551E4D309600263353 /* Sign In and Registration */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		25CFCD551E4D309600263353 /* Sign In and Registration */ = {
+			isa = PBXGroup;
+			children = (
+				25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */,
+				25CFCD5B1E4D34BF00263353 /* RegisterPageViewController.swift */,
+			);
+			name = "Sign In and Registration";
+			sourceTree = "<group>";
+		};
 		25D03B991DC19DAE00045988 = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +218,7 @@
 		25D03BA41DC19DAE00045988 /* PAPhotoArchivingTimelineView */ = {
 			isa = PBXGroup;
 			children = (
+				25CFCD541E4D308F00263353 /* View Controllers */,
 				25D87D0D1DE9FC5F000D2160 /* GoogleCast.framework */,
 				25EC9C821DFBADFB00C30604 /* UIImage+ImageEffects.h */,
 				25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */,
@@ -525,11 +547,13 @@
 			files = (
 				25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */,
 				25D03BC71DC19EC500045988 /* PARepositoryInfo.swift in Sources */,
+				25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */,
 				25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */,
 				255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
 				25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */,
+				25CFCD5D1E4D34BF00263353 /* RegisterPageViewController.swift in Sources */,
 				2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */,
 				25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */,
 				2583CA521DD3B5D2004711DC /* PAPerson.swift in Sources */,
