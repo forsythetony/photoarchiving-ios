@@ -22,7 +22,8 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func loginButtonTapped(_ sender: Any) {
+    @IBAction func didTapLogin(_ sender: Any) {
+        
         _ = userEmailTextField.text
         let userPassword = userPasswordTextField.text
         _ = UserDefaults.standard.string(forKey: "userEmail")
@@ -39,6 +40,8 @@ class LoginViewController: UIViewController {
                 
             }
         }
+        
+        
     }
     
 
