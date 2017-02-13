@@ -22,6 +22,7 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func didTapLogin(_ sender: Any) {
         
         _ = userEmailTextField.text

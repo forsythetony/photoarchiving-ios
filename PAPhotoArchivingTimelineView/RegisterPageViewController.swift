@@ -20,6 +20,7 @@ class RegisterPageViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     
@@ -31,13 +32,13 @@ class RegisterPageViewController: UIViewController {
         //check for empty field
         if (userEmail=="" && userPassword=="" && userRepeatPassword=="")
         {
-            //display alert message 
+            //display alert message
             displayMyAlertMessage(userMessage: "All field are required")
             return
             
         }
         
-        //check if password match 
+        //check if password match
         if (userPassword != userRepeatPassword )
         {
             //display alert messsage
@@ -54,22 +55,24 @@ class RegisterPageViewController: UIViewController {
         
         
         //Display alert message with confirmation
-        //var MyAlert =  UIAlertController(title:"Alert", message:"Registeration is sucessful!", preferredStyle:UIAlertControllerStyle.alert)
-        //let okAction = UIAlertAction(title:"Ok", style:UIAlertActionStyle.default)
-        //{
-        //    action in self.dismiss(animated: true,completion: nil)
-        //}
-        //myAlert.addAction(okAction)
-        //self.presentedViewController（myAlert, animated:true, completion:nil）
+        /*var MyAlert =  UIAlertController(title:"Alert", message:"Registeration is sucessful!", preferredStyle:UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title:"Ok", style:UIAlertActionStyle.default)
+        {
+            action in self.dismiss(animated: true,completion: nil)
+        }
+        myAlert.addAction(okAction)
+        self.presentedViewController（myAlert, animated:true, completion:nil）
+        */
         
     }
+
     
     func displayMyAlertMessage(userMessage:String)
     {
-        var MyAlert =  UIAlertController(title:"Alert", message:userMessage, preferredStyle:UIAlertControllerStyle.alert)
-        //let okAction = UIAlertController(title:"Ok" , message:UIAlertActionStyle.Default, preferredStyle:nil)
-       // MyAlert.addAction(okAction)
-        
+        /*var MyAlert =  UIAlertController(title:"Alert", message:userMessage, preferredStyle:UIAlertControllerStyle.alert)
+        let okAction = UIAlertController(title:"Ok" , message:UIAlertActionStyle.Default, preferredStyle:nil)
+        MyAlert.addAction(okAction)
+        */
         
     }
     
