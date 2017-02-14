@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YVx-b2-PR9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YVx-b2-PR9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -305,7 +305,6 @@
         <!--Sign Inand Registration View Controller-->
         <scene sceneID="jdc-Gk-QGl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yKO-Im-ZDH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ubU-6Q-xVy" customClass="SignInandRegistrationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Y6e-Ft-onI"/>
@@ -338,6 +337,7 @@
                         <segue destination="761-3E-t7F" kind="presentation" identifier="loginView" id="9Vi-Za-zqN"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yKO-Im-ZDH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-703" y="2819"/>
         </scene>
