@@ -80,15 +80,18 @@ struct Constants {
     
     
     struct SegueIDs {
-        static let ToAddUser = "segueToAddUser"
-        static let ToAddPhotograph = "segueToAddPhotograph"
-        static let ToAddRecording = "segueToAddRecording"
-        static let ToPhotoInformation = "showPhotoInformation"
-        static let FromPhotoInfoToMainImageViewer = "segueFromPhotoInfoToMainImageViewer"
-        static let FromPhotoInfoToAddRecording = "SegueFromPhotoInfoToAddRecording"
-        static let SegueFromRepositoriesToTimelineView = "SegueFromRepositoriesToTimelineView"
-        static let SegueFromTimelineToAddStoryScene = "SegueFromTimelineToAddStoryScene"
-        static let SegueFromTimelineToAddPhotograph = "SegueFromTimelineToAddPhotograph"
+        static let ToAddUser                            = "segueToAddUser"
+        static let ToAddPhotograph                      = "segueToAddPhotograph"
+        static let ToAddRecording                       = "segueToAddRecording"
+        static let ToPhotoInformation                   = "showPhotoInformation"
+        static let FromPhotoInfoToMainImageViewer       = "segueFromPhotoInfoToMainImageViewer"
+        static let FromPhotoInfoToAddRecording          = "SegueFromPhotoInfoToAddRecording"
+        static let SegueFromRepositoriesToTimelineView  = "SegueFromRepositoriesToTimelineView"
+        static let SegueFromTimelineToAddStoryScene     = "SegueFromTimelineToAddStoryScene"
+        static let SegueFromTimelineToAddPhotograph     = "SegueFromTimelineToAddPhotograph"
+        static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
+        static let SegueFromSignInToRegisterPage        = "segueFromHomeToSignInPage"
+        
     }
     
     struct Timeline {

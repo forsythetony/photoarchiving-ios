@@ -29,6 +29,7 @@
 		2583CA581DD3B748004711DC /* PARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA571DD3B748004711DC /* PARepository.swift */; };
 		2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA591DD3B7F1004711DC /* PAStory.swift */; };
 		2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */; };
+		25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */; };
 		25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */; };
 		25CFCD5D1E4D34BF00263353 /* RegisterPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5B1E4D34BF00263353 /* RegisterPageViewController.swift */; };
 		25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D03BA51DC19DAE00045988 /* AppDelegate.swift */; };
@@ -98,6 +99,7 @@
 		2583CA571DD3B748004711DC /* PARepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepository.swift; sourceTree = "<group>"; };
 		2583CA591DD3B7F1004711DC /* PAStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStory.swift; sourceTree = "<group>"; };
 		2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoRegularTableViewCell.swift; sourceTree = "<group>"; };
+		25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAHomeViewController.swift; sourceTree = "<group>"; };
 		25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25CFCD5B1E4D34BF00263353 /* RegisterPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPageViewController.swift; sourceTree = "<group>"; };
 		25D03BA21DC19DAE00045988 /* PAPhotoArchivingTimelineView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAPhotoArchivingTimelineView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,9 +179,18 @@
 			name = "Photo Info";
 			sourceTree = "<group>";
 		};
+		25AA7CDC1E52C0BF00733DC8 /* Home View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */,
+			);
+			name = "Home View Controller";
+			sourceTree = "<group>";
+		};
 		25CFCD541E4D308F00263353 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				25AA7CDC1E52C0BF00733DC8 /* Home View Controller */,
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
 			);
 			name = "View Controllers";
@@ -569,6 +580,7 @@
 				2568E9DF1DD27D5100FE911E /* Constants.swift in Sources */,
 				25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */,
 				2583CA561DD3B6CC004711DC /* PAPhotograph.swift in Sources */,
+				25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */,
 				250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */,
 				255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */,
 				2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */,

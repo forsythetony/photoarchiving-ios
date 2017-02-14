@@ -333,9 +333,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="NwH-BO-fD8"/>
-                    <connections>
-                        <segue destination="761-3E-t7F" kind="presentation" identifier="loginView" id="9Vi-Za-zqN"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKO-Im-ZDH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -412,7 +409,7 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
-                                    <segue destination="3Pp-pn-KXk" kind="presentation" identifier="registerView" id="TBl-gw-ARY"/>
+                                    <action selector="didTapRegister:" destination="761-3E-t7F" eventType="touchUpInside" id="5Qz-on-xq0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -421,11 +418,12 @@
                     <connections>
                         <outlet property="userEmailTextField" destination="JCU-O5-jmV" id="ScI-TH-lE1"/>
                         <outlet property="userPasswordTextField" destination="p0y-4R-M9W" id="Ce7-Ge-zcY"/>
+                        <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromSignInPageToRegisterPage" id="tw8-m7-gjF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3j-7L-bav" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="89" y="2819"/>
+            <point key="canvasLocation" x="-566" y="5567"/>
         </scene>
         <!--Register Page View Controller-->
         <scene sceneID="dqB-40-68Q">
@@ -492,9 +490,6 @@
                                 <rect key="frame" x="78" y="421" width="219" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Already have account? Sign in!"/>
-                                <connections>
-                                    <segue destination="761-3E-t7F" kind="presentation" id="BbY-rc-JOI"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixx-Qn-ziA">
                                 <rect key="frame" x="144" y="363" width="87" height="30"/>
@@ -518,7 +513,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k2P-Ha-ltl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="134" y="3563"/>
+            <point key="canvasLocation" x="806" y="5567"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="Jdv-d9-nv5">
+            <objects>
+                <viewController id="JZY-qU-w37" customClass="PAHomeViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iYU-21-gUs"/>
+                        <viewControllerLayoutGuide type="bottom" id="LIm-ok-zJu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bGQ-Ee-Vwr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is the Home View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kta-B4-4Bm">
+                                <rect key="frame" x="62" y="323" width="250" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="761-3E-t7F" kind="presentation" identifier="segueFromHomeToSignInPage" id="MGD-zO-cmt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5sL-Ap-4cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-23" y="4656"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HtE-26-8ah">
@@ -594,7 +619,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9Vi-Za-zqN"/>
         <segue reference="5gN-WE-TIe"/>
     </inferredMetricsTieBreakers>
 </document>

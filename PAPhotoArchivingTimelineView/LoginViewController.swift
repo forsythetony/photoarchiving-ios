@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol PALoginViewControllerDelegate {
+    func PALoginViewControllerDidSignInSuccessfully()
+}
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var userEmailTextField: UITextField!
     @IBOutlet weak var userPasswordTextField: UITextField!
+    
+    var delegate : PALoginViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,15 +43,21 @@ class LoginViewController: UIViewController {
                 //Login is successfull
                 UserDefaults.standard.set(true,forKey: "isUserLoggedIn")
                 UserDefaults.standard.synchronize()
-                self.dismiss(animated: true,completion: nil)
                 
-                
+                //  Alert your delegate that you did sign in successfully
+                self.delegate?.PALoginViewControllerDidSignInSuccessfully()
             }
         }
         
         
     }
     
+    @IBAction func didTapRegister(_ sender: Any) {
+        
+        //  If the user wants to register then present the registration
+        //  view controller modally.
+        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromSignInToRegisterPage, sender: nil)
+    }
 
     /*
     // MARK: - Navigation
