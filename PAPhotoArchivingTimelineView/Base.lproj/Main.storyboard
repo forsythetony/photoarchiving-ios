@@ -418,7 +418,6 @@
                     <connections>
                         <outlet property="userEmailTextField" destination="JCU-O5-jmV" id="ScI-TH-lE1"/>
                         <outlet property="userPasswordTextField" destination="p0y-4R-M9W" id="Ce7-Ge-zcY"/>
-                        <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromSignInPageToRegisterPage" id="tw8-m7-gjF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3j-7L-bav" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,7 +504,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="registerButton" destination="ixx-Qn-ziA" id="vwe-oH-3k3"/>
                         <outlet property="repeatPasswordTextField" destination="653-pb-YHA" id="tUP-7Z-kZG"/>
                         <outlet property="userEmailTextField" destination="MBH-PV-Dmn" id="K4Y-3b-En6"/>
                         <outlet property="userPasswordTextField" destination="jVI-Op-OhB" id="g5j-sE-kNj"/>
@@ -540,6 +538,7 @@
                     <navigationItem key="navigationItem" id="oBL-AI-hbe"/>
                     <connections>
                         <segue destination="761-3E-t7F" kind="presentation" identifier="segueFromHomeToSignInPage" id="MGD-zO-cmt"/>
+                        <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromHomeToRegister" id="Al4-GN-h8v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sL-Ap-4cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

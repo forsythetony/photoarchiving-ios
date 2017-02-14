@@ -10,6 +10,7 @@ import UIKit
 
 protocol PALoginViewControllerDelegate {
     func PALoginViewControllerDidSignInSuccessfully()
+    func PALoginViewControllerUserDidClickSignUp()
 }
 
 class LoginViewController: UIViewController {
@@ -54,9 +55,11 @@ class LoginViewController: UIViewController {
     
     @IBAction func didTapRegister(_ sender: Any) {
         
-        //  If the user wants to register then present the registration
-        //  view controller modally.
-        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromSignInToRegisterPage, sender: nil)
+        //  If the user wants to register then we need to inform the presenting
+        //  view controller about this so that it can dismiss this view controller
+        //  and present the sign in view controller.
+        self.delegate?.PALoginViewControllerUserDidClickSignUp()
+        
     }
 
     /*

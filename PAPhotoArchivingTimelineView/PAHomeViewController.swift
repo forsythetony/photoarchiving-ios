@@ -14,7 +14,6 @@ class PAHomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
         checkIfUserSignedIn()
     }
 
@@ -88,8 +87,18 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
     
     func PALoginViewControllerDidSignInSuccessfully() {
         
+        //  First dismiss the view controller that is being presented
+        self.presentedViewController?.dismiss(animated: true, completion: nil)
+        
         //  If the login was successful then begin to load the data for the user's
         //  home page
         self.loadData()
+    }
+    
+    func PALoginViewControllerUserDidClickSignUp() {
+        
+        self.presentedViewController?.dismiss(animated: false, completion: {
+            self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToRegister, sender: nil)
+        })
     }
 }

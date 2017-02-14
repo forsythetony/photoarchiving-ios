@@ -90,7 +90,7 @@ struct Constants {
         static let SegueFromTimelineToAddStoryScene     = "SegueFromTimelineToAddStoryScene"
         static let SegueFromTimelineToAddPhotograph     = "SegueFromTimelineToAddPhotograph"
         static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
-        static let SegueFromSignInToRegisterPage        = "segueFromHomeToSignInPage"
+        static let SegueFromHomeToRegister              = "segueFromHomeToRegister"
         
     }
     
