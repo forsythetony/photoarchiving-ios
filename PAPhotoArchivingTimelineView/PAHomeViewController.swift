@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class PAHomeViewController: UIViewController {
 
@@ -34,6 +35,17 @@ class PAHomeViewController: UIViewController {
         //  This boolean value should be computed, I'm not going to bother with it 
         //  at the moment.
         var userIsSignedIn = false;
+        
+        
+        //  Check Firebase to see if the user is signed in
+        if FIRAuth.auth()?.currentUser != nil {
+            userIsSignedIn = true
+        }
+        else {
+            //  If the user is not signed in then check the user defaults to see
+            //  if there are saved credentials to sign the user in
+            //  ADDME
+        }
         
         if userIsSignedIn {
             
@@ -100,5 +112,23 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
         self.presentedViewController?.dismiss(animated: false, completion: {
             self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToRegister, sender: nil)
         })
+    }
+}
+
+extension PAHomeViewController : PADataManagerDelegate {
+    
+    func PADataMangerDidConfigure() {
+        //  I don't think there needs to be any implementation here
+    }
+    
+    func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
+        //  I don't think there needs to be any implementation here
+    }
+    
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+        //  If the user was successfully signed in using the UserDefaults then
+        //  we can allow the user to view the home page
+        //  ADDME
     }
 }

@@ -11,9 +11,14 @@ import Firebase
 import UIKit
 
 
+enum PAUserSignInStatus {
+    case SignInSuccess, SignInFailed, FirebaseNotConfigured
+}
+
 protocol PADataManagerDelegate {
     func PADataManagerDidGetNewRepository(_ newRepository : PARepository)
     func PADataMangerDidConfigure()
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus : PAUserSignInStatus)
 }
 
 class PADataManager {
@@ -66,9 +71,40 @@ class PADataManager {
         }
         
     }
+    
+    
+    func signInUserWithCredentials( username : String , password : String ) {
+        
+        guard isConfigured else {
+            self.delegate?.PADataManagerDidSignInUserWithStatus(.FirebaseNotConfigured)
+            return
+        }
+        
+        FIRAuth.auth()?.signIn(withEmail: username, password: password, completion: { (user, error) in
+            
+            //  First check to see if there was an error
+            if error != nil {
+                self.delegate?.PADataManagerDidSignInUserWithStatus(PAUserSignInStatus.SignInFailed)
+                return
+            }
+            
+            //  If the user sign in was successful then save the user credentials to UserDefaults
+            //  ADDME
+            
+            
+            //  Let the delegate know that the sign in was successful
+            self.delegate?.PADataManagerDidSignInUserWithStatus(PAUserSignInStatus.SignInSuccess)
+        })
+        
+    }
     func addStoryToPhotograph( story : PAStory, photograph : PAPhotograph) {
         
         //  First upload the file
+        
+        guard isConfigured else {
+            self.delegate?.PADataManagerDidSignInUserWithStatus(.FirebaseNotConfigured)
+            return
+        }
         
         if let data_url = story.tempRecordingURL, let rec_ref = self.recordings_storage_ref, let db_ref = database_ref {
             
