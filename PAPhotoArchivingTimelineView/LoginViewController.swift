@@ -18,12 +18,25 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userEmailTextField: UITextField!
     @IBOutlet weak var userPasswordTextField: UITextField!
     
+    @IBOutlet weak var passwordTitleLabel: UILabel!
+    @IBOutlet weak var emailTitleLabel: UILabel!
+    
+    @IBOutlet weak var emailTextboxUnderline: UIView!
+    
+    @IBOutlet weak var passwordTextboxUnderline: UIView!
+    
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet weak var registerButton: UIButton!
+    
+    
+    
     var delegate : PALoginViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        _setup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +75,34 @@ class LoginViewController: UIViewController {
         
     }
 
+    func _setup() {
+        
+        //  Set up the colors for the text fields
+        let titleLabelColor             = UIColor.white
+        let textfieldTextColor          = UIColor.white
+        let textfieldPlaceholderColor   = UIColor.white
+        let buttonTextColor             = UIColor.white
+        let underlineColor              = UIColor.white
+        
+        
+        emailTitleLabel.textColor       = titleLabelColor
+        emailTitleLabel.font            = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: emailTitleLabel.font.pointSize)
+        
+        passwordTitleLabel.textColor    = titleLabelColor
+        passwordTitleLabel.font         = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: passwordTitleLabel.font.pointSize)
+        
+        userEmailTextField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ])
+        userPasswordTextField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor])
+        
+        userEmailTextField.textColor    = textfieldTextColor
+        userPasswordTextField.textColor = textfieldTextColor
+        
+        loginButton.setTitleColor(buttonTextColor, for: .normal)
+        registerButton.setTitleColor(buttonTextColor, for: .normal)
+        
+        passwordTextboxUnderline.backgroundColor    = underlineColor
+        emailTextboxUnderline.backgroundColor       = underlineColor
+    }
     /*
     // MARK: - Navigation
 

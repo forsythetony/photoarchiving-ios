@@ -208,6 +208,12 @@ class PARepositoriesViewController: UIViewController {
 
 extension PARepositoriesViewController : PADataManagerDelegate {
     
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+        //  FIXME:
+        //      Need to add some stuff here
+        
+    }
     func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
         
         

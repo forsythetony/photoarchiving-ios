@@ -61,9 +61,9 @@ struct Constants {
     
     struct Fonts {
         struct MainFontFamilies {
-            static let regular  = "Avenir-Book"
-            static let bold     = "Avenir-Heavy"
-            static let italics  = "Avenir-BookOblique"
+            static let regular  = "Futura"
+            static let bold     = "Futura-Medium"
+            static let italics  = "Futura-MediumItalic"
         }
     }
     
