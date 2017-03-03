@@ -39,6 +39,12 @@ class LoginViewController: UIViewController {
         _setup()
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return UIStatusBarStyle.lightContent
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -77,10 +83,14 @@ class LoginViewController: UIViewController {
 
     func _setup() {
         
+        //  Navigation Bar
+        self.navigationController?.navigationBar.barTintColor = Color.MainApplicationColor
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         //  Set up the colors for the text fields
         let titleLabelColor             = UIColor.white
         let textfieldTextColor          = UIColor.white
-        let textfieldPlaceholderColor   = UIColor.white
+        let textfieldPlaceholderColor   = Color.PAWhiteTwo
         let buttonTextColor             = UIColor.white
         let underlineColor              = UIColor.white
         

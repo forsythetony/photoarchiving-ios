@@ -64,7 +64,7 @@ class PADataManager {
         if (FIRApp.defaultApp() != nil) {
             database_ref = FIRDatabase.database().reference()
             storage_ref = FIRStorage.storage().reference(forURL: Constants.DataManager.firebaseStorageURL)
-            recordings_storage_ref = storage_ref?.child(Constants.DataManager.firebaseRecordingsPath)
+            recordings_storage_ref = storage_ref?.child(Constants.DataManager.firebaseRecord ingsPath)
             
             self.isConfigured = true
             self.delegate?.PADataMangerDidConfigure()

@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .highlighted)
         
+        UINavigationBar.appearance().backgroundColor = Color.MainApplicationColor
+        UINavigationBar.appearance().tintColor = Color.MainApplicationColor
         
         //  Setup Firebase
         setupFirebase()
@@ -54,22 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupFirebase() {
         FIRApp.configure()
         
+        PADataManager.sharedInstance.configure()
         
-        let username = "forsythetony@gmail.com"
-        let password = "applepie22"
-        
-        FIRAuth.auth()?.signIn(withEmail: username, password: password) { (user, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-        }
-        
- 
-        
-        //do { try FIRAuth.auth()?.signOut() } catch let error { print(error.localizedDescription) }
-        
-        MockDataGenerator.sharedInstance.configureDatabase()
+        //MockDataGenerator.sharedInstance.configureDatabase()
     }
 }
 

@@ -178,7 +178,7 @@ struct Constants {
     
     
     struct DataManager {
-        static let firebaseStorageURL = "gs://photoarchivingtest.appspot.com"
+        static let firebaseStorageURL = "gs://capstone2017-4504b.appspot.com"
         static let firebaseThumbnailImagesPath = "images/thumbnail"
         static let firebaseMainImagesPath = "images/main"
         static let firebaseRecordingsPath = "recordings"
@@ -226,6 +226,13 @@ extension Font {
 
 extension Color {
     
+    static var MainApplicationColor : Color {
+        get {
+            return Color(red: 192.0.CGFloatRGBValue, green: 57.0.CGFloatRGBValue, blue: 43.0.CGFloatRGBValue, alpha: 1.0)
+        }
+    }
+    
+    
     static var TimelineBackgroundColor : Color {
         get {
             return Color(red: RGBVal(v: 33.0), green: RGBVal(v: 33.0), blue: RGBVal(v: 33.0), alpha: 1.0)
@@ -260,6 +267,12 @@ extension Color {
     static var PAWhiteOne : Color {
         get {
             return Color(white: 1.0, alpha: 0.9)
+        }
+    }
+    
+    static var PAWhiteTwo : Color {
+        get {
+            return Color(white: 0.75, alpha: 1.0)
         }
     }
 }
