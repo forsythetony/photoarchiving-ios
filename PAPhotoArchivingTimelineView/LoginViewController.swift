@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 protocol PALoginViewControllerDelegate {
     func PALoginViewControllerDidSignInSuccessfully()
@@ -30,6 +31,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     
     
+    let dataMan = PADataManager.sharedInstance
     
     var delegate : PALoginViewControllerDelegate?
     
@@ -50,38 +52,31 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func didTapLogin(_ sender: Any) {
-        
-        _ = userEmailTextField.text
-        let userPassword = userPasswordTextField.text
-        _ = UserDefaults.standard.string(forKey: "userEmail")
-        let userPasswordStored = UserDefaults.standard.string(forKey: "userPassword")
-        if(userPasswordStored == userPassword)
-        {
-            if (userPasswordStored == userPassword)
-            {
-                //Login is successfull
-                UserDefaults.standard.set(true,forKey: "isUserLoggedIn")
-                UserDefaults.standard.synchronize()
-                
-                //  Alert your delegate that you did sign in successfully
-                self.delegate?.PALoginViewControllerDidSignInSuccessfully()
-            }
+    @IBAction func didTapLoginButton(_ sender: Any) {
+        guard let userEmail = userEmailTextField.text else {
+            print("There was not a valid user email")
+            return
         }
         
+        guard let userPassword = userPasswordTextField.text else {
+            print("There was not a valid user password")
+            return
+        }
         
+        self.dataMan.signInUserWithCredentials(username: userEmail, password: userPassword)
     }
     
+ 
     @IBAction func didTapRegister(_ sender: Any) {
-        
         //  If the user wants to register then we need to inform the presenting
         //  view controller about this so that it can dismiss this view controller
         //  and present the sign in view controller.
         self.delegate?.PALoginViewControllerUserDidClickSignUp()
         
     }
-
     func _setup() {
+        
+        self.dataMan.delegate = self
         
         //  Navigation Bar
         self.navigationController?.navigationBar.barTintColor = Color.MainApplicationColor
@@ -106,6 +101,8 @@ class LoginViewController: UIViewController {
         
         userEmailTextField.textColor    = textfieldTextColor
         userPasswordTextField.textColor = textfieldTextColor
+        userPasswordTextField.isSecureTextEntry = true
+        
         
         loginButton.setTitleColor(buttonTextColor, for: .normal)
         registerButton.setTitleColor(buttonTextColor, for: .normal)
@@ -123,4 +120,47 @@ class LoginViewController: UIViewController {
     }
     */
 
+}
+
+extension LoginViewController : PADataManagerDelegate {
+    
+    func PADataMangerDidConfigure() {
+        
+    }
+    
+    func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
+        
+    }
+    
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+        guard signInStatus != .SignInFailed else {
+            
+            let alertCont = UIAlertController(title: "Error", message: "Invalid Credentials", preferredStyle: .alert)
+            
+            alertCont.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
+                alertCont.dismiss(animated: true, completion: nil)
+            }))
+            
+            alertCont.show(self, sender: nil)
+            
+            return
+        }
+        
+        guard signInStatus != .FirebaseNotConfigured else {
+            
+            let alertCont = UIAlertController(title: "Error", message: "Firebase Not Configured", preferredStyle: .alert)
+            
+            alertCont.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
+                alertCont.dismiss(animated: true, completion: nil)
+            }))
+            
+            alertCont.show(self, sender: nil)
+            
+            return
+        }
+        
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
 }

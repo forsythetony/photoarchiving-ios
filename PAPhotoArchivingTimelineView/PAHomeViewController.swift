@@ -14,6 +14,8 @@ class PAHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
+        
         // Do any additional setup after loading the view.
         checkIfUserSignedIn()
     }
@@ -24,7 +26,11 @@ class PAHomeViewController: UIViewController {
     }
     
     
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .lightContent
+        }
+    }
     /*
          Here we should check if the user is signed in. If so then take no action
          other than loading the appropriate content. If the user not signed in then

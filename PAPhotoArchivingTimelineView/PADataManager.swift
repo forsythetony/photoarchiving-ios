@@ -34,6 +34,13 @@ class PADataManager {
     
     
     var isConfigured = false
+    private var _signedIn = false
+    
+    var isSignedIn : Bool {
+        get {
+            return _signedIn
+        }
+    }
     
     init() {
         
@@ -90,7 +97,7 @@ class PADataManager {
             
             //  If the user sign in was successful then save the user credentials to UserDefaults
             //  ADDME
-            
+            self._signedIn = true
             
             //  Let the delegate know that the sign in was successful
             self.delegate?.PADataManagerDidSignInUserWithStatus(PAUserSignInStatus.SignInSuccess)

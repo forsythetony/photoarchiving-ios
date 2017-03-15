@@ -9,13 +9,36 @@
 import UIKit
 
 class RegisterPageViewController: UIViewController {
+    
+    
+    
+    
+    @IBOutlet weak var pageTitleLabel: UILabel!
+    @IBOutlet weak var emailTitleLabel: UILabel!
+    @IBOutlet weak var passwordTitleLabel: UILabel!
+    
+    @IBOutlet weak var repeatPasswordTitleLabel: UILabel!
+    @IBOutlet weak var emailUnderlineView: UIView!
+    
+    @IBOutlet weak var passwordUnderlineView: UIView!
+    @IBOutlet weak var repeatPasswordUnderlineView: UIView!
+   
     @IBOutlet weak var userEmailTextField: UITextField!
     @IBOutlet weak var userPasswordTextField: UITextField!
     @IBOutlet weak var repeatPasswordTextField: UITextField!
+    
+    
+    
+    
+    let dataMan : PADataManager = PADataManager.sharedInstance
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        _setup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,6 +89,59 @@ class RegisterPageViewController: UIViewController {
         
     }
 
+    func _setup() {
+        
+        //  Configure the navigation bar
+        self.navigationController?.navigationBar.barTintColor   = Color.MainApplicationColor
+        self.navigationController?.navigationBar.isTranslucent  = false
+        
+        //  Set up the colors for the text fields
+        let titleLabelsTextColor        = Color.PAWhiteOne
+        let textfieldTextColor          = Color.PAWhiteOne
+        let textfieldPlaceholderColor   = Color.PAWhiteOne
+        let underlineColor              = Color.PAWhiteOne
+        
+        
+        /*
+            Email Text Field Settings
+        */
+        emailTitleLabel.textColor = titleLabelsTextColor
+        emailTitleLabel.font = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: emailTitleLabel.font.pointSize)
+        
+        userEmailTextField.textColor = textfieldTextColor
+        userEmailTextField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ])
+        
+        emailUnderlineView.backgroundColor = underlineColor
+        
+        
+        
+        /*
+            Password Text Field Settings
+        */
+        passwordTitleLabel.textColor = titleLabelsTextColor
+        passwordTitleLabel.font = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: passwordTitleLabel.font.pointSize)
+        
+        userPasswordTextField.textColor = textfieldTextColor
+        userPasswordTextField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ] )
+        
+        passwordUnderlineView.backgroundColor = underlineColor
+        
+        
+        /*
+            Repeat Password Text Field Settings
+        */
+        repeatPasswordTitleLabel.textColor = titleLabelsTextColor
+        repeatPasswordTitleLabel.font = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: repeatPasswordTitleLabel.font.pointSize)
+        
+        repeatPasswordTextField.textColor = textfieldTextColor
+        repeatPasswordTextField.attributedPlaceholder = NSAttributedString(string: "repeat password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ])
+        
+        repeatPasswordUnderlineView.backgroundColor = underlineColor
+    }
+    
+    
+    
+    
     
     func displayMyAlertMessage(userMessage:String)
     {
