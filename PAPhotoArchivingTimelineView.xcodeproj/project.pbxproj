@@ -55,6 +55,7 @@
 		25D87D171DEA1511000D2160 /* PAChromecaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D161DEA1511000D2160 /* PAChromecaster.swift */; };
 		25E8AD8F1DE673FF00ADD015 /* TFLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */; };
 		25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */; };
+		25EC83B01E7999B6000AFC54 /* RepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */; };
 		25EC9C7D1DFB7A6700C30604 /* PARepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */; };
 		25EC9C7F1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */; };
 		25EC9C811DFB8A0500C30604 /* PARepositoriesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */; };
@@ -130,6 +131,7 @@
 		25D87D161DEA1511000D2160 /* PAChromecaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAChromecaster.swift; sourceTree = "<group>"; };
 		25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFLogger.swift; path = lib/TFLogger.swift; sourceTree = "<group>"; };
 		25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
+		25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesViewController.swift; sourceTree = "<group>"; };
 		25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoriesViewController.swift; sourceTree = "<group>"; };
 		25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoriesContainer.swift; sourceTree = "<group>"; };
@@ -179,19 +181,20 @@
 			name = "Photo Info";
 			sourceTree = "<group>";
 		};
-		25AA7CDC1E52C0BF00733DC8 /* Home View Controller */ = {
+		25AA7CDC1E52C0BF00733DC8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */,
 			);
-			name = "Home View Controller";
+			name = Home;
 			sourceTree = "<group>";
 		};
 		25CFCD541E4D308F00263353 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				25AA7CDC1E52C0BF00733DC8 /* Home View Controller */,
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
+				25AA7CDC1E52C0BF00733DC8 /* Home */,
+				25EC83AE1E79998A000AFC54 /* Repositories */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -314,6 +317,14 @@
 				25D87CFD1DE98C21000D2160 /* PATimeLabel.swift */,
 			);
 			name = "Add Recording";
+			sourceTree = "<group>";
+		};
+		25EC83AE1E79998A000AFC54 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */,
+			);
+			name = Repositories;
 			sourceTree = "<group>";
 		};
 		25EC9C7B1DFB7A4C00C30604 /* Repositories View */ = {
@@ -556,6 +567,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EC83B01E7999B6000AFC54 /* RepositoriesViewController.swift in Sources */,
 				25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */,
 				25D03BC71DC19EC500045988 /* PARepositoryInfo.swift in Sources */,
 				25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */,

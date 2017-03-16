@@ -548,7 +548,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixx-Qn-ziA">
                                 <rect key="frame" x="144" y="333" width="87" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
@@ -594,7 +594,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k2P-Ha-ltl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="805.60000000000002" y="5566.8665667166424"/>
+            <point key="canvasLocation" x="794" y="5567"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="Jdv-d9-nv5">
@@ -618,8 +618,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="oBL-AI-hbe"/>
+                    <navigationItem key="navigationItem" id="oBL-AI-hbe">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="7pi-w7-hpu">
+                            <connections>
+                                <action selector="didTapLogoutButton:" destination="JZY-qU-w37" id="RQW-5R-4zH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="logoutBarButtonItem" destination="7pi-w7-hpu" id="Tcv-ft-Tyu"/>
                         <segue destination="761-3E-t7F" kind="presentation" identifier="segueFromHomeToSignInPage" id="MGD-zO-cmt"/>
                         <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromHomeToRegister" id="Al4-GN-h8v"/>
                         <segue destination="Zgf-3a-nNA" kind="show" id="mMB-3v-HdP"/>

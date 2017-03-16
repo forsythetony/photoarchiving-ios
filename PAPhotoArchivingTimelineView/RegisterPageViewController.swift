@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import FirebaseAuth
+
+protocol PARegisterControllerDelegate {
+    func PARegisterControllerDidSuccessfullySignInUser( user : FIRUser )
+    func PARegisterControllerCouldNotSignInUser()
+}
 
 class RegisterPageViewController: UIViewController {
-    
-    
-    
     
     @IBOutlet weak var pageTitleLabel: UILabel!
     @IBOutlet weak var emailTitleLabel: UILabel!
@@ -29,11 +32,9 @@ class RegisterPageViewController: UIViewController {
     
     
     
+    var delegate    : PARegisterControllerDelegate?
     
-    let dataMan : PADataManager = PADataManager.sharedInstance
-    
-    
-    
+    let dataMan     : PADataManager = PADataManager.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,45 +49,62 @@ class RegisterPageViewController: UIViewController {
     }
     
     @IBAction func registerButtonTapped(_ sender: Any) {
-        let userEmail = userEmailTextField.text
-        let userPassword = userPasswordTextField.text
-        let userRepeatPassword = repeatPasswordTextField.text
         
-        //check for empty field
-        if (userEmail=="" && userPassword=="" && userRepeatPassword=="")
+        let userEmail           = userEmailTextField.text
+        let userPassword        = userPasswordTextField.text
+        let userRepeatPassword  = repeatPasswordTextField.text
+        
+        
+        guard userEmail != nil, userPassword != nil, userRepeatPassword != nil else {
+            let error_message = "One of the parameters was nil dude. Fix that shiz"
+            self.displayMyAlertMessage(userMessage: error_message)
+            return
+        }
+        
+        
+        if ( userEmail == "" || userPassword  == "" || userRepeatPassword == "" )
         {
-            //display alert message
+            
             displayMyAlertMessage(userMessage: "All field are required")
             return
             
         }
         
-        //check if password match
+        
         if (userPassword != userRepeatPassword )
         {
-            //display alert messsage
+            
             displayMyAlertMessage(userMessage: "Password does not match")
-            return;
+            return
             
         }
         
-        //store data
-        UserDefaults.standard.set(userEmail,forKey:"userEmail")
-        UserDefaults.standard.set(userEmail,forKey:"userPassword")
-        UserDefaults.standard.synchronize()
         
-        
-        
-        //Display alert message with confirmation
-        /*var MyAlert =  UIAlertController(title:"Alert", message:"Registeration is sucessful!", preferredStyle:UIAlertControllerStyle.alert)
-        let okAction = UIAlertAction(title:"Ok", style:UIAlertActionStyle.default)
-        {
-            action in self.dismiss(animated: true,completion: nil)
-        }
-        myAlert.addAction(okAction)
-        self.presentedViewController（myAlert, animated:true, completion:nil）
-        */
-        
+        FIRAuth.auth()?.createUser(withEmail: userEmail!, password: userPassword!, completion: { (user, error) in
+            
+            if let error = error {
+                let error_message = String.init(format: "There was an error creating the user -> %@", error.localizedDescription)
+                self.displayMyAlertMessage(userMessage: error_message)
+                
+                return
+            }
+            
+            if let user = user {
+                
+                let success_message = String.init(format: "Successfully created the user with credentials username=%@ and password=%@ and userID=%@", userEmail!, userPassword!, user.uid)
+                self.displayMyAlertMessage(userMessage: success_message)
+                
+                //  Let the delegate know that you successfully signed in the user
+                self.delegate?.PARegisterControllerDidSuccessfullySignInUser(user: user)
+                
+                
+                return
+            }
+            
+            let error_message = "Something strange happened that I'm not quite equipped to handle"
+            self.displayMyAlertMessage(userMessage: error_message)
+            return
+        })
     }
 
     func _setup() {
@@ -101,6 +119,12 @@ class RegisterPageViewController: UIViewController {
         let textfieldPlaceholderColor   = Color.PAWhiteOne
         let underlineColor              = Color.PAWhiteOne
         
+        
+        /*
+            Title Text Label Settings
+        */
+        pageTitleLabel.textColor = titleLabelsTextColor
+        pageTitleLabel.font         = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: pageTitleLabel.font.pointSize)
         
         /*
             Email Text Field Settings
@@ -123,6 +147,7 @@ class RegisterPageViewController: UIViewController {
         
         userPasswordTextField.textColor = textfieldTextColor
         userPasswordTextField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ] )
+        userPasswordTextField.isSecureTextEntry = true
         
         passwordUnderlineView.backgroundColor = underlineColor
         
@@ -135,6 +160,7 @@ class RegisterPageViewController: UIViewController {
         
         repeatPasswordTextField.textColor = textfieldTextColor
         repeatPasswordTextField.attributedPlaceholder = NSAttributedString(string: "repeat password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ])
+        repeatPasswordTextField.isSecureTextEntry = true
         
         repeatPasswordUnderlineView.backgroundColor = underlineColor
     }
@@ -145,11 +171,9 @@ class RegisterPageViewController: UIViewController {
     
     func displayMyAlertMessage(userMessage:String)
     {
-        /*var MyAlert =  UIAlertController(title:"Alert", message:userMessage, preferredStyle:UIAlertControllerStyle.alert)
-        let okAction = UIAlertController(title:"Ok" , message:UIAlertActionStyle.Default, preferredStyle:nil)
-        MyAlert.addAction(okAction)
-        */
+        let alert_message = String.init(format: "\n\nCaveman Alert Message!\n%@\n\n", userMessage )
         
+        print(alert_message)
     }
     
 

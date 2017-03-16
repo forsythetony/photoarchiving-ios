@@ -11,15 +11,24 @@ import FirebaseAuth
 
 class PAHomeViewController: UIViewController {
 
+    
+    @IBOutlet weak var logoutBarButtonItem: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
+        logoutBarButtonItem.tintColor = UIColor.white
         
         // Do any additional setup after loading the view.
         checkIfUserSignedIn()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        logoutBarButtonItem.tintColor = UIColor.white
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -85,9 +94,13 @@ class PAHomeViewController: UIViewController {
         switch segueIdentifier {
         case Constants.SegueIDs.SegueFromHomeToSignInPage:
             
-            //  Here add the code to set the delegate of the destination view controller
-            //  to this view controller
             let dest = segue.destination as! LoginViewController
+            
+            dest.delegate = self
+            
+        case Constants.SegueIDs.SegueFromHomeToRegister:
+            
+            let dest = segue.destination as! RegisterPageViewController
             
             dest.delegate = self
             
@@ -97,6 +110,16 @@ class PAHomeViewController: UIViewController {
         
     }
     
+    @IBAction func didTapLogoutButton(_ sender: Any) {
+        
+        guard FIRAuth.auth()?.currentUser != nil else { return }
+        
+        //  FIXME:
+        //      Want to catch errors here if they do occur
+        try! FIRAuth.auth()!.signOut()
+        
+        checkIfUserSignedIn()
+    }
 
 }
 
@@ -121,6 +144,23 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
     }
 }
 
+extension PAHomeViewController : PARegisterControllerDelegate {
+    
+    func PARegisterControllerDidSuccessfullySignInUser(user: FIRUser) {
+        
+        //  First dismiss the register view controller that is being presented
+        self.presentedViewController?.dismiss(animated: true, completion: nil)
+        
+        //  If the registration/login was successful then we can load the data
+        //  on the home page
+        self.loadData()
+    }
+    
+    func PARegisterControllerCouldNotSignInUser() {
+        
+        print("\nI could not sign in the user!")
+    }
+}
 extension PAHomeViewController : PADataManagerDelegate {
     
     func PADataMangerDidConfigure() {
