@@ -91,6 +91,7 @@ struct Constants {
         static let SegueFromTimelineToAddPhotograph     = "SegueFromTimelineToAddPhotograph"
         static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
         static let SegueFromHomeToRegister              = "segueFromHomeToRegister"
+        static let SegueFromHomeToRepositories          = "hometorepositoriessegue"
         
     }
     

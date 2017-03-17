@@ -615,6 +615,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljh-BR-VJg" userLabel="Repositories">
+                                <rect key="frame" x="125" y="364" width="124" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Repositories"/>
+                                <connections>
+                                    <action selector="didTapRepositoriesButton:" destination="JZY-qU-w37" eventType="touchUpInside" id="hZd-oL-i8p"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -629,12 +637,12 @@
                         <outlet property="logoutBarButtonItem" destination="7pi-w7-hpu" id="Tcv-ft-Tyu"/>
                         <segue destination="761-3E-t7F" kind="presentation" identifier="segueFromHomeToSignInPage" id="MGD-zO-cmt"/>
                         <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromHomeToRegister" id="Al4-GN-h8v"/>
-                        <segue destination="Zgf-3a-nNA" kind="show" id="mMB-3v-HdP"/>
+                        <segue destination="Zgf-3a-nNA" kind="show" identifier="hometorepositoriessegue" id="mMB-3v-HdP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sL-Ap-4cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-567" y="4600"/>
+            <point key="canvasLocation" x="-567.20000000000005" y="4599.8500749625191"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="a3j-X0-n75">

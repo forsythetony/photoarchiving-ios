@@ -14,6 +14,9 @@ class PAHomeViewController: UIViewController {
     
     @IBOutlet weak var logoutBarButtonItem: UIBarButtonItem!
     
+    
+    let dataMan : PADataManager = PADataManager.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,6 +55,9 @@ class PAHomeViewController: UIViewController {
         var userIsSignedIn = false;
         
         
+        //  FIXME:
+        //      Want to replace this with a check on the data
+        //      manager
         //  Check Firebase to see if the user is signed in
         if FIRAuth.auth()?.currentUser != nil {
             userIsSignedIn = true
@@ -118,9 +124,29 @@ class PAHomeViewController: UIViewController {
         //      Want to catch errors here if they do occur
         try! FIRAuth.auth()!.signOut()
         
+        
+        //  FIXME:
+        //      Want to replace this with a call to the actual
+        //      data manager.
         checkIfUserSignedIn()
     }
 
+    @IBAction func didTapRepositoriesButton(_ sender: Any) {
+        
+        //  Make sure that there is a current user logged in
+        guard FIRAuth.auth()?.currentUser != nil else {
+            
+            let error_message = "There was no current user logged in so I can't go to the Repositories page. I shouldn't even be on this page!"
+            print( error_message )
+            return
+        }
+        
+        
+        
+        
+        
+        
+    }
 }
 
 

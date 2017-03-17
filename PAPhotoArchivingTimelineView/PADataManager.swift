@@ -34,11 +34,14 @@ class PADataManager {
     
     
     var isConfigured = false
-    private var _signedIn = false
     
     var isSignedIn : Bool {
         get {
-            return _signedIn
+            if FIRAuth.auth()?.currentUser != nil {
+                return true
+            }
+            
+            return false
         }
     }
     
@@ -95,10 +98,6 @@ class PADataManager {
                 return
             }
             
-            //  If the user sign in was successful then save the user credentials to UserDefaults
-            //  ADDME
-            self._signedIn = true
-            
             //  Let the delegate know that the sign in was successful
             self.delegate?.PADataManagerDidSignInUserWithStatus(PAUserSignInStatus.SignInSuccess)
         })
@@ -107,7 +106,6 @@ class PADataManager {
     func addStoryToPhotograph( story : PAStory, photograph : PAPhotograph) {
         
         //  First upload the file
-        
         guard isConfigured else {
             self.delegate?.PADataManagerDidSignInUserWithStatus(.FirebaseNotConfigured)
             return
