@@ -86,6 +86,8 @@ class RegisterPageViewController: UIViewController {
                 let error_message = String.init(format: "There was an error creating the user -> %@", error.localizedDescription)
                 self.displayMyAlertMessage(userMessage: error_message)
                 
+                self.delegate?.PARegisterControllerCouldNotSignInUser()
+                
                 return
             }
             
@@ -94,15 +96,17 @@ class RegisterPageViewController: UIViewController {
                 let success_message = String.init(format: "Successfully created the user with credentials username=%@ and password=%@ and userID=%@", userEmail!, userPassword!, user.uid)
                 self.displayMyAlertMessage(userMessage: success_message)
                 
-                //  Let the delegate know that you successfully signed in the user
                 self.delegate?.PARegisterControllerDidSuccessfullySignInUser(user: user)
                 
                 
                 return
             }
             
-            let error_message = "Something strange happened that I'm not quite equipped to handle"
+            let error_message = "Something strange happened that I'm not quite equipped to handle!"
             self.displayMyAlertMessage(userMessage: error_message)
+            
+            self.delegate?.PARegisterControllerCouldNotSignInUser()
+            
             return
         })
     }

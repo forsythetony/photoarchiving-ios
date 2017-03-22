@@ -13,14 +13,14 @@ typealias Color = UIColor
 
 struct Keys {
     struct Repository {
-        static let title = "title"
-        static let shortDescription = "shortDescription"
-        static let longDescription = "longDescription"
-        static let thumbnailURL = "thumbnailURL"
-        static let startDate = "start_date"
-        static let endDate = "end_date"
-        static let photographs = "photographs"
-        static let uid = "uid"
+        static let title                = "title"
+        static let shortDescription     = "shortDescription"
+        static let longDescription      = "longDescription"
+        static let thumbnailURL         = "thumbnailUrl"
+        static let startDate            = "start_date"
+        static let endDate              = "end_date"
+        static let photographs          = "photographs"
+        static let uid                  = "uid"
     }
     struct Photograph {
         static let uid = "uid"

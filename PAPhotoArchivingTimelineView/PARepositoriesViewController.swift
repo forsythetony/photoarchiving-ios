@@ -11,13 +11,14 @@ import UIKit
 class PARepositoriesViewController: UIViewController {
 
     @IBOutlet weak var RepositoriesCollectionView: UICollectionView!
+
     
     let dataMan = PADataManager.sharedInstance
     
     lazy var Repositories = PARepositoryContainer()
     
-    let ItemsPerRow : Int = 3
-    let HorizontalSectionPadding : CGFloat = 10.0
+    let ItemsPerRow : Int                       = 3
+    let HorizontalSectionPadding : CGFloat      = 10.0
     let HorizontalSpacingBetweenItems : CGFloat = 10.0
     
     let backgroundImageView = UIImageView()
@@ -58,11 +59,7 @@ class PARepositoriesViewController: UIViewController {
         }
     }
 
-    
-    
-    
-    
-    
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -97,7 +94,13 @@ class PARepositoriesViewController: UIViewController {
     private func dataSetup() {
         self.dataMan.delegate = self
         
-        self.dataMan.configure()
+        if !self.dataMan.isConfigured {
+            self.dataMan.configure()
+        }
+        else {
+            self.dataMan.pullRepositories()
+        }
+        
     }
     
     private func setupInfoButton() {
@@ -223,6 +226,7 @@ extension PARepositoriesViewController : PADataManagerDelegate {
     }
     
     func PADataMangerDidConfigure() {
+        
         self.dataMan.pullRepositories()
     }
 }

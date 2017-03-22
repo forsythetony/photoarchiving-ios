@@ -25,13 +25,12 @@ class PADataManager {
     
     static let sharedInstance = PADataManager()
     
-    var database_ref : FIRDatabaseReference?
-    var storage_ref : FIRStorageReference?
-    var recordings_storage_ref : FIRStorageReference?
-    var delegate : PADataManagerDelegate?
+    var database_ref            : FIRDatabaseReference?
+    var storage_ref             : FIRStorageReference?
+    var recordings_storage_ref  : FIRStorageReference?
+    var delegate                : PADataManagerDelegate?
     
     var configTimer : Timer?
-    
     
     var isConfigured = false
     
@@ -45,9 +44,11 @@ class PADataManager {
         }
     }
     
-    init() {
+    init()
+    {
         
     }
+    
     func configure() {
         
         guard !self.isConfigured else {
@@ -72,11 +73,12 @@ class PADataManager {
         //  If Firebase is already configured then stop the timer and do personal configuration
         
         if (FIRApp.defaultApp() != nil) {
-            database_ref = FIRDatabase.database().reference()
-            storage_ref = FIRStorage.storage().reference(forURL: Constants.DataManager.firebaseStorageURL)
-            recordings_storage_ref = storage_ref?.child(Constants.DataManager.firebaseRecordingsPath)
+            database_ref            = FIRDatabase.database().reference()
+            storage_ref             = FIRStorage.storage().reference(forURL: Constants.DataManager.firebaseStorageURL)
+            recordings_storage_ref  = storage_ref?.child(Constants.DataManager.firebaseRecordingsPath)
             
             self.isConfigured = true
+            
             self.delegate?.PADataMangerDidConfigure()
         }
         
@@ -115,7 +117,8 @@ class PADataManager {
             
             let child_ref = rec_ref.child("\(story.uid).m4a")
             
-            let upload_task = child_ref.putFile(data_url, metadata: nil, completion: { (storage_metadata, err) in
+            let _ = child_ref.putFile(data_url, metadata: nil, completion: { (storage_metadata, err) in
+                
                 if let err = err {
                     TFLogger.log(str: "There was an error uploading the file", err: err)
                     return
@@ -138,10 +141,6 @@ class PADataManager {
                 
                 
             })
-            
-            
-            
-            
         }
     }
     

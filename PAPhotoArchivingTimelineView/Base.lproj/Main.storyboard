@@ -644,10 +644,10 @@
             </objects>
             <point key="canvasLocation" x="-567.20000000000005" y="4599.8500749625191"/>
         </scene>
-        <!--View Controller-->
+        <!--Repositories View Controller-->
         <scene sceneID="a3j-X0-n75">
             <objects>
-                <viewController id="Zgf-3a-nNA" sceneMemberID="viewController">
+                <viewController id="Zgf-3a-nNA" customClass="PARepositoriesViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bs3-Rk-O8t"/>
                         <viewControllerLayoutGuide type="bottom" id="XM8-Vu-teQ"/>
@@ -655,12 +655,43 @@
                     <view key="view" contentMode="scaleToFill" id="6AL-gs-rYA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MUE-wq-No2">
+                                <rect key="frame" x="16" y="64" width="343" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QNu-Vt-WiU">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="AY5-Bo-FG7">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MUE-wq-No2" firstAttribute="leading" secondItem="6AL-gs-rYA" secondAttribute="leadingMargin" id="Cf1-WR-s4e"/>
+                            <constraint firstItem="XM8-Vu-teQ" firstAttribute="top" secondItem="MUE-wq-No2" secondAttribute="bottom" id="SlK-kv-596"/>
+                            <constraint firstItem="MUE-wq-No2" firstAttribute="top" secondItem="bs3-Rk-O8t" secondAttribute="bottom" id="auo-wO-BU7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MUE-wq-No2" secondAttribute="trailing" id="dxd-Bs-iPt"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="RepositoriesCollectionView" destination="MUE-wq-No2" id="YZX-9A-AIZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UF8-JE-UTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="546" y="4600"/>
+            <point key="canvasLocation" x="544.79999999999995" y="4599.8500749625191"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HtE-26-8ah">

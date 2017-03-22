@@ -55,6 +55,8 @@
 		25D87D171DEA1511000D2160 /* PAChromecaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D87D161DEA1511000D2160 /* PAChromecaster.swift */; };
 		25E8AD8F1DE673FF00ADD015 /* TFLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */; };
 		25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */; };
+		25E920261E7F43C6000D1BE2 /* PATimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E920251E7F43C6000D1BE2 /* PATimelineViewController.swift */; };
+		25E920291E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E920281E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift */; };
 		25EC83B01E7999B6000AFC54 /* RepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */; };
 		25EC9C7D1DFB7A6700C30604 /* PARepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */; };
 		25EC9C7F1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */; };
@@ -131,6 +133,8 @@
 		25D87D161DEA1511000D2160 /* PAChromecaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAChromecaster.swift; sourceTree = "<group>"; };
 		25E8AD8E1DE673FF00ADD015 /* TFLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TFLogger.swift; path = lib/TFLogger.swift; sourceTree = "<group>"; };
 		25E8AD901DE67C1400ADD015 /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
+		25E920251E7F43C6000D1BE2 /* PATimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimelineViewController.swift; sourceTree = "<group>"; };
+		25E920281E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TAPhotoInformationViewController.swift; sourceTree = "<group>"; };
 		25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesViewController.swift; sourceTree = "<group>"; };
 		25EC9C7C1DFB7A6700C30604 /* PARepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoriesViewController.swift; sourceTree = "<group>"; };
 		25EC9C7E1DFB7BBB00C30604 /* PARepositoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
 				25AA7CDC1E52C0BF00733DC8 /* Home */,
 				25EC83AE1E79998A000AFC54 /* Repositories */,
+				25E920241E7F43AA000D1BE2 /* Timline View */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -236,7 +241,6 @@
 				25D87D0D1DE9FC5F000D2160 /* GoogleCast.framework */,
 				25EC9C821DFBADFB00C30604 /* UIImage+ImageEffects.h */,
 				25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */,
-				25EC9C7B1DFB7A4C00C30604 /* Repositories View */,
 				25D03BCB1DC19FD800045988 /* Singletons */,
 				25D03BC51DC19EB100045988 /* Data Entities */,
 				25D03BC81DC19F9200045988 /* Timeline View */,
@@ -319,9 +323,27 @@
 			name = "Add Recording";
 			sourceTree = "<group>";
 		};
+		25E920241E7F43AA000D1BE2 /* Timline View */ = {
+			isa = PBXGroup;
+			children = (
+				25E920271E7F4426000D1BE2 /* Timeline View */,
+				25E920251E7F43C6000D1BE2 /* PATimelineViewController.swift */,
+			);
+			name = "Timline View";
+			sourceTree = "<group>";
+		};
+		25E920271E7F4426000D1BE2 /* Timeline View */ = {
+			isa = PBXGroup;
+			children = (
+				25E920281E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift */,
+			);
+			name = "Timeline View";
+			sourceTree = "<group>";
+		};
 		25EC83AE1E79998A000AFC54 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				25EC9C7B1DFB7A4C00C30604 /* Repositories View */,
 				25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */,
 			);
 			name = Repositories;
@@ -568,11 +590,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				25EC83B01E7999B6000AFC54 /* RepositoriesViewController.swift in Sources */,
+				25E920291E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift in Sources */,
 				25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */,
 				25D03BC71DC19EC500045988 /* PARepositoryInfo.swift in Sources */,
 				25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */,
 				25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */,
 				255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */,
+				25E920261E7F43C6000D1BE2 /* PATimelineViewController.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
 				25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */,

@@ -142,9 +142,8 @@ class PAHomeViewController: UIViewController {
         }
         
         
-        
-        
-        
+        //  Push the page with all the repositories on it
+        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToRepositories, sender: nil)
         
     }
 }
