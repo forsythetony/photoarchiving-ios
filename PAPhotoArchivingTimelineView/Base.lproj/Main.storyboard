@@ -687,11 +687,30 @@
                     </view>
                     <connections>
                         <outlet property="RepositoriesCollectionView" destination="MUE-wq-No2" id="YZX-9A-AIZ"/>
+                        <segue destination="5kv-cl-TAq" kind="show" identifier="segueFromRepositoriesViewToTimelineView" id="emV-7I-n6M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UF8-JE-UTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="544.79999999999995" y="4599.8500749625191"/>
+        </scene>
+        <!--Timeline View Controller-->
+        <scene sceneID="id6-FD-6WN">
+            <objects>
+                <viewController id="5kv-cl-TAq" customClass="PATimelineViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tqS-CT-xwj"/>
+                        <viewControllerLayoutGuide type="bottom" id="A5i-Uy-2QO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="o9u-9c-AXk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rc5-sE-cdl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1974" y="4600"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HtE-26-8ah">

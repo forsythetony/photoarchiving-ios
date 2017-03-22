@@ -12,6 +12,8 @@ import UIKit
 typealias Color = UIColor
 
 struct Keys {
+    
+    
     struct Repository {
         static let title                = "title"
         static let shortDescription     = "shortDescription"
@@ -19,33 +21,37 @@ struct Keys {
         static let thumbnailURL         = "thumbnailUrl"
         static let startDate            = "start_date"
         static let endDate              = "end_date"
-        static let photographs          = "photographs"
+        static let photographs          = "photos"
         static let uid                  = "uid"
     }
+    
+    
     struct Photograph {
-        static let uid = "uid"
-        static let description = "description"
-        static let mainURL = "main_url"
-        static let thumbURL = "thumb_url"
-        static let dateTaken = "date_taken"
-        static let title = "title"
-        static let dateTakenConf = "date_taken_conf"
-        static let locationLongitude = "location_coord_longitude"
-        static let locationLatitude = "location_coord_lattitude"
-        static let locationConf = "location_conf"
-        static let locationCity = "location_city"
-        static let locationCountry = "location_country"
-        static let locationState = "location_state"
+        
+        static let uid                  = "uid"
+        static let description          = "description"
+        static let mainURL              = "main_url"
+        static let thumbURL             = "thumb_url"
+        static let dateTaken            = "date_taken"
+        static let title                = "title"
+        static let dateTakenConf        = "date_taken_conf"
+        static let locationLongitude    = "location_coord_longitude"
+        static let locationLatitude     = "location_coord_lattitude"
+        static let locationConf         = "location_conf"
+        static let locationCity         = "location_city"
+        static let locationCountry      = "location_country"
+        static let locationState        = "location_state"
         
     }
     
     struct Story {
-        static let uid = "uid"
-        static let title = "title"
-        static let audioFormat = "audio_format"
-        static let recordingLength = "recording_length"
-        static let recordingURL = "recording_url"
-        static let date_recorded = "date_recorded"
+        static let uid              = "uid"
+        static let title            = "title"
+        static let audioFormat      = "audio_format"
+        static let recordingLength  = "recording_length"
+        static let recordingURL     = "recording_url"
+        static let date_recorded    = "date_recorded"
+        
     }
 }
 
@@ -86,7 +92,7 @@ struct Constants {
         static let ToPhotoInformation                   = "showPhotoInformation"
         static let FromPhotoInfoToMainImageViewer       = "segueFromPhotoInfoToMainImageViewer"
         static let FromPhotoInfoToAddRecording          = "SegueFromPhotoInfoToAddRecording"
-        static let SegueFromRepositoriesToTimelineView  = "SegueFromRepositoriesToTimelineView"
+        static let SegueFromRepositoriesToTimelineView  = "segueFromRepositoriesViewToTimelineView"
         static let SegueFromTimelineToAddStoryScene     = "SegueFromTimelineToAddStoryScene"
         static let SegueFromTimelineToAddPhotograph     = "SegueFromTimelineToAddPhotograph"
         static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
