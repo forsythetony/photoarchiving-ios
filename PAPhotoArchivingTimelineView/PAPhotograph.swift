@@ -28,6 +28,7 @@ class PAPhotograph {
     private static let DEFAULT_LOC_STATE                = "Any State"
     private static let DEFAULT_LOC_COUNTRY              = "Any Country"
     private static let DEFAULT_LOC_CONF : Float         = 0.0
+    private static let DEFAULT_UPLOADER_ID              = ""
     
     var uid = ""
     var title = ""
@@ -44,6 +45,8 @@ class PAPhotograph {
     var dateTakenConf : Float = 0.0
     var locationTaken : PALocation?
     var locationTakenConf : Float = 0.0
+    var localImageURL : URL?
+    var uploaderID : String?
     
     var delegate : PAPhotographDelegate?
     
@@ -96,6 +99,17 @@ class PAPhotograph {
         
         newPhoto.dateTakenConf = snapData[Keys.Photograph.dateTakenConf] as? Float ?? PAPhotograph.DEFAULT_DATE_CONF
         
+        //  Upload Information
+        if let date_uploaded = snapData[Keys.Photograph.dateUploaded] as? String {
+            newPhoto.dateUploaded = PADateManager.sharedInstance.getDateFromString(str: date_uploaded, formatType: .FirebaseFull)
+        }
+        else {
+            newPhoto.dateUploaded = PAPhotograph.DEFAULT_DATE_UPLOADED
+        }
+        
+        newPhoto.uploaderID = snapData[Keys.Photograph.uploaderID] as? String ?? PAPhotograph.DEFAULT_UPLOADER_ID
+        
+        
         if let date_taken = snapData[Keys.Photograph.dateTaken] as? String {
             
             newPhoto.dateTaken = PADateManager.sharedInstance.getDateFromString(str: date_taken, formatType: .FirebaseFull)
@@ -106,7 +120,18 @@ class PAPhotograph {
         }
         
         newPhoto.mainImageURL = snapData[Keys.Photograph.mainURL] as? String ?? PAPhotograph.DEFAULT_MAIN_URL
-        newPhoto.thumbnailURL = snapData[Keys.Photograph.thumbURL] as? String ?? PAPhotograph.DEFAULT_THUMB_URL
+        
+        
+        /*
+            If there is no thumbnail URL then just use the main URL
+            as the thumbnail URL
+        */
+        if snapData[Keys.Photograph.thumbURL] == nil {
+            newPhoto.thumbnailURL = newPhoto.mainImageURL
+        }
+        else {
+            newPhoto.thumbnailURL = (snapData[Keys.Photograph.thumbURL] as? String)!
+        }
         
         
         let location = PALocation()
@@ -165,21 +190,32 @@ class PAPhotograph {
         //  Main URL
         jsonArray[Keys.Photograph.mainURL] = self.mainImageURL
         
+        //  Date Uploaded
+        if let date_uploaded = self.dateUploaded {
+            let date_uploaded_string = PADateManager.sharedInstance.getDateString(date: date_uploaded, formatType: .FirebaseFull)
+            
+            jsonArray[Keys.Photograph.dateUploaded] = date_uploaded_string
+        }
+        
+        //  Uploader ID
+        jsonArray[Keys.Photograph.uploaderID] = self.uploaderID
+        
+        
         if let locationData = self.locationTaken {
-            jsonArray[Keys.Photograph.locationCity] = locationData.city
-            jsonArray[Keys.Photograph.locationState] = locationData.state
-            jsonArray[Keys.Photograph.locationCountry] = locationData.country
-            jsonArray[Keys.Photograph.locationLatitude] = locationData.coordinates?.latitude ?? PAPhotograph.DEFAULT_LOC_LATITUDE
-            jsonArray[Keys.Photograph.locationLongitude] = locationData.coordinates?.longitude ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
-            jsonArray[Keys.Photograph.locationConf] = self.locationTakenConf
+            jsonArray[Keys.Photograph.locationCity]         = locationData.city
+            jsonArray[Keys.Photograph.locationState]        = locationData.state
+            jsonArray[Keys.Photograph.locationCountry]      = locationData.country
+            jsonArray[Keys.Photograph.locationLatitude]     = locationData.coordinates?.latitude ?? PAPhotograph.DEFAULT_LOC_LATITUDE
+            jsonArray[Keys.Photograph.locationLongitude]    = locationData.coordinates?.longitude ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
+            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
         }
         else {
-            jsonArray[Keys.Photograph.locationCity] = PAPhotograph.DEFAULT_LOC_CITY
-            jsonArray[Keys.Photograph.locationState] = PAPhotograph.DEFAULT_LOC_STATE
-            jsonArray[Keys.Photograph.locationCountry] = PAPhotograph.DEFAULT_LOC_COUNTRY
-            jsonArray[Keys.Photograph.locationLatitude] = PAPhotograph.DEFAULT_LOC_LATITUDE
-            jsonArray[Keys.Photograph.locationLongitude] = PAPhotograph.DEFAULT_LOC_LONGITUDE
-            jsonArray[Keys.Photograph.locationConf] = self.locationTakenConf
+            jsonArray[Keys.Photograph.locationCity]         = PAPhotograph.DEFAULT_LOC_CITY
+            jsonArray[Keys.Photograph.locationState]        = PAPhotograph.DEFAULT_LOC_STATE
+            jsonArray[Keys.Photograph.locationCountry]      = PAPhotograph.DEFAULT_LOC_COUNTRY
+            jsonArray[Keys.Photograph.locationLatitude]     = PAPhotograph.DEFAULT_LOC_LATITUDE
+            jsonArray[Keys.Photograph.locationLongitude]    = PAPhotograph.DEFAULT_LOC_LONGITUDE
+            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
         }
         
         return jsonArray

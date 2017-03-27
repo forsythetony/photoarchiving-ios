@@ -10,6 +10,11 @@
 import UIKit
 import Firebase
 
+fileprivate struct Action {
+    
+    static let addButton = #selector(PATimelineViewController.didTapAddButton(sender:))
+}
+
 class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     
     var ref : FIRDatabaseReference!
@@ -29,11 +34,8 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        chromecaster.delegate = self
-        
-        
+        _setup()
     }
     
     
@@ -117,14 +119,57 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         self.showAlertViewWithDevice(device: device)
     }
     
+    /*
+        SETUP FUNCTIONS
+    */
+    private func _setup() {
+        _setupAddButton()
+        _setupChromecast()
+    }
+    
+    private func _setupAddButton() {
+        
+        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.addButton)
+        
+        self.navigationItem.rightBarButtonItem = add_button
+    }
+    
+    private func _setupChromecast() {
+        
+        self.chromecaster.delegate = self
+    }
 }
 
+/*
+    ACTION HANDLERS
+*/
 extension PATimelineViewController : PATimelineViewDelegate {
     
+    /*
+        PHOTOGRAPHS
+    */
     func PATimelineViewPhotographWasTapped(info: PAPhotograph) {
         
         TFLogger.log(logString: "Tapping image with information", arguments: info.getPhotoInfoData().description)
         //self.chromecaster.sendPhoto(photo: info)
         self.performSegue(withIdentifier: Constants.SegueIDs.ToPhotoInformation, sender: info)
     }
+    
+    /*
+        BUTTONS
+    */
+    func didTapAddButton( sender : UIBarButtonItem ) {
+        
+        let message = "\nLooks like you tapped the add button there kiddo!\n"
+        
+        print(message)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        let add_photograph_vc = storyboard.instantiateViewController(withIdentifier: PAAddPhotoViewController.STORYBOARD_ID) as! PAAddPhotoViewController
+        add_photograph_vc.currentRepository = self.currentRepository
+        
+        self.present(add_photograph_vc, animated: true, completion: nil)
+    }
 }
+

@@ -13,6 +13,7 @@
 		250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */; };
 		2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */; };
 		2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */; };
+		2558AE8C1E88C95E004D7BCB /* PAAddPhotographViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2558AE8B1E88C95E004D7BCB /* PAAddPhotographViewController.swift */; };
 		255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C4F031DE9120400EBD24C /* PAMainImageViewController.swift */; };
 		255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C4F051DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift */; };
 		2568E9DD1DD27CB200FE911E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2568E9DC1DD27CB200FE911E /* GoogleService-Info.plist */; };
@@ -20,6 +21,7 @@
 		2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E01DD27DC900FE911E /* ContentAddSelectorViewController.swift */; };
 		2568E9E31DD281A300FE911E /* PADataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E21DD281A300FE911E /* PADataManager.swift */; };
 		2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */; };
+		256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */; };
 		2583CA4B1DD38003004711DC /* PAPhotoInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */; };
 		2583CA4E1DD387D0004711DC /* TFPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */; };
 		2583CA501DD3B546004711DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2583CA4F1DD3B546004711DC /* CoreLocation.framework */; };
@@ -86,6 +88,7 @@
 		250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PAApplicationImages.xcassets; sourceTree = "<group>"; };
 		2539ED5B1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAPhotoArchivingModel.xcdatamodel; sourceTree = "<group>"; };
 		2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoUploadForm.swift; sourceTree = "<group>"; };
+		2558AE8B1E88C95E004D7BCB /* PAAddPhotographViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAddPhotographViewController.swift; sourceTree = "<group>"; };
 		255C4F031DE9120400EBD24C /* PAMainImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAMainImageViewController.swift; sourceTree = "<group>"; };
 		255C4F051DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoDateTableViewCell.swift; sourceTree = "<group>"; };
 		2568E9DC1DD27CB200FE911E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		2568E9E01DD27DC900FE911E /* ContentAddSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentAddSelectorViewController.swift; sourceTree = "<group>"; };
 		2568E9E21DD281A300FE911E /* PADataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PADataManager.swift; sourceTree = "<group>"; };
 		2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimelineManager.swift; sourceTree = "<group>"; };
+		256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACurrentUploadsViewController.swift; sourceTree = "<group>"; };
 		2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationViewController.swift; sourceTree = "<group>"; };
 		2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFPhotoInfo.swift; sourceTree = "<group>"; };
 		2583CA4F1DD3B546004711DC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -172,6 +176,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2558AE8A1E88C8DF004D7BCB /* Add Photograph */ = {
+			isa = PBXGroup;
+			children = (
+				2558AE8B1E88C95E004D7BCB /* PAAddPhotographViewController.swift */,
+			);
+			name = "Add Photograph";
+			sourceTree = "<group>";
+		};
 		2583CA4C1DD387BD004711DC /* Photo Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,10 +208,12 @@
 		25CFCD541E4D308F00263353 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */,
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
 				25AA7CDC1E52C0BF00733DC8 /* Home */,
 				25EC83AE1E79998A000AFC54 /* Repositories */,
 				25E920241E7F43AA000D1BE2 /* Timline View */,
+				2558AE8A1E88C8DF004D7BCB /* Add Photograph */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -326,8 +340,8 @@
 		25E920241E7F43AA000D1BE2 /* Timline View */ = {
 			isa = PBXGroup;
 			children = (
-				25E920271E7F4426000D1BE2 /* Timeline View */,
 				25E920251E7F43C6000D1BE2 /* PATimelineViewController.swift */,
+				25E920271E7F4426000D1BE2 /* Timeline View */,
 			);
 			name = "Timline View";
 			sourceTree = "<group>";
@@ -599,12 +613,14 @@
 				25E920261E7F43C6000D1BE2 /* PATimelineViewController.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
+				256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */,
 				25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */,
 				25CFCD5D1E4D34BF00263353 /* RegisterPageViewController.swift in Sources */,
 				2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */,
 				25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */,
 				2583CA521DD3B5D2004711DC /* PAPerson.swift in Sources */,
 				2568E9E31DD281A300FE911E /* PADataManager.swift in Sources */,
+				2558AE8C1E88C95E004D7BCB /* PAAddPhotographViewController.swift in Sources */,
 				2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */,
 				2583CA581DD3B748004711DC /* PARepository.swift in Sources */,
 				2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */,
@@ -773,6 +789,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = CB6W4HNRCM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -795,6 +812,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = CB6W4HNRCM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

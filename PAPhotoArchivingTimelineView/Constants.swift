@@ -15,14 +15,16 @@ struct Keys {
     
     
     struct Repository {
-        static let title                = "title"
         static let shortDescription     = "shortDescription"
         static let longDescription      = "longDescription"
         static let thumbnailURL         = "thumbnailUrl"
         static let startDate            = "start_date"
         static let endDate              = "end_date"
         static let photographs          = "photos"
+        static let title                = "title"
         static let uid                  = "uid"
+        static let creationDate         = "creation_date"
+        static let creatorID            = "creator_id"
     }
     
     
@@ -41,6 +43,9 @@ struct Keys {
         static let locationCity         = "location_city"
         static let locationCountry      = "location_country"
         static let locationState        = "location_state"
+        static let localPhotoURL        = "local_photo_url"
+        static let dateUploaded         = "date_uploaded"
+        static let uploaderID           = "uploader_id"
         
     }
     
@@ -52,6 +57,16 @@ struct Keys {
         static let recordingURL     = "recording_url"
         static let date_recorded    = "date_recorded"
         
+    }
+    
+    struct NotificationUserInfo {
+        struct PhotoUpload {
+            static let status = "status"
+            static let progress = "progress"
+            static let photoID = "photo_id"
+            static let repoID = "repo_id"
+            static let photoUploadInformation = "photo_upload_info"
+        }
     }
 }
 
@@ -98,6 +113,7 @@ struct Constants {
         static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
         static let SegueFromHomeToRegister              = "segueFromHomeToRegister"
         static let SegueFromHomeToRepositories          = "hometorepositoriessegue"
+        //static let SegueFromTimelineViewToAddPhotograph = "seguefromtimelineviewtoaddphotograph"
         
     }
     
@@ -189,6 +205,15 @@ struct Constants {
         static let firebaseThumbnailImagesPath = "images/thumbnail"
         static let firebaseMainImagesPath = "images/main"
         static let firebaseRecordingsPath = "recordings"
+    }
+    
+    
+    struct Notifications {
+        struct Upload {
+            static let photoUploadProgressUpdate = "photouploadprogressupdate"
+            static let photoUploadHasNewUpload = "photouploadhasnew"
+            static let photoUploadDidRemoveUpload = "photouploadDidRemoveUpload"
+        }
     }
 }
 

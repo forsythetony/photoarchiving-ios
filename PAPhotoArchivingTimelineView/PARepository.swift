@@ -16,6 +16,18 @@ protocol PARepositoryDelegate {
     
 }
 
+fileprivate struct PARepoDefaults {
+    
+    static let uid = ""
+    static let title = ""
+    static let shortDescription = ""
+    static let longDescription = ""
+    static let thumbnailURL = ""
+    static let creatorID = ""
+    static let startDateInt : Int = 1900
+    static let endDateInt : Int = 2000
+    static let dateCreated = Date()
+}
 class PARepository {
     
     var uid                 = ""
@@ -25,6 +37,9 @@ class PARepository {
     var thumbnailURL        = ""
     var photographs         = [PAPhotograph]()
     
+    var dateCreated = Date()
+    
+    var creatorID           = ""
     var thumbnailImage      : UIImage?
     var administrator       : PAUser?
     var startDate           : Date?
@@ -62,6 +77,59 @@ class PARepository {
     }
 }
 
+extension PARepository {
+    
+    func GetJSONCompatibleArray() -> [ String : Any ] {
+        
+        var json_array = [ String : Any ]()
+        
+        
+        //  UID
+        json_array[Keys.Repository.uid] = self.uid
+        
+        //  Title
+        json_array[Keys.Repository.title] = self.title 
+        
+        //  Uploader Information
+        json_array[Keys.Repository.creationDate] = PADateManager.sharedInstance.getDateString(date: self.dateCreated, formatType: .FirebaseFull)
+        json_array[Keys.Repository.creatorID] = self.creatorID
+        
+        //  Start and End Dates
+        if let start_date = self.startDate {
+            let start_date_string = PADateManager.sharedInstance.getDateString(date: start_date, formatType: .FirebaseFull)
+            json_array[Keys.Repository.startDate] = start_date_string
+        }
+        else {
+            let default_start_date = PADateManager.sharedInstance.getDateFromYearInt(year: PARepoDefaults.startDateInt)
+            let default_start_date_string = PADateManager.sharedInstance.getDateString(date: default_start_date, formatType: .FirebaseFull)
+            
+            json_array[Keys.Repository.startDate] = default_start_date_string
+        }
+        
+        if let end_date = self.endDate {
+            
+            let end_date_string = PADateManager.sharedInstance.getDateString(date: end_date, formatType: .FirebaseFull)
+            
+            json_array[Keys.Repository.endDate] = end_date_string
+        }
+        else {
+            let default_end_date = PADateManager.sharedInstance.getDateFromYearInt(year: PARepoDefaults.endDateInt)
+            let default_end_date_string = PADateManager.sharedInstance.getDateString(date: default_end_date, formatType: .FirebaseFull)
+            
+            json_array[Keys.Repository.endDate] = default_end_date_string
+        }
+        
+        
+        //  Thumbnail URL
+        json_array[Keys.Repository.thumbnailURL] = self.thumbnailURL
+        
+        //  Descriptions
+        json_array[Keys.Repository.shortDescription] = self.shortDescription
+        json_array[Keys.Repository.longDescription] = self.longDescription
+        
+        return json_array
+    }
+}
 extension PARepository {
     
     static func CreateWithFirebaseSnapshot( snap : FIRDataSnapshot ) -> PARepository? {

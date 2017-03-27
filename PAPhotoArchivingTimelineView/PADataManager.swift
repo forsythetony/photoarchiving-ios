@@ -11,6 +11,67 @@ import Firebase
 import UIKit
 
 
+enum PAUploadStatus {
+    case Paused, InProgress, Completed, Unknown
+}
+
+
+extension Notification {
+    
+    static func PABuildPhotoUploadNotification( status : PAUploadStatus, progress : Float, repo_id : String, photo_id : String) -> Notification {
+        
+        
+        let user_info : [ String : Any ] = [
+            Keys.NotificationUserInfo.PhotoUpload.photoID : photo_id,
+            Keys.NotificationUserInfo.PhotoUpload.repoID : repo_id,
+            Keys.NotificationUserInfo.PhotoUpload.status : status,
+            Keys.NotificationUserInfo.PhotoUpload.progress : progress
+        ]
+        
+        let notification = Notification(    name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadProgressUpdate),
+                                            object: nil,
+                                            userInfo: user_info)
+        
+        return notification
+    }
+    
+    static func PABuildPhotoUploadDidCompleteNotification( uploadInformation : PAPhotoUploadInformation ) -> Notification {
+        
+        let user_info : [ String : Any ] = [ Keys.NotificationUserInfo.PhotoUpload.photoUploadInformation : uploadInformation ]
+        
+        let notification = Notification(name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadDidRemoveUpload), object: nil, userInfo: user_info)
+        
+        return notification
+    }
+    
+    static func PABuildPhotoUploadWasAddedNotification( uploadInformation : PAPhotoUploadInformation ) -> Notification
+    {
+        let user_info : [ String : Any ] = [ Keys.NotificationUserInfo.PhotoUpload.photoUploadInformation : uploadInformation ]
+        
+        let notification = Notification(name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadHasNewUpload), object: nil, userInfo: user_info)
+        
+        return notification
+    }
+}
+fileprivate enum PAImageURLToDataError : Error {
+    case invalidURL
+    case dataCreationError( creationError : Error )
+    
+    var paDescription : String {
+        get {
+            switch self {
+            case .invalidURL:
+                return "The URL was invalid"
+                
+            case .dataCreationError(creationError: _):
+                return "There was an error creating the data"
+                
+            default:
+                return "Unknown description"
+            }
+        }
+    }
+}
 enum PAUserSignInStatus {
     case SignInSuccess, SignInFailed, FirebaseNotConfigured
 }
@@ -25,10 +86,14 @@ class PADataManager {
     
     static let sharedInstance = PADataManager()
     
+    let uploadsMan = PAUploadsManager()
+    
+    
     var database_ref            : FIRDatabaseReference?
     var storage_ref             : FIRStorageReference?
     var recordings_storage_ref  : FIRStorageReference?
     var delegate                : PADataManagerDelegate?
+    
     
     var configTimer : Timer?
     
@@ -169,6 +234,99 @@ class PADataManager {
 
 extension PADataManager {
 
+    func handleError( error : Error ) {
+        
+        let error_message = String.init(format: "\nThere was an error...\nError Message:\t%@\n\n", error.localizedDescription )
+        
+        print( error_message )
+    }
+    
+    fileprivate func handlePAError( error : PAImageURLToDataError ) {
+        
+        let error_message = String.init(format: "\nThere was an error...\nError Message:\t%@\n\n", error.paDescription )
+        
+        print( error_message )
+    }
+    
+    func addPhotographToRepositoryv2( newPhoto : PAPhotograph, repository : PARepository ) {
+        
+        if !isConfigured { return }
+        
+        
+        guard let main_image = newPhoto.mainImage else {
+            print("No main image")
+            return
+        }
+        
+        guard let image_data = UIImageJPEGRepresentation(main_image, 1.0) else {
+            print( "Could not convert to data")
+            return
+        }
+        
+        let photographs_db_ref  = database_ref!.child("/photographs")
+        let repository_db_ref   = database_ref!.child(String.init(format: "/repositories/%@", repository.uid))
+        
+        
+        let new_photograph_key = photographs_db_ref.childByAutoId().key
+        
+        let image_metadata = FIRStorageMetadata()
+        image_metadata.contentType = "images/jpeg"
+        
+        let upload_task = storage_ref!.child(String.init(format: "images/%@.jpg", new_photograph_key)).put(image_data, metadata: image_metadata) { (metaData, error) in
+            
+            if let error = error {
+                self.handleError(error: error)
+                return
+            }
+            
+            
+            if let image_url = metaData?.downloadURLs?.first?.absoluteString {
+                
+                newPhoto.dateUploaded   = Date()
+                newPhoto.mainImageURL   = image_url
+                newPhoto.uid            = new_photograph_key
+                photographs_db_ref.child(new_photograph_key).setValue(newPhoto.PAGetJSONCompatibleArray())
+            }
+            
+            repository_db_ref.child(String.init(format: "photos/%@", new_photograph_key)).setValue("true")
+            
+            let note = Notification.PABuildPhotoUploadNotification(
+                status: PAUploadStatus.Completed,
+                progress: 1.0,
+                repo_id: repository.uid,
+                photo_id: new_photograph_key)
+            
+            NotificationCenter.default.post(note)
+        }
+        
+        upload_task.observe(.progress) { (snap) in
+            
+            if let upload_progress = snap.progress {
+                
+                let upload_message = String.init(format: "\nUpload Progress:\t%.2f", upload_progress.fractionCompleted)
+                
+                print( upload_message )
+                
+                
+                //  Post notification about upload progress
+                let note = Notification.PABuildPhotoUploadNotification(status: PAUploadStatus.InProgress, progress: Float(upload_progress.fractionCompleted), repo_id: repository.uid, photo_id: new_photograph_key)
+                
+                NotificationCenter.default.post(note)
+                
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
     func addPhotographToRepository( newPhoto : PAPhotograph, repository : PARepository ) {
         
         if !isConfigured { return }
@@ -296,5 +454,143 @@ extension PADataManager {
             print("Done ish")
         }
         
+    }
+}
+//
+//enum PASortType {
+//    case ascending, descending
+//}
+//protocol PASortable {
+//    var uintValue : UInt { get }
+//}
+//
+//class PASortedDictionary {
+//    lazy var values = [ String : Any ]()
+//    var sortKey : String!
+//    var sortType : PASortType = .ascending
+//    
+//    lazy var sortedIDs = [ String ]()
+//    
+//    var count : Int {
+//        get {
+//            return sortedIDs.count
+//        }
+//    }
+//    
+//    init(sort_key : String, sort_type : PASortType) {
+//        
+//        self.sortKey = sort_key
+//        self.sortType = sort_type
+//    }
+//    
+//    func addValueForKey( val : Any, key : String ) {
+//        
+//        values[key] = val
+//        sortedIDs.append(key)
+//    }
+//    
+//    func sortKeys() {
+//        
+//        
+//    }
+//    
+//}
+struct PAPhotoUploadInformation {
+    var status : PAUploadStatus!
+    var repositoryID : String!
+    var photographID : String!
+    var progress : Float = 0.0
+    var uploadBeganTime : Date!
+    var lastUpdateDate : Date!
+}
+
+class PAUploadsManager : NSObject {
+    
+    lazy var currentPhotoUploads = [String : PAPhotoUploadInformation]()
+    lazy var sortedPhotoIDs = [ String ]()
+    
+    
+    var currentUploads : Int {
+        get {
+            return self.currentPhotoUploads.count
+        }
+    }
+    
+    override init() {
+        super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PAUploadsManager.didReceivePhotoUploadNotification(sender:)), name: Notification.Name(rawValue : Constants.Notifications.Upload.photoUploadProgressUpdate), object: nil)
+    }
+    
+    @objc func didReceivePhotoUploadNotification( sender : Notification ) {
+        
+        guard let user_info = sender.userInfo else {
+            print( "No user info" )
+            return
+        }
+        
+        guard   let status      = user_info[Keys.NotificationUserInfo.PhotoUpload.status]   as? PAUploadStatus,
+                let progress    = user_info[Keys.NotificationUserInfo.PhotoUpload.progress] as? Float,
+                let photo_id    = user_info[Keys.NotificationUserInfo.PhotoUpload.photoID]  as? String,
+                let repo_id     = user_info[Keys.NotificationUserInfo.PhotoUpload.repoID]   as? String else
+        {
+            print( "Not all the properties were set on that notification" )
+            return
+        }
+        
+        if self.currentPhotoUploads[photo_id] != nil {
+            
+            var record : PAPhotoUploadInformation! = self.currentPhotoUploads[photo_id]
+            
+            record.progress         = progress
+            record.status           = status
+            record.lastUpdateDate   = Date()
+        }
+        else {
+            
+            var new_record = PAPhotoUploadInformation()
+            new_record.photographID = photo_id
+            new_record.status = status
+            new_record.repositoryID = repo_id
+            new_record.progress = progress
+            new_record.uploadBeganTime = Date()
+            new_record.lastUpdateDate = Date()
+            
+            self.addPhotoInformation(photoInformation: new_record)
+            
+            NotificationCenter.default.post(Notification.PABuildPhotoUploadWasAddedNotification(uploadInformation: new_record))
+        }
+        
+        if status == .Completed {
+            
+            if let uploadInformation = self.removePhotoInformation(photo_id: photo_id) {
+                NotificationCenter.default.post(Notification.PABuildPhotoUploadDidCompleteNotification(uploadInformation: uploadInformation))
+            }
+        }
+    }
+    
+    func addPhotoInformation( photoInformation : PAPhotoUploadInformation ) {
+        
+        self.currentPhotoUploads[photoInformation.photographID] = photoInformation
+        self.sortedPhotoIDs.append(photoInformation.photographID)
+    }
+    
+    func removePhotoInformation( photo_id : String ) -> PAPhotoUploadInformation? {
+        
+        
+        
+        if let i = self.sortedPhotoIDs.index(of: photo_id ) {
+            self.sortedPhotoIDs.remove(at: i)
+            
+            return self.currentPhotoUploads.removeValue(forKey: photo_id)
+        }
+        
+        return nil
+        
+    }
+    
+    func getInformationForIndexPath( i : Int ) -> PAPhotoUploadInformation? {
+        
+        return self.currentPhotoUploads[self.sortedPhotoIDs[i]]
     }
 }

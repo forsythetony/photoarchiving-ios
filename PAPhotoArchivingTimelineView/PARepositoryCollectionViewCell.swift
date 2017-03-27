@@ -14,8 +14,8 @@ class PARepositoryCollectionViewCell: UICollectionViewCell {
     static let Height : CGFloat = 200.0
     static let Width : CGFloat = 200.0
     
-    let ImageView = UIImageView()
-    let TitleLabel = UILabel()
+    let ImageView   = UIImageView()
+    let TitleLabel  = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +43,7 @@ class PARepositoryCollectionViewCell: UICollectionViewCell {
         TitleLabel.font = Font.PARegularFontWithSize(size: 10.0)
         
         //  Hide the title label for now
-        TitleLabel.alpha = 0.0
+        TitleLabel.alpha = 1.0
         
         
         self.contentView.addSubview(TitleLabel)

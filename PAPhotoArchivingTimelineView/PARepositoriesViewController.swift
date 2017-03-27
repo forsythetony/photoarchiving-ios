@@ -8,6 +8,10 @@
 
 import UIKit
 
+fileprivate struct Action {
+    static let didTapAddButton = #selector(PARepositoriesViewController.didTapAddButton(sender:))
+}
+
 class PARepositoriesViewController: UIViewController {
 
     @IBOutlet weak var RepositoriesCollectionView: UICollectionView!
@@ -78,10 +82,10 @@ class PARepositoriesViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "Repositories"
         
-        self.dataSetup()
-        self.setupCollectionView()
-        self.setupImageView()
-        self.setupInfoButton()
+        _dataSetup()
+        _setupCollectionView()
+        _setupImageView()
+        _setupAddButton()
         
     }
 
@@ -91,7 +95,12 @@ class PARepositoriesViewController: UIViewController {
     }
 
     
-    private func dataSetup() {
+    
+    
+    /*
+        SETUP FUNCTIONS
+    */
+    private func _dataSetup() {
         self.dataMan.delegate = self
         
         if !self.dataMan.isConfigured {
@@ -103,26 +112,14 @@ class PARepositoriesViewController: UIViewController {
         
     }
     
-    private func setupInfoButton() {
+    private func _setupAddButton() {
         
-        let btnImg = UIImage(named: "info_icon")?.withRenderingMode(.alwaysOriginal)
+        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.didTapAddButton)
         
-        
-        
-        let btn = UIBarButtonItem(image: btnImg, style: .plain, target: self, action: #selector(self.didTapAboutInfo(sender:)))
-        
-        self.navigationItem.rightBarButtonItem = btn
+        self.navigationItem.rightBarButtonItem = add_button
     }
     
-    func didTapAboutInfo( sender : UIBarButtonItem ) {
-        
-        let infoController = PAAboutPageViewController()
-        
-        self.present(infoController, animated: true, completion: nil)
-        
-    }
-    
-    private func setupImageView() {
+    private func _setupImageView() {
         
         let blur = UIBlurEffect(style: .light)
         let blurView = UIVisualEffectView(effect: blur)
@@ -146,7 +143,8 @@ class PARepositoriesViewController: UIViewController {
         backgroundImageView.addSubview(blurView)
         
     }
-    private func setupCollectionView() {
+    
+    private func _setupCollectionView() {
         
         self.RepositoriesCollectionView.register(PARepositoryCollectionViewCell.self, forCellWithReuseIdentifier: PARepositoryCollectionViewCell.ReuseID)
         
@@ -157,6 +155,15 @@ class PARepositoriesViewController: UIViewController {
         
     }
     
+    /*
+        BUTTON ACTION HANDLERS
+    */
+    func didTapAddButton( sender : UIBarButtonItem ) {
+        
+        let message = "Looks like you tapped the add button there kiddo!"
+        
+        print(String.init(format: "\n%@\n", message))
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -175,7 +182,7 @@ class PARepositoriesViewController: UIViewController {
             }
             
             
-            let dest = segue.destination as! PARepositoryViewController
+            let dest = segue.destination as! PATimelineViewController
             
             dest.currentRepository = selectedRepository
             
@@ -188,6 +195,7 @@ class PARepositoriesViewController: UIViewController {
     
     
     func updateBlur() {
+        
         self.RepositoriesCollectionView.alpha = 0.0
         self.blurredBackgroundImageView.alpha = 0.0
         self.backgroundImageView.alpha = 1.0

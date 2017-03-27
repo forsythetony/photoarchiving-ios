@@ -25,6 +25,7 @@ struct PAKeys {
         static let DateTakenConf = "DateTakenConf"
     }
 }
+
 public class PAPhotographInfo {
     
     var UUID : String?
@@ -41,12 +42,12 @@ extension PAPhotographInfo {
     static var MockPhoto1 : PAPhotographInfo {
         
         get {
-            let uid = PARandom.string()
-            let title = PARandom.string()
-            let thumbnailurl = "https://s3-us-west-2.amazonaws.com/node-photo-archive/mainPhotos/Fred_and_Freddie.jpg"
-            let mainImageUrl = PARandom.string()
-            let dateTaken = PADateManager.sharedInstance.randomDateBetweenYears(startYear: 1905, endYear: 1930)
-            let dateTakenConf = Float(0.6)
+            let uid             = PARandom.string()
+            let title           = PARandom.string()
+            let thumbnailurl    = "https://s3-us-west-2.amazonaws.com/node-photo-archive/mainPhotos/Fred_and_Freddie.jpg"
+            let mainImageUrl    = PARandom.string()
+            let dateTaken       = PADateManager.sharedInstance.randomDateBetweenYears(startYear: 1905, endYear: 1930)
+            let dateTakenConf   = Float(0.6)
             
             let newPhoto = PAPhotographInfo()
             
@@ -139,20 +140,20 @@ extension PARepositoryInfo {
     
     static var MockRepo1 : PARepositoryInfo {
         get {
-            let uid = PARandom.string()
-            let title = "Mock 1 Repo"
+            let uid         = PARandom.string()
+            let title       = "Mock 1 Repo"
             let description = "The is just a mock repo"
             
-            let startDate = PADateManager.sharedInstance.getDateFromYearInt(year: 1903)
-            let endDate = PADateManager.sharedInstance.getDateFromYearInt(year: 1933)
+            let startDate   = PADateManager.sharedInstance.getDateFromYearInt(year: 1903)
+            let endDate     = PADateManager.sharedInstance.getDateFromYearInt(year: 1933)
             
             let newRepo = PARepositoryInfo()
             
-            newRepo.UUID = uid
-            newRepo.Title = title
-            newRepo.Description = description
-            newRepo.StartDate = startDate
-            newRepo.EndDate = endDate
+            newRepo.UUID            = uid
+            newRepo.Title           = title
+            newRepo.Description     = description
+            newRepo.StartDate       = startDate
+            newRepo.EndDate         = endDate
             
             return newRepo
         }
