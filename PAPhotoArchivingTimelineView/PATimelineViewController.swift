@@ -37,8 +37,7 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         
         _setup()
     }
-    
-    
+
     func showAlertViewWithDevice( device : GCKDevice ) {
         
         let a = UIAlertController(title: "Device Found", message: "Would you like to connect", preferredStyle: .alert)
@@ -151,8 +150,14 @@ extension PATimelineViewController : PATimelineViewDelegate {
     func PATimelineViewPhotographWasTapped(info: PAPhotograph) {
         
         TFLogger.log(logString: "Tapping image with information", arguments: info.getPhotoInfoData().description)
-        //self.chromecaster.sendPhoto(photo: info)
-        self.performSegue(withIdentifier: Constants.SegueIDs.ToPhotoInformation, sender: info)
+        
+        let photo_info_vc = UIStoryboard.PAMainStoryboard.instantiateViewController(withIdentifier: PAPhotoInformationViewControllerv2.STORYBOARD_ID) as! PAPhotoInformationViewControllerv2
+        
+        photo_info_vc.currentRepository = self.currentRepository
+        photo_info_vc.currentPhotograph = info
+        
+        self.present(photo_info_vc, animated: true, completion: nil)
+        
     }
     
     /*

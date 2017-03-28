@@ -60,7 +60,23 @@ class PARepository {
         
         repo_ref.observe(.childAdded, with: { snapshot in
          
+
             photos_ref.child(snapshot.key).observe(.value, with: { snapper in
+                
+                let new_photo_key = snapshot.key
+                
+                var exists = false
+                
+                for val in self.photographs {
+                    
+                    if val.uid == new_photo_key {
+                        exists = true
+                        break
+                    }
+                }
+                if exists {
+                    return
+                }
                 
                 let new_photo = PAPhotograph.photographWithSnapshot(snap: snapper) ?? PAPhotograph.Mock1()
                 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 fileprivate struct Action {
     static let didTapAddButton = #selector(PARepositoriesViewController.didTapAddButton(sender:))
@@ -163,6 +164,12 @@ class PARepositoriesViewController: UIViewController {
         let message = "Looks like you tapped the add button there kiddo!"
         
         print(String.init(format: "\n%@\n", message))
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        let add_repository_vc = storyboard.instantiateViewController(withIdentifier: PAAddRepositoryViewController.STORYBOARD_ID) as! PAAddRepositoryViewController
+        
+        self.present(add_repository_vc, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -277,7 +284,15 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
             
             let imgPath = cellInfo.thumbnailURL
             
-            cell.ImageView.downloadedFrom(link: imgPath)
+            if imgPath == "" {
+                cell.TitleLabel.textColor = Color.white
+            }
+            else {
+                
+                cell.ImageView.kf.setImage(with: URL(string: imgPath )! )
+                cell.TitleLabel.textColor = Color.black
+            }
+            
             
             let repoTitle = cellInfo.title
             

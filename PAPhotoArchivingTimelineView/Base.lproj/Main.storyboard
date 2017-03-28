@@ -748,6 +748,42 @@
             </objects>
             <point key="canvasLocation" x="4039" y="4254"/>
         </scene>
+        <!--Add Repository View Controller-->
+        <scene sceneID="4pl-k0-ZKf">
+            <objects>
+                <viewController storyboardIdentifier="PAAddRepositoryViewControllerStoryboardID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pvg-i0-0xM" customClass="PAAddRepositoryViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eEg-GE-xxF"/>
+                        <viewControllerLayoutGuide type="bottom" id="B3V-J0-WAf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XY4-Ux-jKr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BH8-0V-e8I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4927" y="4254"/>
+        </scene>
+        <!--Photo Information View Controllerv2-->
+        <scene sceneID="b1Z-30-5jz">
+            <objects>
+                <viewController storyboardIdentifier="PAPhotoInformationViewControllerv2StoryboardID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HRb-WR-tLX" customClass="PAPhotoInformationViewControllerv2" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cpL-TP-XWo"/>
+                        <viewControllerLayoutGuide type="bottom" id="gUE-AP-4LL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wZQ-qh-P6x">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ECM-UI-9dA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5846" y="4254"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="HtE-26-8ah">
             <objects>

@@ -215,6 +215,20 @@ struct Constants {
             static let photoUploadDidRemoveUpload = "photouploadDidRemoveUpload"
         }
     }
+    
+    struct Spring {
+        
+        struct Animations {
+            static let zoomIn = "zoomIn"
+            static let fadeInDown = "fadeInDown"
+            static let fadeIn = "fadeIn"
+            static let fadeOut = "fadeOut"
+        }
+        
+        struct Properties {
+            static let duration = "duration"
+        }
+    }
 }
 
 typealias Font = UIFont

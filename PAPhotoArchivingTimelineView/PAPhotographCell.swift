@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Kingfisher
+import Spring
 
 protocol PAPhotographCellDelegate {
     func PAPhotographCellWasTapped( sender : PAPhotographCell )
@@ -18,7 +20,7 @@ class PAPhotographCell: UIView {
     var delegate : PAPhotographCellDelegate?
     
     
-    let photoImageView = UIImageView()
+    let photoImageView = SpringImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,9 +72,24 @@ class PAPhotographCell: UIView {
     private func updateInformation() {
         
         if let info = self.photographInfo {
-            let link = info.mainImageURL
             
-            self.photoImageView.downloadedFrom(url: URL(string: link)!)
+            if let img_url = URL(string: info.mainImageURL) {
+                
+                self.photoImageView.kf.setImage(    with: img_url,
+                                                    placeholder: nil,
+                                                    options: nil,
+                                                    progressBlock: nil,
+                                                    completionHandler: { image, error, cacheType, imageURL in
+                    
+                                                        self.photoImageView.animation = Constants.Spring.Animations.zoomIn
+                                                        self.photoImageView.duration = 0.6
+                                                        self.photoImageView.animate()
+                                                        
+                })
+            }
+            else {
+                self.photoImageView.image = #imageLiteral(resourceName: "timeline_thumbnail_placeholder")
+            }
             
         }
         

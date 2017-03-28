@@ -49,7 +49,9 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - ImageRow (1.0.0):
     - Eureka (~> 2.0.0-beta.1)
+  - Kingfisher (3.6.0)
   - SnapKit (3.2.0)
+  - Spring (1.0.3)
   - SwiftyJSON (3.1.3)
 
 DEPENDENCIES:
@@ -59,8 +61,20 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - ImageRow (~> 1.0)
+  - Kingfisher (~> 3.0)
   - SnapKit (~> 3.2.0)
+  - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift3`)
   - SwiftyJSON
+
+EXTERNAL SOURCES:
+  Spring:
+    :branch: swift3
+    :git: https://github.com/MengTo/Spring.git
+
+CHECKOUT OPTIONS:
+  Spring:
+    :commit: 3a9227c6e9157e7b47f5ac1ee5abab2a56b50002
+    :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
   Eureka: ae837bb1dfae0c07bc1bda7aeef87876eeb537c2
@@ -76,9 +90,11 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   ImageRow: 1e37db26f61a0c4ad3bc9a3a803c32d968782857
+  Kingfisher: 300035f9a40634dc9b452d946c9f22250688fecd
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: e569241b8133a5e9f8d34e1249a09b4e0c77cfdb
+PODFILE CHECKSUM: 9e67045e4829eef348b0c7db0dbc401daca59ff4
 
 COCOAPODS: 1.1.1

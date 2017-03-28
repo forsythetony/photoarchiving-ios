@@ -16,6 +16,8 @@ target 'PAPhotoArchivingTimelineView' do
 	pod 'Eureka', '~> 2.0'
 	pod 'ImageRow', '~> 1.0'
 	pod 'SnapKit', '~> 3.2.0'
+	pod 'Kingfisher', '~> 3.0'
+	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 	
 	# pod 'SwiftyTools', :git => 'https://github.com/forsythetony/SwiftyTools'
 end

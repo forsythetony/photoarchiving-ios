@@ -266,6 +266,9 @@ extension PADataManager {
         let photographs_db_ref  = database_ref!.child("/photographs")
         let repository_db_ref   = database_ref!.child(String.init(format: "/repositories/%@", repository.uid))
         
+        let current_user_id = FIRAuth.auth()?.currentUser?.uid
+        
+        newPhoto.uploaderID = current_user_id
         
         let new_photograph_key = photographs_db_ref.childByAutoId().key
         
@@ -321,7 +324,36 @@ extension PADataManager {
         
     }
     
-    
+    func uploadNewRepository( repository : PARepository ) {
+        
+        if !isConfigured { return }
+        
+        let db_ref = database_ref!.child("/repositories")
+        
+        let new_key = db_ref.childByAutoId().ref.key
+        
+        repository.uid = new_key
+        repository.dateCreated = Date()
+        repository.creatorID = FIRAuth.auth()?.currentUser?.uid ?? ""
+        
+        let repository_json_information = repository.GetJSONCompatibleArray()
+        
+        db_ref.child(new_key).setValue(repository_json_information) { (error, database_reference) in
+            
+            if error != nil {
+                
+                let err_message = "\nThere was an error set the repository value\n"
+                print( err_message )
+                return
+            }
+            
+            let success_message = String.init(format: "\nSuccessfully uploaded repository with ID -> %@\n", new_key )
+            
+            print( success_message )
+        }
+        
+        
+    }
     
     
     

@@ -110,6 +110,17 @@ extension Date {
         
         return Date().addingTimeInterval(-secondsToSubtract)
     }
+    
+    func isGreaterThanDate( date : Date ) -> Bool {
+        
+        var isGreater = false
+        
+        if self.compare(date) == ComparisonResult.orderedDescending {
+            isGreater = true
+        }
+        
+        return !isGreater
+    }
 }
 extension Float {
     var PAStringValue : String {
@@ -542,4 +553,12 @@ class TFTextViewTextGenerator {
     
     
     
+}
+extension UIStoryboard {
+    
+    static var PAMainStoryboard : UIStoryboard {
+        get {
+            return UIStoryboard(name: "Main", bundle: Bundle.main)
+        }
+    }
 }
