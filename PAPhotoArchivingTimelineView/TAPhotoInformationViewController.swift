@@ -175,7 +175,6 @@ extension TAPhotoInformationViewController : UITableViewDelegate, UITableViewDat
             self.photoImageView.contentMode = .scaleAspectFit
             ve.addSubview(self.photoImageView)
             
-            //  Add the tap gesture recognizer
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.DidTapMainImageView(sender:)))
             tap.numberOfTapsRequired = 2
             

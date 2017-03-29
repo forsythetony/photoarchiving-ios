@@ -11,6 +11,7 @@
 		2506A2281DD2BE940033EEDD /* PAPhotographCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */; };
 		250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B3A2B1DE8EF91002CE391 /* Helpers.swift */; };
 		250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */; };
+		25316B461E8B260100C2B7F8 /* PANotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B451E8B260100C2B7F8 /* PANotifications.swift */; };
 		2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */; };
 		2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */; };
 		2558AE8C1E88C95E004D7BCB /* PAAddPhotographViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2558AE8B1E88C95E004D7BCB /* PAAddPhotographViewController.swift */; };
@@ -89,6 +90,7 @@
 		2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotographCell.swift; sourceTree = "<group>"; };
 		250B3A2B1DE8EF91002CE391 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PAApplicationImages.xcassets; sourceTree = "<group>"; };
+		25316B451E8B260100C2B7F8 /* PANotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANotifications.swift; sourceTree = "<group>"; };
 		2539ED5B1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PAPhotoArchivingModel.xcdatamodel; sourceTree = "<group>"; };
 		2539ED5D1DFBFA23008B7D38 /* PAPhotoUploadForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoUploadForm.swift; sourceTree = "<group>"; };
 		2558AE8B1E88C95E004D7BCB /* PAAddPhotographViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAddPhotographViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */,
 				2568E9DE1DD27D5100FE911E /* Constants.swift */,
 				250B3A2B1DE8EF91002CE391 /* Helpers.swift */,
+				25316B451E8B260100C2B7F8 /* PANotifications.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */,
 				25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */,
 				255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */,
+				25316B461E8B260100C2B7F8 /* PANotifications.swift in Sources */,
 				25E920261E7F43C6000D1BE2 /* PATimelineViewController.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,

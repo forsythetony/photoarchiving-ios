@@ -16,43 +16,6 @@ enum PAUploadStatus {
 }
 
 
-extension Notification {
-    
-    static func PABuildPhotoUploadNotification( status : PAUploadStatus, progress : Float, repo_id : String, photo_id : String) -> Notification {
-        
-        
-        let user_info : [ String : Any ] = [
-            Keys.NotificationUserInfo.PhotoUpload.photoID : photo_id,
-            Keys.NotificationUserInfo.PhotoUpload.repoID : repo_id,
-            Keys.NotificationUserInfo.PhotoUpload.status : status,
-            Keys.NotificationUserInfo.PhotoUpload.progress : progress
-        ]
-        
-        let notification = Notification(    name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadProgressUpdate),
-                                            object: nil,
-                                            userInfo: user_info)
-        
-        return notification
-    }
-    
-    static func PABuildPhotoUploadDidCompleteNotification( uploadInformation : PAPhotoUploadInformation ) -> Notification {
-        
-        let user_info : [ String : Any ] = [ Keys.NotificationUserInfo.PhotoUpload.photoUploadInformation : uploadInformation ]
-        
-        let notification = Notification(name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadDidRemoveUpload), object: nil, userInfo: user_info)
-        
-        return notification
-    }
-    
-    static func PABuildPhotoUploadWasAddedNotification( uploadInformation : PAPhotoUploadInformation ) -> Notification
-    {
-        let user_info : [ String : Any ] = [ Keys.NotificationUserInfo.PhotoUpload.photoUploadInformation : uploadInformation ]
-        
-        let notification = Notification(name: Notification.Name(rawValue: Constants.Notifications.Upload.photoUploadHasNewUpload), object: nil, userInfo: user_info)
-        
-        return notification
-    }
-}
 fileprivate enum PAImageURLToDataError : Error {
     case invalidURL
     case dataCreationError( creationError : Error )
@@ -81,6 +44,16 @@ protocol PADataManagerDelegate {
     func PADataMangerDidConfigure()
     func PADataManagerDidSignInUserWithStatus(_ signInStatus : PAUserSignInStatus)
 }
+
+
+
+
+
+
+
+
+
+
 
 class PADataManager {
     
@@ -117,11 +90,18 @@ class PADataManager {
     func configure() {
         
         guard !self.isConfigured else {
+            
             TFLogger.log(logString: "The data manger is already configured...")
             return
         }
         
-        self.configTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(PADataManager.configureFireFunction), userInfo: nil, repeats: true)
+        self.configTimer = Timer.scheduledTimer(
+            timeInterval: 0.1,
+            target: self,
+            selector: #selector(PADataManager.configureFireFunction),
+            userInfo: nil,
+            repeats: true)
+    
     }
     
     @objc func configureFireFunction() {
@@ -488,45 +468,7 @@ extension PADataManager {
         
     }
 }
-//
-//enum PASortType {
-//    case ascending, descending
-//}
-//protocol PASortable {
-//    var uintValue : UInt { get }
-//}
-//
-//class PASortedDictionary {
-//    lazy var values = [ String : Any ]()
-//    var sortKey : String!
-//    var sortType : PASortType = .ascending
-//    
-//    lazy var sortedIDs = [ String ]()
-//    
-//    var count : Int {
-//        get {
-//            return sortedIDs.count
-//        }
-//    }
-//    
-//    init(sort_key : String, sort_type : PASortType) {
-//        
-//        self.sortKey = sort_key
-//        self.sortType = sort_type
-//    }
-//    
-//    func addValueForKey( val : Any, key : String ) {
-//        
-//        values[key] = val
-//        sortedIDs.append(key)
-//    }
-//    
-//    func sortKeys() {
-//        
-//        
-//    }
-//    
-//}
+
 struct PAPhotoUploadInformation {
     var status : PAUploadStatus!
     var repositoryID : String!

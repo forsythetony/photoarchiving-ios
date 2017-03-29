@@ -72,8 +72,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
             header.height = {PAPhotoInformationHeaderView.VIEW_HEIGHT}
             
             header.onSetupView = { view , _ in
-             
-                view.backgroundColor = Color.red
+                
                 view.delegate = self
                 
                 if let photo = self.currentPhotograph {
@@ -85,11 +84,6 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                                                         options: nil,
                                                         progressBlock: nil,
                                                         completionHandler: { image, error, cacheType, imageURL in
-                                                            
-//                                                            view.mainImageView.animation = Constants.Spring.Animations.fadeInDown
-//                                                            view.mainImageView.duration = 0.6
-//                                                            view.mainImageView.delay = 2.0
-//                                                            view.mainImageView.animate()
                                                             
                     })
                     self.didSetImage = true
