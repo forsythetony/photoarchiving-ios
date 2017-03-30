@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .highlighted)
         
+        let textAttributes = [ NSForegroundColorAttributeName : Color.white ]
+        
+        UINavigationBar.appearance().titleTextAttributes = textAttributes
         
         
         setupFirebase()

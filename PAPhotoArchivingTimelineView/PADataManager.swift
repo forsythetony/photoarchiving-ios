@@ -45,6 +45,7 @@ protocol PADataManagerDelegate {
     func PADataManagerDidSignInUserWithStatus(_ signInStatus : PAUserSignInStatus)
     func PADataManagerDidFinishUploadingStory( storyID : String )
     func PADataManagerDidUpdateProgress( progress : Double )
+    func PADataManagerDidDeleteStoryFromPhotograph( story : PAStory, photograph : PAPhotograph )
 }
 
 
@@ -578,6 +579,36 @@ extension PADataManager {
                 self.delegate?.PADataManagerDidUpdateProgress(progress: progress)
             }
         }
+        
+    }
+    
+    func deleteStoryForPhotograph( story : PAStory, photograph : PAPhotograph ) {
+        
+        guard isConfigured else { return }
+        
+        guard let uploader_id = story.uploaderID else { return }
+        guard let current_user_id = FIRAuth.auth()?.currentUser?.uid else { return }
+        
+        guard uploader_id == current_user_id else { return }
+        
+        
+        let bucket_path = String.init(format: "recordings/%@.mp4", story.uid)
+        
+        let storage_ref = self.storage_ref!.child(bucket_path)
+        let story_db_ref = self.database_ref!.child("stories").child(story.uid)
+        let photograph_story_ref = self.database_ref!.child("photographs").child(photograph.uid).child("stories").child(story.uid)
+        
+        storage_ref.delete { (error) in
+            if let error = error {
+                print("Error deleting file")
+                return
+            }
+        }
+        
+        story_db_ref.removeValue()
+        photograph_story_ref.removeValue()
+        
+        self.delegate?.PADataManagerDidDeleteStoryFromPhotograph(story: story, photograph: photograph)
         
     }
 }

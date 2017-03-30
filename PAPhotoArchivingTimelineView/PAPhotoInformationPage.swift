@@ -111,18 +111,10 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                 $0.textAreaHeight = .dynamic(initialTextViewHeight: 10.0)
                 
             }
-                .cellUpdate { [ weak self ] (cell, row) in
-                    
-                    if let editing = self?.isEditingForm {
-                        
-                        if editing {
-                            row.placeholder = "Enter a description"
-                        }
-                        else {
-                        }
-                    }
-                    
-        }
+            .cellUpdate { [ weak self ] (cell, row) in
+                
+  
+            }
         
         form +++ Section( "Date Taken" )
             <<< DateInlineRow() {
@@ -153,7 +145,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
             }
             .cellUpdate { cell, row in
                 
-                cell.textLabel?.textColor = Color.green
+                cell.textLabel?.textColor = Color.PASuccessColor
             }
         
             <<< ButtonRow() {

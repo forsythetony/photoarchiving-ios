@@ -55,13 +55,11 @@ class PAAddPhotoViewController : FormViewController {
         SETUP FUNCTIONS
     */
     private func _setup() {
-        _setupView()
+        
         _setupInitialValues()
         _setupForm()
     }
-    private func _setupView() {
-        
-    }
+    
     private func _setupForm() {
         
         /*
@@ -166,13 +164,20 @@ class PAAddPhotoViewController : FormViewController {
                 print("\nYou selected the submit button!\n")
                 
             }
+            .cellUpdate { cell, row in
+                cell.textLabel?.textColor = Color.PASuccessColor
+            }
             <<< ButtonRow() {
              
                 $0.title = "Cancel"
             }
             .onCellSelection { [ weak self ] ( cell, row ) in
                 
-                print("\nYou selected the cancel button!\n")
+                self?.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+                .cellUpdate { cell, row in
+                    
+                    cell.textLabel?.textColor = Color.PADangerColor
             }
         
     }

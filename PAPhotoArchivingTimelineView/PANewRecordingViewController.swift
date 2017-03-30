@@ -18,6 +18,8 @@ fileprivate struct ButtonKeys {
     static let beginRecording = "beginRecordingButton"
     static let exit = "exitButton"
     static let submit = "submitButton"
+    static let trash = "trash"
+    static let recordingInfo = "recordingInfo"
     
 }
 fileprivate struct TextboxKeys {
@@ -44,12 +46,19 @@ class PANewRecordingViewController : FormViewController {
     fileprivate var uploadState = FileUploadStatus.notStarted
     fileprivate var uploadProgress = 0.0
     
+    var hasRecording = false
+    
     var isRecording = false {
         didSet {
             self.updateRecordingButtons()
         }
     }
     
+    override var prefersStatusBarHidden: Bool {
+        get {
+            return true
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,7 +116,7 @@ class PANewRecordingViewController : FormViewController {
             <<< TextRow() {
                 $0.title = "Title"
                 $0.placeholder = "Give the story a title..."
-                $0.value = "Some Title"
+                $0.value = ""
                 $0.tag = Keys.Story.title
             }
         
@@ -121,6 +130,13 @@ class PANewRecordingViewController : FormViewController {
                 $0.hidden = true
                 $0.disabled = true
             }
+            <<< TextRow() {
+                $0.title = "Recording URL"
+                $0.value = ""
+                $0.hidden = true
+                $0.disabled = true
+                $0.tag = ButtonKeys.recordingInfo
+            }
             <<< ButtonRow() {
                 $0.title = "Begin Recording"
                 $0.disabled = true
@@ -133,6 +149,9 @@ class PANewRecordingViewController : FormViewController {
                     if curr_story.uid != "" {
                         self?.audioMan.beginRecordingNewStory(story: curr_story)
                         self?.isRecording = true
+                        self?.hasRecording = true
+                        
+                        self?.updateTrashRecordingButton()
                         
                         let debug_message = "Did begin recording"
                         print( debug_message )
@@ -149,7 +168,7 @@ class PANewRecordingViewController : FormViewController {
             }
             
             <<< ButtonRow() {
-                $0.title = "Stop Recording"
+                $0.title = "Save Recording"
                 $0.disabled = true
                 $0.hidden = true
                 $0.tag = ButtonKeys.stopRecording
@@ -157,6 +176,17 @@ class PANewRecordingViewController : FormViewController {
             .onCellSelection { [ weak self ] ( cell,row ) in
                 
                 self?.audioMan.stopRecording()
+            }
+            <<< ButtonRow() {
+                $0.title = "Trash Recording"
+                $0.disabled = true
+                $0.hidden = true
+                $0.tag = ButtonKeys.trash
+            }
+            .onCellSelection { [ weak self ] ( cell,row ) in
+            
+                self?.trashRecording()
+            
             }
             <<< ButtonRow() {
                 $0.title    = "Create New Recording"
@@ -179,7 +209,8 @@ class PANewRecordingViewController : FormViewController {
                 $0.tag = ButtonKeys.submit
             }
             .onCellSelection { [ weak self ] ( cell,row ) in
-                
+                self?.newStory.recordingLength = self?.currentRecordingTime ?? 0.0
+                self?.setValuesForStory()
                 if let photo = self?.photoInformation, let story = self?.newStory {
                     self?.dataMan.addNewStory(new_story: story, photograph: photo)
                 }
@@ -205,7 +236,55 @@ class PANewRecordingViewController : FormViewController {
         self.updateUploadProgress()
     }
     
-    
+    private func trashRecording() {
+        self.audioMan.stopRecording()
+        self.newStory.recordingLength = 0.0
+        self.newStory.tempRecordingURL = nil
+        self.hasRecording = false
+        self.isRecording = false
+        
+        self.updateTrashRecordingButton()
+        self.updateRecordingInfoButton()
+    }
+    fileprivate func updateRecordingInfoButton() {
+        let recordingInfoCell = form.rowBy(tag: ButtonKeys.recordingInfo)
+        
+        if hasRecording && !isRecording {
+            if let temp_url = self.newStory.tempRecordingURL {
+                recordingInfoCell?.baseValue = temp_url.absoluteString
+                recordingInfoCell?.hidden = false
+                
+            }
+        }
+        else {
+            recordingInfoCell?.hidden = true
+        }
+        
+        recordingInfoCell?.evaluateHidden()
+    }
+    private func updateTrashRecordingButton() {
+        let trashRecordingButton = form.rowBy(tag: ButtonKeys.trash)
+        
+        if hasRecording {
+            trashRecordingButton?.hidden = false
+            trashRecordingButton?.evaluateHidden()
+            trashRecordingButton?.disabled = false
+            trashRecordingButton?.evaluateDisabled()
+        }
+        else {
+            trashRecordingButton?.hidden = true
+            trashRecordingButton?.evaluateHidden()
+            trashRecordingButton?.disabled = true
+            trashRecordingButton?.evaluateDisabled()
+        }
+    }
+    private func setValuesForStory() {
+        
+        let form_values = form.values()
+        
+        newStory.title = form_values[Keys.Story.title] as? String ?? ""
+        
+    }
     
     /*
         UPDATE HANDLERS
@@ -216,6 +295,8 @@ class PANewRecordingViewController : FormViewController {
         let stopRecordingButton = form.rowBy(tag: ButtonKeys.stopRecording)
         let createNewRecordingButton = form.rowBy(tag: ButtonKeys.createNewRecording)
         let currentTimeButton = form.rowBy(tag: TextboxKeys.currentRecordingTime)
+        let trashRecordingButton = form.rowBy(tag: ButtonKeys.trash)
+        let submitButton = form.rowBy(tag: ButtonKeys.submit)
         
         //  If you are currently recording then make sure to hide
         //  the begin recording and create new recording buttons
@@ -239,6 +320,24 @@ class PANewRecordingViewController : FormViewController {
             currentTimeButton?.hidden = false
             currentTimeButton?.evaluateHidden()
             
+//            if hasRecording {
+//                trashRecordingButton?.hidden = false
+//                trashRecordingButton?.evaluateHidden()
+//                trashRecordingButton?.disabled = false
+//                trashRecordingButton?.evaluateDisabled()
+//            }
+//            else {
+//                trashRecordingButton?.hidden = true
+//                trashRecordingButton?.evaluateHidden()
+//                trashRecordingButton?.disabled = true
+//                trashRecordingButton?.evaluateDisabled()
+//            }
+//            
+            
+            submitButton?.disabled = true
+            submitButton?.evaluateDisabled()
+            
+            
         }
         else {
             beginRecordingButton?.hidden = false
@@ -258,6 +357,22 @@ class PANewRecordingViewController : FormViewController {
             
             currentTimeButton?.hidden = true
             currentTimeButton?.evaluateHidden()
+//            
+//            if self.hasRecording {
+//                trashRecordingButton?.hidden = false
+//                trashRecordingButton?.evaluateHidden()
+//                trashRecordingButton?.disabled = false
+//                trashRecordingButton?.evaluateDisabled()
+//            }
+//            else {
+//                trashRecordingButton?.hidden = true
+//                trashRecordingButton?.evaluateHidden()
+//                trashRecordingButton?.disabled = true
+//                trashRecordingButton?.evaluateDisabled()
+//            }
+            
+            submitButton?.disabled = false
+            submitButton?.evaluateDisabled()
         }
     }
     
@@ -306,6 +421,10 @@ class PANewRecordingViewController : FormViewController {
 }
 
 extension PANewRecordingViewController : PADataManagerDelegate {
+    func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+    
     func PADataMangerDidConfigure() {
         
     }
@@ -316,6 +435,8 @@ extension PANewRecordingViewController : PADataManagerDelegate {
         
     }
     func PADataManagerDidFinishUploadingStory(storyID: String) {
+        SCLAlertView().showSuccess("Success!", subTitle: String.init(format: "Successfully uploaded the story titled '%@'", storyID))
+        
         self.uploadState = .completed
     }
     func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
@@ -341,11 +462,12 @@ extension PANewRecordingViewController : PAAudioManagerDelegate {
         
     }
     func PAAudioManagerDidFinishRecording(total_time: TimeInterval, story: PAStory) {
-        
-        SCLAlertView().showSuccess("Success!", subTitle: String.init(format: "Successfully uploaded the story titled '%@'", story.title))
-        
+
         self.newStory = story
+        self.hasRecording = true
         self.isRecording = false
+        
+        self.updateRecordingInfoButton()
     }
     func PAAudioManagerDidUpdateStoryPlayTime(running_time: TimeInterval, total_time: TimeInterval, story: PAStory) {
         

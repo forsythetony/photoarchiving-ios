@@ -37,6 +37,8 @@
 		2583CA581DD3B748004711DC /* PARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA571DD3B748004711DC /* PARepository.swift */; };
 		2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA591DD3B7F1004711DC /* PAStory.swift */; };
 		2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */; };
+		25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */; };
+		25918EDD1E8D19F600CB697A /* PAAudioControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */; };
 		25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */; };
 		25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */; };
 		25C2D1CE1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */; };
@@ -72,6 +74,8 @@
 		25EC9C811DFB8A0500C30604 /* PARepositoriesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C801DFB8A0500C30604 /* PARepositoriesContainer.swift */; };
 		25EC9C841DFBADFB00C30604 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */; };
 		25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EC9C851DFBE01A00C30604 /* PAAboutPageViewController.swift */; };
+		25F9B72A1E8D2EC50028B91B /* PAStoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9B7281E8D2EC50028B91B /* PAStoryTableViewCell.swift */; };
+		25F9B72B1E8D2EC50028B91B /* PAStoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F9B7291E8D2EC50028B91B /* PAStoryTableViewCell.xib */; };
 		33B4360600DA7A14E6FA6545 /* Pods_PAPhotoArchivingTimelineViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B184F863C949FF0663A20DCE /* Pods_PAPhotoArchivingTimelineViewUITests.framework */; };
 		8F3AC47D254722331AE32DC5 /* Pods_PAPhotoArchivingTimelineView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45CFA5D02464BCB7876B0498 /* Pods_PAPhotoArchivingTimelineView.framework */; };
 /* End PBXBuildFile section */
@@ -119,6 +123,8 @@
 		2583CA571DD3B748004711DC /* PARepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepository.swift; sourceTree = "<group>"; };
 		2583CA591DD3B7F1004711DC /* PAStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStory.swift; sourceTree = "<group>"; };
 		2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoRegularTableViewCell.swift; sourceTree = "<group>"; };
+		25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryTypeBar.swift; sourceTree = "<group>"; };
+		25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAudioControlBar.swift; sourceTree = "<group>"; };
 		25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAHomeViewController.swift; sourceTree = "<group>"; };
 		25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationPage.swift; sourceTree = "<group>"; };
 		25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationHeaderView.swift; sourceTree = "<group>"; };
@@ -160,6 +166,8 @@
 		25EC9C821DFBADFB00C30604 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		25EC9C831DFBADFB00C30604 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		25EC9C851DFBE01A00C30604 /* PAAboutPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAboutPageViewController.swift; sourceTree = "<group>"; };
+		25F9B7281E8D2EC50028B91B /* PAStoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStoryTableViewCell.swift; sourceTree = "<group>"; };
+		25F9B7291E8D2EC50028B91B /* PAStoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PAStoryTableViewCell.xib; sourceTree = "<group>"; };
 		38FA2E907F510E51B8FC8E0F /* Pods-PAPhotoArchivingTimelineView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineView/Pods-PAPhotoArchivingTimelineView.debug.xcconfig"; sourceTree = "<group>"; };
 		45CFA5D02464BCB7876B0498 /* Pods_PAPhotoArchivingTimelineView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PAPhotoArchivingTimelineView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76714CFBC854414433CB05D6 /* Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAPhotoArchivingTimelineViewUITests/Pods-PAPhotoArchivingTimelineViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -284,6 +292,10 @@
 				25C2D1CF1E8AF45200AB7CB9 /* Photo Information View */,
 				25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */,
 				25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */,
+				25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */,
+				25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */,
+				25F9B7281E8D2EC50028B91B /* PAStoryTableViewCell.swift */,
+				25F9B7291E8D2EC50028B91B /* PAStoryTableViewCell.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -557,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25D03BB01DC19DAE00045988 /* LaunchScreen.storyboard in Resources */,
+				25F9B72B1E8D2EC50028B91B /* PAStoryTableViewCell.xib in Resources */,
 				250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */,
 				2568E9DD1DD27CB200FE911E /* GoogleService-Info.plist in Resources */,
 				25D03BAD1DC19DAE00045988 /* Assets.xcassets in Resources */,
@@ -684,6 +697,7 @@
 				25316B4F1E8CB6F500C2B7F8 /* PARepositoryCell.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
+				25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */,
 				256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */,
 				25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */,
 				25D87D061DE9C085000D2160 /* PATextEditView.swift in Sources */,
@@ -705,6 +719,7 @@
 				2568E9DF1DD27D5100FE911E /* Constants.swift in Sources */,
 				25E8AD911DE67C1400ADD015 /* MockDataGenerator.swift in Sources */,
 				2583CA561DD3B6CC004711DC /* PAPhotograph.swift in Sources */,
+				25F9B72A1E8D2EC50028B91B /* PAStoryTableViewCell.swift in Sources */,
 				25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */,
 				250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */,
 				255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */,
@@ -726,6 +741,7 @@
 				2583CA4E1DD387D0004711DC /* TFPhotoInfo.swift in Sources */,
 				256AB0191E89301100FD9779 /* PAAddRepositoryViewController.swift in Sources */,
 				25D87D171DEA1511000D2160 /* PAChromecaster.swift in Sources */,
+				25918EDD1E8D19F600CB697A /* PAAudioControlBar.swift in Sources */,
 				2506A2281DD2BE940033EEDD /* PAPhotographCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

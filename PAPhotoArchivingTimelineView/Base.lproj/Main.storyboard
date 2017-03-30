@@ -81,7 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="158"/>
+            <point key="canvasLocation" x="1071" y="158"/>
         </scene>
         <!--Content Add Selector View Controller-->
         <scene sceneID="S7W-iQ-w5k">
@@ -618,7 +618,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljh-BR-VJg" userLabel="Repositories">
                                 <rect key="frame" x="125" y="364" width="124" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Repositories"/>
+                                <state key="normal" title="Repositories">
+                                    <color key="titleColor" red="0.93333333330000001" green="0.30196078430000001" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="didTapRepositoriesButton:" destination="JZY-qU-w37" eventType="touchUpInside" id="hZd-oL-i8p"/>
                                 </connections>
@@ -936,4 +938,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="5gN-WE-TIe"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -33,12 +33,18 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     
     var can_use : Bool = false
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .lightContent
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         _setup()
     }
 
+    
     func showAlertViewWithDevice( device : GCKDevice ) {
         
         let a = UIAlertController(title: "Device Found", message: "Would you like to connect", preferredStyle: .alert)
@@ -132,6 +138,11 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.addButton)
         
         self.navigationItem.rightBarButtonItem = add_button
+
+        
+//        self.navigationController?.navigationBar.barStyle = .black
+//        self.navigationController?.navigationBar.tintColor = Color.white
+        
     }
     
     private func _setupChromecast() {

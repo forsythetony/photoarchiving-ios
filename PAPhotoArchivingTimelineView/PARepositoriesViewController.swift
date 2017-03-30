@@ -227,6 +227,10 @@ class PARepositoriesViewController: UIViewController {
 }
 
 extension PARepositoriesViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+
     internal func PADataManagerDidUpdateProgress(progress: Double) {
         
     }

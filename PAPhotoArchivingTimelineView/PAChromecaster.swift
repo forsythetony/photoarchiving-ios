@@ -20,7 +20,7 @@ class PAChromecaster: NSObject, GCKDeviceScannerListener,GCKDeviceManagerDelegat
     //  MARK: Object Properties
     static let sharedInstance = PAChromecaster()
     
-    let receiverAppID = "94B7DFA1"
+    let receiverAppID = "8F5EA4C3"
     var deviceScanner : GCKDeviceScanner?
     var connectedDevice : GCKDevice?
     var deviceMan : GCKDeviceManager?

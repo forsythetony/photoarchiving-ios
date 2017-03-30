@@ -327,7 +327,7 @@ extension Color {
     
     static var PASuccessColor : Color {
         get {
-            return Color(red: 76.0.CGFloatRGBValue, green: 217.0.CGFloatRGBValue, blue: 101.0.CGFloatRGBValue, alpha: 1.0)
+            return Color(red: 0.0.CGFloatRGBValue, green: 122.0.CGFloatRGBValue, blue: 255.0.CGFloatRGBValue, alpha: 1.0)
         }
     }
     

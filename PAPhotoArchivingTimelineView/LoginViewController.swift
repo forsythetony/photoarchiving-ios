@@ -142,6 +142,10 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+
     internal func PADataManagerDidUpdateProgress(progress: Double) {
         
     }

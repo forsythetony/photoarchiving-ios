@@ -28,11 +28,13 @@ class PAAudioManager : NSObject {
     
     static let sharedInstance = PAAudioManager()
     
-    private var recorder : AVAudioRecorder?
-    private var session : AVAudioSession?
-    private var player : AVAudioPlayer?
+    fileprivate var recorder : AVAudioRecorder?
+    fileprivate var session : AVAudioSession?
+    fileprivate var player : AVAudioPlayer?
     
     private let fileMan = PAFileManager()
+    
+    let audioControlBar : PAAudioControlBar = PAAudioControlBar.init(frame: CGRect(x: 0.0, y: 0.0, width: 320.0, height: PAAudioControlBar.BAR_HEIGHT))
     
     var curr_story : PAStory?
     var curr_story_url : URL?
@@ -68,6 +70,7 @@ class PAAudioManager : NSObject {
     
     override init() {
         super.init()
+        self.audioControlBar.delegate = self
     }
     
     func playStory( story : PAStory ) {
@@ -186,6 +189,7 @@ class PAAudioManager : NSObject {
         guard let p = self.player else { return }
         
         p.play()
+        self.updateAudioControlBar()
         
         self.player_timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (t) in
             
@@ -193,6 +197,8 @@ class PAAudioManager : NSObject {
             
             if let curr_story = self.curr_story {
                 self.delegate?.PAAudioManagerDidUpdateStoryPlayTime(running_time: self.curr_play_time, total_time: curr_story.recordingLength, story: curr_story)
+                
+                self.updateAudioControlBar()
             }
             
             
@@ -217,6 +223,8 @@ class PAAudioManager : NSObject {
         
         p.pause()
         
+        self.audioControlBar.currentState = .isStopped
+        
         if let player_timer = player_timer {
             player_timer.invalidate()
         }
@@ -226,7 +234,7 @@ class PAAudioManager : NSObject {
     func beginRecording() {
         self.recording_timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { t in
          
-            self.curr_recording_length += 1
+            self.curr_recording_length = self.recorder?.currentTime ?? 0.0
             
             if let curr_story = self.curr_story {
                 self.delegate?.PAAudioManagerDidUpdateRecordingTime(time: self.curr_recording_length, story: curr_story)
@@ -242,6 +250,28 @@ class PAAudioManager : NSObject {
             recording_timer.invalidate()
         }
         recorder = nil
+    }
+    
+    private func updateAudioControlBar() {
+        guard let current_story = self.curr_story else { return }
+        guard let audio_player = self.player else { return }
+        
+        let progress = Float( audio_player.currentTime / current_story.recordingLength)
+        let currTime = Double(audio_player.currentTime).PATimeString
+        let totalTime = current_story.recordingLength.PATimeString
+        
+        if audio_player.isPlaying {
+            audioControlBar.currentState = .isPlaying
+        }
+        else {
+            audioControlBar.currentState = .isStopped
+        }
+        
+        audioControlBar.progress = progress
+        audioControlBar.totalTime = totalTime
+        audioControlBar.currentTime = currTime
+        audioControlBar.titleLabel.text = current_story.title
+        
     }
 }
 
@@ -292,4 +322,30 @@ extension PAAudioManager {
         
         return .Unknown
     }
+}
+
+extension PAAudioManager : PAAudioControlBarDelegate {
+    
+    func PAAudioControlBarDidClickPlay() {
+        if self.player == nil { return }
+        if self.player!.isPlaying { return }
+        
+        self.beginPlaying()
+    }
+    
+    func PAAudioControlBarDidClickStop() {
+        
+        if self.player == nil { return }
+        
+        self.stopPlaying()
+    }
+    
+    func PAAudioControlBarDidClickPause() {
+        if self.player == nil { return }
+        if !self.player!.isPlaying { return }
+        
+        self.pausePlaying()
+    }
+    
+    
 }

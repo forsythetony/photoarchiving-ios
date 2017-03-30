@@ -34,6 +34,7 @@ class PATimelineManager {
     
     var recommendedIncViewWidth : CGFloat = 0.0
     
+    
     init( _startDate : Date, _endDate : Date, _startY : CGFloat, _endY : CGFloat, _contentViewWidth : CGFloat) {
         
         self.startDate  = _startDate
@@ -92,5 +93,9 @@ class PATimelineManager {
         mainPoint.x = CGFloat(xPosDouble)
         
         return mainPoint
+    }
+    
+    func setupPhotographBuckets() {
+        
     }
 }

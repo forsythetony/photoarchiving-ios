@@ -162,6 +162,8 @@ class PARepositoryViewController: UIViewController, PAChromeCasterDelegate {
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.didTapAddPhotograph(sender:)))
         
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        self.navigationController?.navigationBar.tintColor = Color.white
     }
     
     func didTapAddPhotograph( sender : UIBarButtonItem ) {

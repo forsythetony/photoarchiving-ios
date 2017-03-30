@@ -17,14 +17,24 @@ class PAHomeViewController: UIViewController {
     
     let dataMan : PADataManager = PADataManager.sharedInstance
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return .default
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setNeedsStatusBarAppearanceUpdate()
+        self.navigationController?.navigationBar.barStyle = .black
+        
         self.navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
         logoutBarButtonItem.tintColor = UIColor.white
         
         // Do any additional setup after loading the view.
         checkIfUserSignedIn()
+        
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -37,12 +47,6 @@ class PAHomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        get {
-            return .lightContent
-        }
-    }
     /*
          Here we should check if the user is signed in. If so then take no action
          other than loading the appropriate content. If the user not signed in then
@@ -186,6 +190,10 @@ extension PAHomeViewController : PARegisterControllerDelegate {
     }
 }
 extension PAHomeViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+
     internal func PADataManagerDidUpdateProgress(progress: Double) {
         
     }

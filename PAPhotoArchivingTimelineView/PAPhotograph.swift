@@ -61,6 +61,8 @@ class PAPhotograph {
     ///
     func fetchStories() {
         
+        self.stories.removeAll()
+        
         let db_ref = FIRDatabase.database().reference()
         
         let curr_photo_ref = db_ref.child("photographs").child(self.uid)
