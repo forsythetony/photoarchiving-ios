@@ -8,12 +8,17 @@
 
 import UIKit
 import FirebaseAuth
+import SCLAlertView
 
 protocol PALoginViewControllerDelegate {
     func PALoginViewControllerDidSignInSuccessfully()
     func PALoginViewControllerUserDidClickSignUp()
 }
 
+//fileprivate struct TextboxTags {
+//    static let username = 0
+//    static let password = 1
+//}
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var userEmailTextField: UITextField!
@@ -53,6 +58,19 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func didTapLoginButton(_ sender: Any) {
+        self.loginUser()
+    }
+    
+ 
+    @IBAction func didTapRegister(_ sender: Any) {
+        //  If the user wants to register then we need to inform the presenting
+        //  view controller about this so that it can dismiss this view controller
+        //  and present the sign in view controller.
+        self.delegate?.PALoginViewControllerUserDidClickSignUp()
+        
+    }
+    
+    fileprivate func loginUser() {
         guard let userEmail = userEmailTextField.text else {
             print("There was not a valid user email")
             return
@@ -64,15 +82,6 @@ class LoginViewController: UIViewController {
         }
         
         self.dataMan.signInUserWithCredentials(username: userEmail, password: userPassword)
-    }
-    
- 
-    @IBAction func didTapRegister(_ sender: Any) {
-        //  If the user wants to register then we need to inform the presenting
-        //  view controller about this so that it can dismiss this view controller
-        //  and present the sign in view controller.
-        self.delegate?.PALoginViewControllerUserDidClickSignUp()
-        
     }
     func _setup() {
         
@@ -97,7 +106,15 @@ class LoginViewController: UIViewController {
         passwordTitleLabel.font         = UIFont(name: Constants.Fonts.MainFontFamilies.bold, size: passwordTitleLabel.font.pointSize)
         
         userEmailTextField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor ])
+        userEmailTextField.spellCheckingType = .no
+        userEmailTextField.autocorrectionType = .no
+        
         userPasswordTextField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [ NSForegroundColorAttributeName : textfieldPlaceholderColor])
+        userPasswordTextField.spellCheckingType = .no
+        userPasswordTextField.spellCheckingType = .no
+        
+        userPasswordTextField.delegate = self
+        userEmailTextField.delegate = self
         
         userEmailTextField.textColor    = textfieldTextColor
         userPasswordTextField.textColor = textfieldTextColor
@@ -110,6 +127,8 @@ class LoginViewController: UIViewController {
         passwordTextboxUnderline.backgroundColor    = underlineColor
         emailTextboxUnderline.backgroundColor       = underlineColor
     }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -123,6 +142,10 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController : PADataManagerDelegate {
+    internal func PADataManagerDidUpdateProgress(progress: Double) {
+        
+    }
+
     internal func PADataManagerDidFinishUploadingStory(storyID: String) {
         
     }
@@ -140,17 +163,12 @@ extension LoginViewController : PADataManagerDelegate {
         
         guard signInStatus != .SignInFailed else {
             
-            let alertCont = UIAlertController(title: "Error", message: "Invalid Credentials", preferredStyle: .alert)
-            
-            alertCont.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
-                alertCont.dismiss(animated: true, completion: nil)
-            }))
-            
-            alertCont.show(self, sender: nil)
-            
+            SCLAlertView().showError("Error Signing In", subTitle: "There was an error signing in")
             return
         }
         
+        
+        /*
         guard signInStatus != .FirebaseNotConfigured else {
             
             let alertCont = UIAlertController(title: "Error", message: "Firebase Not Configured", preferredStyle: .alert)
@@ -163,8 +181,25 @@ extension LoginViewController : PADataManagerDelegate {
             
             return
         }
+        */
         
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension LoginViewController : UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == self.userEmailTextField {
+            self.userPasswordTextField.becomeFirstResponder()
+        }
+        else if textField == self.userPasswordTextField {
+            self.userPasswordTextField.resignFirstResponder()
+            self.loginUser()
+        }
+        
+        return false
+    }
 }

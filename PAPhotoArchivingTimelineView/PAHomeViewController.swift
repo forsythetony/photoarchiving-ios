@@ -186,6 +186,10 @@ extension PAHomeViewController : PARegisterControllerDelegate {
     }
 }
 extension PAHomeViewController : PADataManagerDelegate {
+    internal func PADataManagerDidUpdateProgress(progress: Double) {
+        
+    }
+
     internal func PADataManagerDidFinishUploadingStory(storyID: String) {
         
     }

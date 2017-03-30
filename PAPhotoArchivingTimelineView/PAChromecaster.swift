@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GoogleCast
 
 protocol PAChromeCasterDelegate {
     func didFindNewDevice( device : GCKDevice)
@@ -44,10 +45,10 @@ class PAChromecaster: NSObject, GCKDeviceScannerListener,GCKDeviceManagerDelegat
     }
     
     func setupChromecast() {
-        
+        /*
         deviceScanner = GCKDeviceScanner()
         deviceScanner?.add(self)
-        
+        */
         
     }
     
@@ -166,7 +167,7 @@ class PAChromecaster: NSObject, GCKDeviceScannerListener,GCKDeviceManagerDelegat
         
         let metadata = GCKMediaMetadata()
         
-        metadata?.setString(photo.title, forKey: kGCKMetadataKeyTitle)
+        metadata.setString(photo.title, forKey: kGCKMetadataKeyTitle)
         
         let mediaInfo = GCKMediaInformation(contentID: photo.mainImageURL, streamType: GCKMediaStreamType.unknown, contentType: "image/jpg", metadata: metadata, streamDuration: 0, customData: nil)
         

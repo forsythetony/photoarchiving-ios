@@ -9,6 +9,7 @@
 import UIKit
 import Eureka
 import Kingfisher
+import SCLAlertView
 
 fileprivate struct ButtonKeys {
     
@@ -19,6 +20,15 @@ fileprivate struct ButtonKeys {
     static let submit = "submitButton"
     
 }
+fileprivate struct TextboxKeys {
+    
+    static let currentRecordingTime = "currentRecordingTime"
+    static let uploadProgress = "uploadProgress"
+    
+}
+fileprivate enum FileUploadStatus {
+    case notStarted, inProgress, completed, error
+}
 class PANewRecordingViewController : FormViewController {
     
     static let STORYBOARD_ID = "PANewRecordingViewControllerStoryboardID"
@@ -28,6 +38,11 @@ class PANewRecordingViewController : FormViewController {
     
     var photoInformation : PAPhotograph?
     var newStory = PAStory()
+    
+    var currentRecordingTime = 0.0
+    
+    fileprivate var uploadState = FileUploadStatus.notStarted
+    fileprivate var uploadProgress = 0.0
     
     var isRecording = false {
         didSet {
@@ -53,6 +68,7 @@ class PANewRecordingViewController : FormViewController {
     
     private func _setupData() {
         
+        dataMan.delegate = self
         if let new_story_id = dataMan.getNewStoryUID() {
             self.newStory.uid = new_story_id
         }
@@ -98,6 +114,13 @@ class PANewRecordingViewController : FormViewController {
         
         
         form +++ Section( "Record Story" )
+            <<< TextRow() {
+                $0.title = "Recording Time"
+                $0.value = 0.0.PATimeString
+                $0.tag = TextboxKeys.currentRecordingTime
+                $0.hidden = true
+                $0.disabled = true
+            }
             <<< ButtonRow() {
                 $0.title = "Begin Recording"
                 $0.disabled = true
@@ -143,6 +166,14 @@ class PANewRecordingViewController : FormViewController {
             }
         
         form +++ Section()
+            <<< TextRow() {
+                $0.title = "Upload Progress"
+                $0.value = 0.0.PAPercentString
+                $0.tag = TextboxKeys.uploadProgress
+                $0.hidden = true
+                $0.disabled = true
+                
+            }
             <<< ButtonRow() {
                 $0.title = "Submit"
                 $0.tag = ButtonKeys.submit
@@ -171,6 +202,7 @@ class PANewRecordingViewController : FormViewController {
         
         
         self.updateRecordingButtons()
+        self.updateUploadProgress()
     }
     
     
@@ -183,7 +215,7 @@ class PANewRecordingViewController : FormViewController {
         let beginRecordingButton = form.rowBy(tag: ButtonKeys.beginRecording)
         let stopRecordingButton = form.rowBy(tag: ButtonKeys.stopRecording)
         let createNewRecordingButton = form.rowBy(tag: ButtonKeys.createNewRecording)
-        
+        let currentTimeButton = form.rowBy(tag: TextboxKeys.currentRecordingTime)
         
         //  If you are currently recording then make sure to hide
         //  the begin recording and create new recording buttons
@@ -203,6 +235,10 @@ class PANewRecordingViewController : FormViewController {
             createNewRecordingButton?.disabled = true
             createNewRecordingButton?.evaluateHidden()
             createNewRecordingButton?.evaluateDisabled()
+            
+            currentTimeButton?.hidden = false
+            currentTimeButton?.evaluateHidden()
+            
         }
         else {
             beginRecordingButton?.hidden = false
@@ -219,10 +255,77 @@ class PANewRecordingViewController : FormViewController {
             createNewRecordingButton?.disabled = true
             createNewRecordingButton?.evaluateHidden()
             createNewRecordingButton?.evaluateDisabled()
+            
+            currentTimeButton?.hidden = true
+            currentTimeButton?.evaluateHidden()
         }
+    }
+    
+    fileprivate func updateRecordingTime() {
+        
+        let rec_time_row = form.rowBy(tag: TextboxKeys.currentRecordingTime)
+        
+        rec_time_row?.baseValue = self.currentRecordingTime.PATimeString
+        
+        rec_time_row?.updateCell()
+    }
+    
+    fileprivate func updateUploadProgress() {
+        
+        let upload_row = form.rowBy(tag: TextboxKeys.uploadProgress)
+        
+        switch self.uploadState {
+        case .inProgress:
+            
+            upload_row?.baseValue = self.uploadProgress.PAPercentString
+            upload_row?.hidden = false
+            
+            
+        case .notStarted:
+            
+            upload_row?.baseValue = 0.0.PAPercentString
+            upload_row?.hidden = true
+            
+        case .error:
+            upload_row?.baseValue = "Error"
+            upload_row?.hidden = false
+            
+        case .completed:
+            upload_row?.baseValue = 100.0.PAPercentString
+            upload_row?.hidden = false
+            
+        default:
+            upload_row?.baseValue = 0.0.PAPercentString
+            upload_row?.hidden = true
+        }
+        
+        upload_row?.evaluateHidden()
+        
+        upload_row?.updateCell()
     }
 }
 
+extension PANewRecordingViewController : PADataManagerDelegate {
+    func PADataMangerDidConfigure() {
+        
+    }
+    func PADataManagerDidUpdateProgress(progress: Double) {
+        self.uploadState = .inProgress
+        self.uploadProgress = progress
+        self.updateUploadProgress()
+        
+    }
+    func PADataManagerDidFinishUploadingStory(storyID: String) {
+        self.uploadState = .completed
+    }
+    func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
+        
+    }
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+    }
+    
+}
 extension PANewRecordingViewController : PAAudioManagerDelegate {
     func PAAudioManagerDidBeginPlayingStory(story: PAStory) {
         
@@ -232,8 +335,14 @@ extension PANewRecordingViewController : PAAudioManagerDelegate {
     }
     func PAAudioManagerDidUpdateRecordingTime(time: TimeInterval, story: PAStory) {
         
+        self.currentRecordingTime = Double(time)
+        
+        self.updateRecordingTime()
+        
     }
     func PAAudioManagerDidFinishRecording(total_time: TimeInterval, story: PAStory) {
+        
+        SCLAlertView().showSuccess("Success!", subTitle: String.init(format: "Successfully uploaded the story titled '%@'", story.title))
         
         self.newStory = story
         self.isRecording = false

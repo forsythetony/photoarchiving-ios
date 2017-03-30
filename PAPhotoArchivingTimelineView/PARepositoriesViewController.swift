@@ -225,6 +225,10 @@ class PARepositoriesViewController: UIViewController {
 }
 
 extension PARepositoriesViewController : PADataManagerDelegate {
+    internal func PADataManagerDidUpdateProgress(progress: Double) {
+        
+    }
+
     internal func PADataManagerDidFinishUploadingStory(storyID: String) {
         
     }

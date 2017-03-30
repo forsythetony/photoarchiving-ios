@@ -180,6 +180,23 @@ extension Double {
             return CGFloat(self)
         }
     }
+    
+    var PATimeString : String {
+        get {
+            let total_minutes : Double = floor( self / 60.0 )
+            let total_seconds : Double = self.truncatingRemainder(dividingBy: 60.0)
+            
+            return String.init(format: "%02.0f:%02.0f", total_minutes, total_seconds)
+        }
+    }
+    
+    var PAPercentString : String {
+        get {
+            let percent_value = self * 100.0
+            
+            return String.init(format: "%.0f%%", percent_value)
+        }
+    }
 }
 extension Int {
     

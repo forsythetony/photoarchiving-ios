@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import GoogleCast
 
 class PARepositoryViewController: UIViewController, PAChromeCasterDelegate {
 

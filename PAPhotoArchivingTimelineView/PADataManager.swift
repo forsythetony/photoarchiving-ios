@@ -44,6 +44,7 @@ protocol PADataManagerDelegate {
     func PADataMangerDidConfigure()
     func PADataManagerDidSignInUserWithStatus(_ signInStatus : PAUserSignInStatus)
     func PADataManagerDidFinishUploadingStory( storyID : String )
+    func PADataManagerDidUpdateProgress( progress : Double )
 }
 
 
@@ -542,6 +543,8 @@ extension PADataManager {
                 let progress_message = String.init(format: "\nTotal Progress:\t%0.2f\n", progress)
                 
                 print( progress_message )
+                
+                self.delegate?.PADataManagerDidUpdateProgress(progress: progress)
             }
         }
         

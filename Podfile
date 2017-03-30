@@ -19,6 +19,9 @@ target 'PAPhotoArchivingTimelineView' do
 	pod 'Kingfisher', '~> 3.0'
 	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
 	
+	pod 'google-cast-sdk'
+	pod 'SCLAlertView'
+	
 	# pod 'SwiftyTools', :git => 'https://github.com/forsythetony/SwiftyTools'
 end
 
