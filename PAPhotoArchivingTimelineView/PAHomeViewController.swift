@@ -186,6 +186,10 @@ extension PAHomeViewController : PARegisterControllerDelegate {
     }
 }
 extension PAHomeViewController : PADataManagerDelegate {
+    internal func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+
     
     func PADataMangerDidConfigure() {
         //  I don't think there needs to be any implementation here

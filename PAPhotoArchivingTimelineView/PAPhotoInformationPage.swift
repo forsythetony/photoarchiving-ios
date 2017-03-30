@@ -126,24 +126,57 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                 $0.disabled = true
             }
         
+        form +++ Section( "Story Information" )
+            <<< ButtonRow() {
+                $0.title = "Add New Story"
+            }
+            .onCellSelection { [ weak self ] (cell, row) in
+                
+                let add_new_story_vc = UIStoryboard.PAMainStoryboard.instantiateViewController(withIdentifier: PANewRecordingViewController.STORYBOARD_ID) as! PANewRecordingViewController
+                
+                add_new_story_vc.photoInformation = self?.currentPhotograph
+                
+                self?.present(add_new_story_vc, animated: true, completion: nil)
+            }
+            .cellUpdate { cell, row in
+                
+                cell.textLabel?.textColor = Color.green
+            }
+        
+            <<< ButtonRow() {
+                $0.title = "View Stories"
+            }
+            .onCellSelection { [ weak self ] ( cell,row ) in
+                
+                let view_stories_vc = UIStoryboard.PAMainStoryboard.instantiateViewController(withIdentifier: PAStoriesViewController.STORYBOARD_ID) as! PAStoriesViewController
+                
+                view_stories_vc.currentPhotograph = self?.currentPhotograph
+                
+                self?.present(view_stories_vc, animated: true, completion: nil)
+            }
+        
+        
         form +++ Section()
             <<< ButtonRow() {
                 $0.title = "Submit"
                 $0.hidden = true
                 
             }
-                
             .onCellSelection { [ weak self ] ( cell, row ) in
                 
                 print("You chose to submit it!")
             }
-        
+            .cellUpdate { cell, row in
+                
+                cell.textLabel?.textColor = Color.PASuccessColor
+            }
+            
             <<< ButtonRow() {
                 $0.title = "Exit"
                 
             }
             .cellUpdate { cell, row in
-                cell.textLabel?.textColor = Color.red
+                cell.textLabel?.textColor = Color.PADangerColor
                 
                 
             }

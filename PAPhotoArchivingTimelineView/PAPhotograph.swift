@@ -69,12 +69,18 @@ class PAPhotograph {
         
         stories_ref.observe(.childAdded, with: { snapshot in
             
-            if let new_story = PAStory.storyFromSnapshot(snapshot: snapshot ) {
+            
+            
+            db_ref.child("stories").child(snapshot.key).observeSingleEvent(of: .value, with: { (snapper) in
                 
-                self.stories.append(new_story)
-                self.delegate?.PAPhotographDidFetchNewStory(story: new_story)
-                
-            }
+                if let new_story = PAStory.storyFromSnapshot(snapshot: snapper ) {
+                    
+                    self.stories.append(new_story)
+                    self.delegate?.PAPhotographDidFetchNewStory(story: new_story)
+                    
+                }
+            })
+            
         })
     }
     

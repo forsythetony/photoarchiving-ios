@@ -123,6 +123,10 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController : PADataManagerDelegate {
+    internal func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+
     
     func PADataMangerDidConfigure() {
         

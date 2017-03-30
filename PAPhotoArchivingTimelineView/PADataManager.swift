@@ -43,6 +43,7 @@ protocol PADataManagerDelegate {
     func PADataManagerDidGetNewRepository(_ newRepository : PARepository)
     func PADataMangerDidConfigure()
     func PADataManagerDidSignInUserWithStatus(_ signInStatus : PAUserSignInStatus)
+    func PADataManagerDidFinishUploadingStory( storyID : String )
 }
 
 
@@ -464,6 +465,84 @@ extension PADataManager {
         
         uploadGroup.notify(queue: DispatchQueue.main) {
             print("Done ish")
+        }
+        
+    }
+    
+    func getNewStoryUID() -> String? {
+        
+        guard isConfigured else { return nil }
+        
+        let story_db_ref = database_ref!.child("stories")
+        
+        let new_child = story_db_ref.childByAutoId()
+        
+        new_child.setValue("placeholder")
+        
+        return new_child.key
+    }
+    
+    func addNewStory( new_story : PAStory, photograph : PAPhotograph ) {
+        
+        guard isConfigured else { return }
+        
+        guard let curr_user_id = FIRAuth.auth()?.currentUser?.uid else {
+            print("Can't upload story no user signed in...")
+            return
+        }
+        
+        let story_storage_ref = storage_ref!.child(String.init(format: "recordings/%@.mp4", new_story.uid))
+        let story_db_ref = database_ref!.child(String.init(format: "stories/%@", new_story.uid))
+        let photo_db_ref = database_ref!.child(String.init(format: "photographs/%@", photograph.uid))
+        
+        new_story.dateUploaded = Date()
+        new_story.uploaderID = curr_user_id
+        
+        guard let local_url = new_story.tempRecordingURL else {
+            print( "There was no URL for this story..." )
+            return
+        }
+        
+        let audio_upload_metadata = FIRStorageMetadata()
+        audio_upload_metadata.contentType = "audio/mp4"
+        
+        let story_upload_task = story_storage_ref.putFile(local_url, metadata: audio_upload_metadata) { (metaDataCompletion, error) in
+            
+            if let error = error {
+                let error_message = String.init(format: "\nThere was an error uploading the story audio -> %@ \n", error.localizedDescription)
+                print( error_message )
+                
+                return
+            }
+            
+            guard let download_url = metaDataCompletion?.downloadURL() else {
+                print("There was no download URL for this story")
+                return
+            }
+            
+            new_story.recordingURL = download_url.absoluteString
+            let new_story_data = new_story.getJSONCompatibleArray()
+            
+            story_db_ref.setValue(new_story_data)
+            
+            let stories_child_db_ref = photo_db_ref.child("stories")
+            
+            stories_child_db_ref.child(new_story.uid).setValue("true")
+            
+            self.delegate?.PADataManagerDidFinishUploadingStory(storyID: new_story.uid)
+            
+            let done_message = String.init(format: "\nFinished uploading everything, photo_id -> %@, story_id -> %@\n", photograph.uid, new_story.uid)
+            print( done_message )
+        }
+        
+        
+        story_upload_task.observe(.progress) { (snap) in
+            
+            if let progress = snap.progress?.fractionCompleted {
+                let progress_message = String.init(format: "\nTotal Progress:\t%0.2f\n", progress)
+                
+                print( progress_message )
+            }
         }
         
     }

@@ -55,7 +55,9 @@ struct Keys {
         static let audioFormat      = "audio_format"
         static let recordingLength  = "recording_length"
         static let recordingURL     = "recording_url"
-        static let date_recorded    = "date_recorded"
+        static let dateRecorded     = "date_recorded"
+        static let uploadedByID     = "uploaded_by"
+        static let dateUploaded     = "date_uploaded"
         
     }
     
@@ -319,6 +321,18 @@ extension Color {
     static var PAWhiteTwo : Color {
         get {
             return Color(white: 0.75, alpha: 1.0)
+        }
+    }
+    
+    static var PASuccessColor : Color {
+        get {
+            return Color(red: 76.0.CGFloatRGBValue, green: 217.0.CGFloatRGBValue, blue: 101.0.CGFloatRGBValue, alpha: 1.0)
+        }
+    }
+    
+    static var PADangerColor : Color {
+        get {
+            return Color.red
         }
     }
 }

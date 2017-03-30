@@ -253,7 +253,7 @@ extension PAAudioManager : AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         
         if let curr_story = curr_story {
-            curr_story.recordingLength = self.curr_recording_length
+            curr_story.recordingLength = Double(recorder.currentTime)
             self.delegate?.PAAudioManagerDidFinishRecording(total_time: self.curr_recording_length, story: curr_story)
         }
     }

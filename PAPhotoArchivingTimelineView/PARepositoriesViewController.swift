@@ -225,6 +225,10 @@ class PARepositoriesViewController: UIViewController {
 }
 
 extension PARepositoriesViewController : PADataManagerDelegate {
+    internal func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+
     
     func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
         

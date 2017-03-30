@@ -299,6 +299,10 @@ class PACustomHeaderView : UIView {
 }
 
 extension PAPhotoUploadForm : PADataManagerDelegate {
+    internal func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+
     internal func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
         //  FIXME:
         //      We either have to add some new code here or
