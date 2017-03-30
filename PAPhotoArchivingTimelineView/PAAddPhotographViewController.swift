@@ -180,11 +180,11 @@ class PAAddPhotoViewController : FormViewController {
     private func _setupInitialValues() {
         
         setupValues.photoDate           = dateMan.getDateFromYearInt(year: 1970)
-        setupValues.photoMinDate        = dateMan.getDateFromYearInt(year: 1900)
+        setupValues.photoMinDate        = dateMan.getDateFromYearInt(year: 1500)
         setupValues.photoMaxDate        = Date()
         
         setupValues.photoDateConf       = 0.4
-        setupValues.photoTitle          = "A photograph"
+        setupValues.photoTitle          = ""
         setupValues.photoDescription    = ""
         
         setupValues.confSliderSteps     = 100

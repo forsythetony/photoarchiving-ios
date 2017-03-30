@@ -234,7 +234,6 @@ extension PADataManager {
         
         if !isConfigured { return }
         
-        
         guard let main_image = newPhoto.mainImage else {
             print("No main image")
             return
@@ -247,6 +246,36 @@ extension PADataManager {
         
         let photographs_db_ref  = database_ref!.child("/photographs")
         let repository_db_ref   = database_ref!.child(String.init(format: "/repositories/%@", repository.uid))
+        
+        
+        
+        //  If the date on the photograph is not within the range of the repository
+        //  then update either the 'end_date' or 'start_date' on the repository
+        
+        if
+            let start_date = repository.startDate,
+            let end_date = repository.endDate,
+            let photo_date = newPhoto.dateTaken {
+            
+            let new_value = PADateManager.sharedInstance.getDateString(date: photo_date, formatType: .FirebaseFull)
+            
+            switch (photo_date.compareToPeriod(start_date: start_date, end_date: end_date)) {
+                
+            case .isBeforePeriod:
+                repository_db_ref.child(Keys.Repository.startDate).setValue(new_value)
+                
+                
+            case .isAfterPeriod:
+                repository_db_ref.child(Keys.Repository.endDate).setValue(new_value)
+                
+            default:
+                break;
+            }
+        }
+        
+        
+        
+        
         
         let current_user_id = FIRAuth.auth()?.currentUser?.uid
         

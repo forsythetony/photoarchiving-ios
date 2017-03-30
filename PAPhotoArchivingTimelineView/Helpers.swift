@@ -91,6 +91,9 @@ func RGBVal( v : CGFloat ) -> CGFloat {
 }
 
 
+enum PADatePeriodCompareResult {
+    case isBeforePeriod, isAfterPeriod, isInPeriod, invalidPeriodDates
+}
 extension Date {
     
     static func dateBySubtractingYears( years : Int ) -> Date {
@@ -120,6 +123,47 @@ extension Date {
         }
         
         return !isGreater
+    }
+    
+    func isGreaterThan( otherDate : Date ) -> Bool {
+        
+        var isGreater = false
+        
+        if self.compare(otherDate) == ComparisonResult.orderedDescending {
+            isGreater = true
+        }
+        
+        return isGreater
+        
+    }
+    
+    func isLessThan( otherDate : Date ) -> Bool {
+        
+        var isLessThan = false
+        
+        if self.compare(otherDate) == ComparisonResult.orderedAscending {
+            isLessThan = true
+        }
+        
+        return isLessThan
+    }
+    
+    func compareToPeriod( start_date : Date, end_date : Date ) -> PADatePeriodCompareResult {
+        
+        var ret_val = PADatePeriodCompareResult.isInPeriod
+        
+        if start_date.isGreaterThan(otherDate: end_date) {
+            return .invalidPeriodDates
+        }
+        
+        if self.isLessThan(otherDate: start_date) {
+            ret_val = PADatePeriodCompareResult.isBeforePeriod
+        }
+        else if self.isGreaterThan(otherDate: end_date) {
+            ret_val = PADatePeriodCompareResult.isAfterPeriod
+        }
+        
+        return ret_val
     }
 }
 extension Float {

@@ -9,6 +9,11 @@
 import Foundation
 import Eureka
 
+fileprivate struct FormKeys {
+    static let choosePhotoButton = "choosePhotoButton"
+    static let basicSection = "basicSection"
+}
+
 class PAAddRepositoryViewController : FormViewController {
     
     static let STORYBOARD_ID = "PAAddRepositoryViewControllerStoryboardID"
@@ -43,7 +48,13 @@ class PAAddRepositoryViewController : FormViewController {
         let default_repo_title = "A new repository"
         let default_description = "Some description"
         
-        form +++ Section("General Information")
+        form +++ Section("General Information") { section in
+            
+            var header = HeaderFooterView<PACustomHeaderView>(.class)
+            header.height = { 0.0 }
+            section.tag = FormKeys.basicSection
+            //section.header = header
+        }
             <<< TextRow() {
                 
                 $0.title        = "Title"
@@ -58,6 +69,11 @@ class PAAddRepositoryViewController : FormViewController {
                 $0.textAreaHeight   = .dynamic(initialTextViewHeight: 90.0)
                 $0.placeholder      = "A short description of this repository"
                 $0.tag              = Keys.Repository.longDescription
+            }
+            <<< ButtonRow() {
+                $0.title = "Choose Thumbnail"
+                $0.hidden = true
+                
             }
         
         form +++ Section("Date Information")
@@ -179,5 +195,9 @@ class PAAddRepositoryViewController : FormViewController {
         get {
             return true
         }
+    }
+    
+    func showImagePicker() {
+        
     }
 }
