@@ -146,8 +146,10 @@ class PARepositoriesViewController: UIViewController {
     }
     
     private func _setupCollectionView() {
-        
-        self.RepositoriesCollectionView.register(PARepositoryCollectionViewCell.self, forCellWithReuseIdentifier: PARepositoryCollectionViewCell.ReuseID)
+//        
+//        self.RepositoriesCollectionView.register(PARepositoryCollectionViewCell.self, forCellWithReuseIdentifier: PARepositoryCollectionViewCell.ReuseID)
+//        
+        self.RepositoriesCollectionView.register(UINib.init(nibName: "PARepositoryCell", bundle: Bundle.main), forCellWithReuseIdentifier: PARepositoryCell.REUSE_ID)
         
         self.RepositoriesCollectionView.delegate = self
         self.RepositoriesCollectionView.dataSource = self
@@ -285,7 +287,7 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        let cell = collectionView.dequeueReusableCell(  withReuseIdentifier: PARepositoryCollectionViewCell.ReuseID,
+        /*let cell = collectionView.dequeueReusableCell(  withReuseIdentifier: PARepositoryCollectionViewCell.ReuseID,
                                                         for: indexPath) as! PARepositoryCollectionViewCell
         
         if let cellInfo = self.Repositories.repositoryAtIndex(indexPath.item) {
@@ -312,6 +314,47 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
         cell.backgroundColor = Color.black
         
         return cell
+        
+        
+        */
+        
+        
+        
+        
+        
+        let cell = collectionView.dequeueReusableCell(  withReuseIdentifier: PARepositoryCell.REUSE_ID,
+                                                        for: indexPath) as! PARepositoryCell
+        
+        if let cellInfo = self.Repositories.repositoryAtIndex(indexPath.item) {
+            
+            let imgPath = cellInfo.thumbnailURL
+            
+            if imgPath == "" {
+                //cell.TitleLabel.textColor = Color.white
+            }
+            else {
+                
+                cell.thumbnailImageView.kf.setImage(with: URL(string: imgPath )! )
+                //cell.TitleLabel.textColor = Color.black
+            }
+            
+            let start_year = PADateManager.sharedInstance.getDateString(date: cellInfo.startDate!, formatType: .YearOnly)
+            let end_year = PADateManager.sharedInstance.getDateString(date: cellInfo.endDate!, formatType: .YearOnly)
+            
+            let date_span_string = String.init(format: "%@-%@", start_year, end_year)
+            
+            cell.timeframeLabel.text = date_span_string
+            
+            cell.mainTitleLabel.text = cellInfo.title
+            
+            cell.imageCountLabel.text = String.init(format: "%d", cellInfo.totalPhotographs)
+            
+        }
+        
+        
+        //cell.backgroundColor = Color.black
+        
+        return cell
     }
 }
 
@@ -319,10 +362,15 @@ extension PARepositoriesViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        /*
         let availableWidth = (self.ViewWidth - (self.HorizontalSectionPadding * 2.0)) - (self.ItemsPerRow.decrement().CGFloatValue * self.HorizontalSpacingBetweenItems)
-        
+ 
         let cellWidth   = availableWidth / CGFloat(self.ItemsPerRow)
         let cellHeight  = cellWidth
+        */
+        
+        let cellWidth = PARepositoryCell.CELL_WITDTH
+        let cellHeight = PARepositoryCell.CELL_HEIGHT
         
         return CGSize(width: cellWidth, height: cellHeight)
     }

@@ -25,6 +25,7 @@ struct Keys {
         static let uid                  = "uid"
         static let creationDate         = "creation_date"
         static let creatorID            = "creator_id"
+        static let totalPhotographs    = "total_photographs"
     }
     
     

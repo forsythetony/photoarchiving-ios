@@ -23,6 +23,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
     }
     
     var didSetImage = false
+    var isEditingForm = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
             Keys.Photograph.title : photo.title,
             Keys.Photograph.description : photo.longDescription,
             Keys.Photograph.dateTaken : photo.dateTaken ?? Date(),
-            Keys.Photograph.dateTakenConf : String.init(format: "%.2f", photo.dateTakenConf)
+            Keys.Photograph.dateTakenConf : Double(photo.dateTakenConf).PAPercentString
         ] as [String : Any]
         
         self.form.setValues(values)
@@ -110,6 +111,18 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                 $0.textAreaHeight = .dynamic(initialTextViewHeight: 10.0)
                 
             }
+                .cellUpdate { [ weak self ] (cell, row) in
+                    
+                    if let editing = self?.isEditingForm {
+                        
+                        if editing {
+                            row.placeholder = "Enter a description"
+                        }
+                        else {
+                        }
+                    }
+                    
+        }
         
         form +++ Section( "Date Taken" )
             <<< DateInlineRow() {

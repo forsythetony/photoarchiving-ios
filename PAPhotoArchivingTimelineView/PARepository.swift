@@ -36,6 +36,7 @@ class PARepository {
     var longDescription     = ""
     var thumbnailURL        = ""
     var photographs         = [PAPhotograph]()
+    var totalPhotographs    = 0
     
     var dateCreated = Date()
     
@@ -135,6 +136,7 @@ extension PARepository {
             json_array[Keys.Repository.endDate] = default_end_date_string
         }
         
+        json_array[Keys.Repository.totalPhotographs] = self.totalPhotographs
         
         //  Thumbnail URL
         json_array[Keys.Repository.thumbnailURL] = self.thumbnailURL
@@ -161,6 +163,10 @@ extension PARepository {
         
         if let shortDesc = snap_value[Keys.Repository.shortDescription] as? String {
             newRepo.shortDescription = shortDesc
+        }
+        
+        if let numPhotos = snap_value[Keys.Repository.totalPhotographs] as? Int {
+            newRepo.totalPhotographs = numPhotos
         }
         
         if let longDesc = snap_value[Keys.Repository.longDescription] as? String {

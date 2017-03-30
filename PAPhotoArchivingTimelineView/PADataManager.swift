@@ -249,6 +249,8 @@ extension PADataManager {
         
         
         
+        repository_db_ref.child(Keys.Repository.totalPhotographs).setValue(repository.totalPhotographs.increment())
+        
         //  If the date on the photograph is not within the range of the repository
         //  then update either the 'end_date' or 'start_date' on the repository
         

@@ -13,6 +13,7 @@ enum PADateStyleType : String {
     case Firebase = "yyyy-MM-dd"
     case TimeOnly = "H:m:S"
     case FirebaseFull = "yyyy-MM-dd H:m:S"
+    case YearOnly = "yyyy"
 }
 class PADateManager {
     
