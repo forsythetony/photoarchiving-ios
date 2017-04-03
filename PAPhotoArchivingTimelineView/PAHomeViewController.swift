@@ -190,6 +190,10 @@ extension PAHomeViewController : PARegisterControllerDelegate {
     }
 }
 extension PAHomeViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+    }
+
     internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
     }

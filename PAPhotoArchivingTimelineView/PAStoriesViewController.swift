@@ -269,6 +269,10 @@ extension PAStoriesViewController : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension PAStoriesViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+    }
+
     func PADataMangerDidConfigure() {
         
     }

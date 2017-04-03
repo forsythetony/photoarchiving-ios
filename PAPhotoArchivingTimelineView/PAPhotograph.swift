@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 import Firebase
+import Kingfisher
 
 class PAPhotograph {
     
@@ -30,12 +31,16 @@ class PAPhotograph {
     private static let DEFAULT_LOC_CONF : Float         = 0.0
     private static let DEFAULT_UPLOADER_ID              = ""
     
-    var uid = ""
+    var uid : String = "" {
+        didSet {
+            self.didSetImageUUID()
+        }
+    }
     var title = ""
     var longDescription = ""
     var uploadedBy : PAUser?
     var dateUploaded : Date?
-    var thumbnailURL = ""
+    var thumbnailURL : String = ""
     var thumbnailImage : UIImage?
     var mainImageURL = ""
     var mainImage : UIImage?
@@ -43,15 +48,47 @@ class PAPhotograph {
     var stories : [PAStory] = [PAStory]()
     var dateTaken : Date?
     var dateTakenConf : Float = 0.0
-    var locationTaken : PALocation?
+    var locationTaken : PALocation = PALocation()
     var locationTakenConf : Float = 0.0
     var localImageURL : URL?
     var uploaderID : String?
+    var hasThumbnail = false
+    
     
     var delegate : PAPhotographDelegate?
     
     
-    
+    func didSetImageUUID() {
+        if self.hasThumbnail {
+            if self.thumbnailURL != "" {
+                return
+            }
+        }
+        
+        guard self.uid != "" else { return }
+        
+        let storage_ref_url = String.init(format: "images/thumb_%@", self.uid)
+        let storage_ref = FIRStorage.storage().reference(withPath: storage_ref_url)
+        let db_ref = FIRDatabase.database().reference(withPath: "/photographs").child(self.uid)
+        
+        storage_ref.downloadURL { (download_url, error) in
+            
+            if let error = error {
+                let error_message = String.init(format: "\nError dowloading thumbnail image for photo with uid-> %@ and thumbnail storage url -> %@", self.uid, storage_ref_url)
+                
+                print( error_message )
+                return
+            }
+            
+            print("\nGot a thumbnail image for \(self.uid)\n")
+            
+            self.hasThumbnail = true
+            db_ref.child(Keys.Photograph.hasThumbnail).setValue("true")
+            db_ref.child(Keys.Photograph.thumbURL).setValue(download_url!.absoluteString)
+            
+        }
+        
+    }
     /// Function Name:  fetchStories
     /// 
     /// Return Value:   Void
@@ -129,7 +166,13 @@ class PAPhotograph {
         
         newPhoto.mainImageURL = snapData[Keys.Photograph.mainURL] as? String ?? PAPhotograph.DEFAULT_MAIN_URL
         
-        
+        if let has_thumb_str = snapData[Keys.Photograph.hasThumbnail] as? String {
+            
+            newPhoto.hasThumbnail = has_thumb_str.boolValue
+        }
+        else {
+            newPhoto.hasThumbnail = false
+        }
         /*
             If there is no thumbnail URL then just use the main URL
             as the thumbnail URL
@@ -209,22 +252,35 @@ class PAPhotograph {
         jsonArray[Keys.Photograph.uploaderID] = self.uploaderID
         
         
-        if let locationData = self.locationTaken {
-            jsonArray[Keys.Photograph.locationCity]         = locationData.city
-            jsonArray[Keys.Photograph.locationState]        = locationData.state
-            jsonArray[Keys.Photograph.locationCountry]      = locationData.country
-            jsonArray[Keys.Photograph.locationLatitude]     = locationData.coordinates?.latitude ?? PAPhotograph.DEFAULT_LOC_LATITUDE
-            jsonArray[Keys.Photograph.locationLongitude]    = locationData.coordinates?.longitude ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
-            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
-        }
-        else {
-            jsonArray[Keys.Photograph.locationCity]         = PAPhotograph.DEFAULT_LOC_CITY
-            jsonArray[Keys.Photograph.locationState]        = PAPhotograph.DEFAULT_LOC_STATE
-            jsonArray[Keys.Photograph.locationCountry]      = PAPhotograph.DEFAULT_LOC_COUNTRY
-            jsonArray[Keys.Photograph.locationLatitude]     = PAPhotograph.DEFAULT_LOC_LATITUDE
-            jsonArray[Keys.Photograph.locationLongitude]    = PAPhotograph.DEFAULT_LOC_LONGITUDE
-            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
-        }
+        let locationData = self.locationTaken
+        
+        jsonArray[Keys.Photograph.locationCity]         = locationData.city
+        jsonArray[Keys.Photograph.locationState]        = locationData.state
+        jsonArray[Keys.Photograph.locationCountry]      = locationData.country
+        jsonArray[Keys.Photograph.locationLatitude]     = locationData.coordinates?.latitude ?? PAPhotograph.DEFAULT_LOC_LATITUDE
+        jsonArray[Keys.Photograph.locationLongitude]    = locationData.coordinates?.longitude ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
+        jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
+        
+//        
+//        if let locationData = self.locationTaken {
+//            jsonArray[Keys.Photograph.locationCity]         = locationData.city
+//            jsonArray[Keys.Photograph.locationState]        = locationData.state
+//            jsonArray[Keys.Photograph.locationCountry]      = locationData.country
+//            jsonArray[Keys.Photograph.locationLatitude]     = locationData.coordinates?.latitude ?? PAPhotograph.DEFAULT_LOC_LATITUDE
+//            jsonArray[Keys.Photograph.locationLongitude]    = locationData.coordinates?.longitude ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
+//            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
+//        }
+//        else {
+//            jsonArray[Keys.Photograph.locationCity]         = PAPhotograph.DEFAULT_LOC_CITY
+//            jsonArray[Keys.Photograph.locationState]        = PAPhotograph.DEFAULT_LOC_STATE
+//            jsonArray[Keys.Photograph.locationCountry]      = PAPhotograph.DEFAULT_LOC_COUNTRY
+//            jsonArray[Keys.Photograph.locationLatitude]     = PAPhotograph.DEFAULT_LOC_LATITUDE
+//            jsonArray[Keys.Photograph.locationLongitude]    = PAPhotograph.DEFAULT_LOC_LONGITUDE
+//            jsonArray[Keys.Photograph.locationConf]         = self.locationTakenConf
+//        }
+//        
+        
+        jsonArray[Keys.Photograph.hasThumbnail] = self.hasThumbnail.PAFirebaseValue
         
         return jsonArray
     }
@@ -260,7 +316,7 @@ extension PAPhotograph {
         
         info.append(dateTakenInfo)
         
-        let locationInfo = PAPhotoInfoLocation(_uuid: self.uid, _title: self.title, _type: .Location, _cityName: (self.locationTaken?.city)!, _stateName: (self.locationTaken?.state)!, _coordinates: (self.locationTaken?.coordinates!)!, _confidence: 0.4)
+        let locationInfo = PAPhotoInfoLocation(_uuid: self.uid, _title: self.title, _type: .Location, _cityName: self.locationTaken.city, _stateName: self.locationTaken.state, _coordinates: self.locationTaken.coordinates!, _confidence: 0.4)
         
         info.append(locationInfo)
         

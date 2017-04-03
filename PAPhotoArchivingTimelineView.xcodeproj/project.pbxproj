@@ -40,6 +40,9 @@
 		25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */; };
 		25918EDD1E8D19F600CB697A /* PAAudioControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */; };
 		25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */; };
+		25AB18581E91FB5C00F6341A /* PACustomEurekaRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */; };
+		25AB185B1E9209DE00F6341A /* PALocationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */; };
+		25AB185D1E92A0A000F6341A /* PAImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AB185C1E92A0A000F6341A /* PAImageViewCell.xib */; };
 		25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */; };
 		25C2D1CE1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */; };
 		25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */; };
@@ -126,6 +129,9 @@
 		25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryTypeBar.swift; sourceTree = "<group>"; };
 		25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAudioControlBar.swift; sourceTree = "<group>"; };
 		25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAHomeViewController.swift; sourceTree = "<group>"; };
+		25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACustomEurekaRows.swift; sourceTree = "<group>"; };
+		25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PALocationViewCell.xib; sourceTree = "<group>"; };
+		25AB185C1E92A0A000F6341A /* PAImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PAImageViewCell.xib; sourceTree = "<group>"; };
 		25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationPage.swift; sourceTree = "<group>"; };
 		25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationHeaderView.swift; sourceTree = "<group>"; };
 		25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -221,13 +227,6 @@
 			name = "Current Uploads";
 			sourceTree = "<group>";
 		};
-		256AB01B1E8AF23200FD9779 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Libraries;
-			sourceTree = "<group>";
-		};
 		2583CA4C1DD387BD004711DC /* Photo Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +246,16 @@
 				25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		25AB18561E91FB4800F6341A /* Custom Eureka Cells */ = {
+			isa = PBXGroup;
+			children = (
+				25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */,
+				25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */,
+				25AB185C1E92A0A000F6341A /* PAImageViewCell.xib */,
+			);
+			name = "Custom Eureka Cells";
 			sourceTree = "<group>";
 		};
 		25C2D1C91E8AF28E00AB7CB9 /* Helpers */ = {
@@ -333,8 +342,8 @@
 		25D03BA41DC19DAE00045988 /* PAPhotoArchivingTimelineView */ = {
 			isa = PBXGroup;
 			children = (
+				25AB18561E91FB4800F6341A /* Custom Eureka Cells */,
 				25CFCD541E4D308F00263353 /* View Controllers */,
-				256AB01B1E8AF23200FD9779 /* Libraries */,
 				25C2D1C91E8AF28E00AB7CB9 /* Helpers */,
 				25D03BCB1DC19FD800045988 /* Singletons */,
 				25D03BC51DC19EB100045988 /* Data Entities */,
@@ -572,8 +581,10 @@
 				25F9B72B1E8D2EC50028B91B /* PAStoryTableViewCell.xib in Resources */,
 				250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */,
 				2568E9DD1DD27CB200FE911E /* GoogleService-Info.plist in Resources */,
+				25AB185B1E9209DE00F6341A /* PALocationViewCell.xib in Resources */,
 				25D03BAD1DC19DAE00045988 /* Assets.xcassets in Resources */,
 				25316B501E8CB6F500C2B7F8 /* PARepositoryCell.xib in Resources */,
+				25AB185D1E92A0A000F6341A /* PAImageViewCell.xib in Resources */,
 				25D03BAB1DC19DAE00045988 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +734,7 @@
 				25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */,
 				250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */,
 				255C4F061DE9738B00EBD24C /* PAPhotoInfoDateTableViewCell.swift in Sources */,
+				25AB18581E91FB5C00F6341A /* PACustomEurekaRows.swift in Sources */,
 				2583CA5A1DD3B7F1004711DC /* PAStory.swift in Sources */,
 				25C2D1CE1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift in Sources */,
 				25316B4A1E8C5FD500C2B7F8 /* PANewRecordingViewController.swift in Sources */,

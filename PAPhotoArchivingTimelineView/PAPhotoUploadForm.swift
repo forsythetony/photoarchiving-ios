@@ -306,6 +306,10 @@ class PACustomHeaderView : UIView {
 }
 
 extension PAPhotoUploadForm : PADataManagerDelegate {
+    internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+    }
+
     internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
     }

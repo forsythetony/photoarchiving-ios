@@ -421,6 +421,10 @@ class PANewRecordingViewController : FormViewController {
 }
 
 extension PANewRecordingViewController : PADataManagerDelegate {
+    internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+    }
+
     func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
     }

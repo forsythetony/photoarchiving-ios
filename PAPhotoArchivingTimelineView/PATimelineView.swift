@@ -8,9 +8,15 @@
 
 import UIKit
 
+fileprivate enum PATimelineViewAnimationState {
+    case notStarted, inProgress, finished, unknown
+}
+
+
 protocol PATimelineViewDelegate {
     func PATimelineViewPhotographWasTapped( info : PAPhotograph )
     func PATimelineViewLongPress()
+    func PATimelineViewPhotographWasLongPressed( info : PAPhotograph )
 }
 class PATimelineView: UIView {
     
@@ -20,12 +26,14 @@ class PATimelineView: UIView {
     private let mainScrollView = UIScrollView()
     private var repoInfo : PARepository!
     
-    private var incViews = [PAIncrementView]()
+    private var incViews = [(PAIncrementView, PATimelineViewAnimationState)]()
     private var mainTimeline : UIView?
     
     private var springInfo = PASpringAnimationInformation()
     private var currAnimationIndex = 0
     private var animationTimer : Timer?
+    
+    fileprivate var isAnimatingIncViews = false
     
     private var photographCellViews = [PAPhotographCell]()
     
@@ -93,7 +101,7 @@ class PATimelineView: UIView {
         
         
         let long_gest = UILongPressGestureRecognizer(target: self, action: #selector(PATimelineView.didLongPress(sender:)))
-        long_gest.minimumPressDuration = 1.5
+        long_gest.minimumPressDuration = 0.75
         
         mainScrollView.addGestureRecognizer(long_gest)
         
@@ -191,7 +199,7 @@ class PATimelineView: UIView {
                 let incView = PAIncrementView(frame: incViewFrame, year: i, type: incViewType)
                 incView.alpha = alpha_val
                 
-                self.incViews.append(incView)
+                self.incViews.append((incView, .notStarted))
                 
                 self.mainScrollView.addSubview(incView)
                 
@@ -230,7 +238,7 @@ class PATimelineView: UIView {
                 let incView = PAIncrementView(frame: incViewFrame, year: self.getYearVal(counter: i, startYear: startYear), type: incViewType)
                 incView.alpha = alpha_val
                 
-                self.incViews.append(incView)
+                self.incViews.append((incView, .notStarted))
                 
                 self.mainScrollView.addSubview(incView)
                 
@@ -260,26 +268,57 @@ class PATimelineView: UIView {
         
         
     }
+    fileprivate func finishIncViewAnimations() {
+        
+        if let aniTimer = self.animationTimer {
+            aniTimer.invalidate()
+            self.isAnimatingIncViews = false
+        }
+        
+        for incPackage in self.incViews {
+            
+            if incPackage.1 == .finished {
+                
+            }
+            else {
+                let incView = incPackage.0
+                
+                var frm = incView.frame
+                frm.origin.x = 30.0
+                
+                incView.alpha = 1.0
+                incView.frame = frm
+                
+            }
+        }
+        
+    }
     private func animateIncViews() {
         
         self.animationTimer = Timer.scheduledTimer(withTimeInterval: self.springInfo.DelayBetweenAnimations, repeats: true, block: {
             ( timer ) in
+            self.isAnimatingIncViews = true
             
             let incCount = self.incViews.count
             
             if self.currAnimationIndex >= incCount {
-                
+                self.isAnimatingIncViews = false
                 self.animationTimer?.invalidate()
+                
                 return
             }
             
             
-            let currView = self.incViews[self.currAnimationIndex]
+            var currIncPackage = self.incViews[self.currAnimationIndex]
+            
+            let currView = currIncPackage.0
             
             if currView.alpha == 1.0 {
                 self.animationTimer?.invalidate()
                 return
             }
+            
+            currIncPackage.1 = PATimelineViewAnimationState.inProgress
             
             UIView.animate(withDuration: self.springInfo.Duration, delay: self.springInfo.Delay, usingSpringWithDamping: self.springInfo.SpringDamping, initialSpringVelocity: self.springInfo.SpringVeloctiy, options: [], animations: { 
                 
@@ -295,7 +334,11 @@ class PATimelineView: UIView {
                 currView.frame = frm
                 currView.alpha = 1.0
                 
-            }, completion: nil)
+            }, completion: { _ in
+                
+                currIncPackage.1 = PATimelineViewAnimationState.finished
+                
+            })
             
             self.currAnimationIndex += 1
         })
@@ -349,12 +392,58 @@ class PATimelineView: UIView {
     }
     
     @objc func didLongPress( sender : UILongPressGestureRecognizer ) {
+        
+        let sender_center = sender.location(in: mainScrollView)
+        
+        for photo_cells in self.photographCellViews {
+            
+            let photo_cell_frame = photo_cells.frame
+            
+            if photo_cell_frame.contains(sender_center) {
+                self.delegate?.PATimelineViewPhotographWasLongPressed(info: photo_cells.photographInfo!)
+                return
+            }
+        }
+        
+        self.delegate?.PATimelineViewLongPress()
+        
+        
+        
         self.delegate?.PATimelineViewLongPress()
     }
     
     func getYearVal( counter : Int, startYear : Int ) -> Int {
         
         return startYear + (counter / 12)
+    }
+    
+    
+    func deletePhotograph( photo_info : PAPhotograph ) {
+        
+        var removeIndex = -1
+        var i = 0
+        
+        for photo_cell in self.photographCellViews {
+            
+            if let curr_info = photo_cell.photographInfo {
+                
+                if curr_info.uid != ""{
+                    if curr_info.uid == photo_info.uid {
+                        photo_cell.removeFromSuperview()
+                        removeIndex = i
+                        break
+                    }
+                }
+            }
+            
+            i += 1
+        }
+        
+        if removeIndex >= 0 {
+            self.photographCellViews.remove(at: removeIndex)
+        }
+        
+        
     }
 }
 extension PATimelineView : UIScrollViewDelegate {
@@ -374,6 +463,10 @@ extension PATimelineView : UIScrollViewDelegate {
         let viewWindowString = NSStringFromCGRect(viewWindow)
         
         // print("View window -> \(viewWindowString)")
+        
+        if self.isAnimatingIncViews {
+            self.finishIncViewAnimations()
+        }
     }
     
     
@@ -391,6 +484,9 @@ extension PATimelineView : PAPhotographCellDelegate {
         self.delegate?.PATimelineViewPhotographWasTapped(info: sender.photographInfo!)
     }
     
+    func PAPhotographCellWasLongPressed(sender: PAPhotographCell) {
+        self.delegate?.PATimelineViewPhotographWasLongPressed(info: sender.photographInfo!)
+    }
 }
 
 

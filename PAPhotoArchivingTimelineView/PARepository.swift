@@ -273,3 +273,25 @@ extension PARepository {
         }
     }
 }
+
+
+
+extension PARepository {
+    
+    func removePhotograph( photo : PAPhotograph ) {
+        
+        let photosCount = self.photographs.count
+        
+        for i in 0..<photosCount {
+            
+            let curr = self.photographs[i]
+            
+            if curr.uid != "" {
+                if curr.uid == photo.uid {
+                    self.photographs.remove(at: i)
+                    break
+                }
+            }
+        }
+    }
+}

@@ -47,6 +47,7 @@ struct Keys {
         static let localPhotoURL        = "local_photo_url"
         static let dateUploaded         = "date_uploaded"
         static let uploaderID           = "uploader_id"
+        static let hasThumbnail         = "has_thumbnail"
         
     }
     

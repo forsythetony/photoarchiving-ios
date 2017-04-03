@@ -46,6 +46,7 @@ protocol PADataManagerDelegate {
     func PADataManagerDidFinishUploadingStory( storyID : String )
     func PADataManagerDidUpdateProgress( progress : Double )
     func PADataManagerDidDeleteStoryFromPhotograph( story : PAStory, photograph : PAPhotograph )
+    func PADataManagerDidDeletePhotograph( photograph : PAPhotograph )
 }
 
 
@@ -71,6 +72,14 @@ class PADataManager {
     var delegate                : PADataManagerDelegate?
     
     
+    var currentUserID : String {
+        if let id = FIRAuth.auth()?.currentUser?.uid {
+            return id
+        }
+        else {
+            return ""
+        }
+    }
     var configTimer : Timer?
     
     var isConfigured = false
@@ -231,6 +240,71 @@ extension PADataManager {
         print( error_message )
     }
     
+    func deletePhotograph( photo : PAPhotograph, repo : PARepository? ) {
+        
+        guard isConfigured else { return }
+        
+        guard let photo_uploaded_by = photo.uploaderID else {
+            return
+        }
+        
+        if photo_uploaded_by == "" {
+            return
+        }
+        
+        guard currentUserID == photo_uploaded_by else {
+            print("You can't delete this file")
+            return
+        }
+        
+        let thumb_storage_path = String.init(format: "images/thumb_%@.jpg", photo.uid)
+        let main_storage_path = String.init(format: "images/%@.jpg", photo.uid)
+        let photo_db_path = String.init(format: "photographs/%@", photo.uid)
+        
+        
+        let photo_db_ref = database_ref!.child(photo_db_path)
+        
+        photo_db_ref.removeValue()
+        
+        let main_storage_ref = storage_ref!.child(main_storage_path)
+        
+        main_storage_ref.delete(completion: { (error) in
+            if error != nil {
+                let error_message = String.init(format: "\nThere was an error deleting the image -> %@ error -> %@\n", photo.uid, error!.localizedDescription)
+                
+                print( error_message )
+                return
+            }
+            
+            print("Successfully deleted the image!")
+        })
+        
+        
+        if photo.hasThumbnail {
+            let thumb_storage_ref = storage_ref!.child(thumb_storage_path)
+            thumb_storage_ref.delete(completion: { (error) in
+                if let error = error {
+                    let error_message = String.init(format: "\nThere was an error deleting the image -> %@ error -> %@\n", photo.uid, error.localizedDescription)
+                    
+                    print( error_message )
+                    return
+                }
+                
+                print("Successfully deleted the thumbnail image!")
+            })
+        }
+        
+        if let repo = repo {
+            
+            let repo_ref = database_ref!.child(String.init(format: "repositories/%@/photos/%@", repo.uid, photo.uid))
+            
+            repo_ref.removeValue()
+        }
+        
+        
+        self.delegate?.PADataManagerDidDeletePhotograph(photograph: photo)
+        
+    }
     func addPhotographToRepositoryv2( newPhoto : PAPhotograph, repository : PARepository ) {
         
         if !isConfigured { return }
@@ -284,7 +358,9 @@ extension PADataManager {
         let new_photograph_key = photographs_db_ref.childByAutoId().key
         
         let image_metadata = FIRStorageMetadata()
-        image_metadata.contentType = "images/jpeg"
+        image_metadata.contentType = "image/jpeg"
+        image_metadata.customMetadata = [ "photo_id" : new_photograph_key ]
+        
         
         let upload_task = storage_ref!.child(String.init(format: "images/%@.jpg", new_photograph_key)).put(image_data, metadata: image_metadata) { (metaData, error) in
             

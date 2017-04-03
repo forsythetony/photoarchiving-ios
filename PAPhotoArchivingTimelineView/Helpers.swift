@@ -166,6 +166,16 @@ extension Date {
         return ret_val
     }
 }
+
+extension Bool {
+    var PAFirebaseValue : String {
+        if self == true {
+            return "true"
+        }
+        
+        return "false"
+    }
+}
 extension Float {
     var PAStringValue : String {
         get {
@@ -487,6 +497,16 @@ extension Color {
 
 extension String {
     
+    var boolValue : Bool {
+        get {
+            if self.lowercased() == "true" {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+    }
     func appendForwardSlash() -> String {
         
         let lastChar = self[self.index(before: self.endIndex)]

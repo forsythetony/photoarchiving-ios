@@ -172,6 +172,10 @@ class PARepositoryViewController: UIViewController, PAChromeCasterDelegate {
 }
 
 extension PARepositoryViewController: PATimelineViewDelegate {
+    internal func PATimelineViewPhotographWasLongPressed(info: PAPhotograph) {
+        
+    }
+
     
     func PATimelineViewPhotographWasTapped(info: PAPhotograph) {
         

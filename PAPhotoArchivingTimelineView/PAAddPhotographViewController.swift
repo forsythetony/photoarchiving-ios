@@ -9,7 +9,7 @@
 import Foundation
 import Eureka
 import ImageRow
-
+import CoreLocation
 
 fileprivate struct PAPhotographValidationError {
     
@@ -33,7 +33,10 @@ fileprivate struct InitialValues {
 
 class PAAddPhotoViewController : FormViewController {
     
+    
     static let STORYBOARD_ID = "paaddphotoviewcontroller"
+    
+    private let myLocation = CLLocation(latitude: 38.575036, longitude: -90.354108)
     
     let dateMan = PADateManager.sharedInstance
     let dataMan = PADataManager.sharedInstance
@@ -41,7 +44,6 @@ class PAAddPhotoViewController : FormViewController {
     var newPhotograph = PAPhotograph()
     fileprivate var selectedImageURL : URL?
     var currentRepository : PARepository?
-    
     
     fileprivate var setupValues = InitialValues()
     
@@ -61,6 +63,36 @@ class PAAddPhotoViewController : FormViewController {
     }
     
     private func _setupForm() {
+        
+        
+        let section_three_title = "Image"
+        
+        form +++ Section( section_three_title )
+            <<< ImageRow() {
+                $0.title = "Photograph"
+                $0.sourceTypes = [.PhotoLibrary ]
+                $0.tag          = Keys.Photograph.localPhotoURL
+                }
+                .cellUpdate { [weak self ] (cell , row) in
+                    
+                    cell.accessoryView?.layer.cornerRadius = 17.0
+                    cell.accessoryView?.frame = CGRect(x: 0.0, y: 0.0, width: 34.0, height: 34.0)
+                    
+                    if let img_url = row.imageURL {
+                        
+                        self?.selectedImageURL = img_url
+                        
+                        let message_string = String.init(format: "\nImage URL:\t%@\n", img_url.absoluteString)
+                        print( message_string )
+                        
+                        
+                    }
+                    else {
+                        
+                        let message_string = "\nThere was no image url\n"
+                        print( message_string )
+                    }
+        }
         
         /*
             General Information Section
@@ -115,39 +147,27 @@ class PAAddPhotoViewController : FormViewController {
             }
         
         
-        
         /*
-            Image Selection Section
+            Photograph Location Information
         */
-        let section_three_title = "Image"
+        let location_section_title = "Location Information"
         
-        form +++ Section( section_three_title )
-            <<< ImageRow() {
-                $0.title = "Photograph"
-                $0.sourceTypes = [.PhotoLibrary ]
-                $0.tag          = Keys.Photograph.localPhotoURL
+        form +++ Section( location_section_title )
+            <<< PALocationRow() {
+                $0.value = self.myLocation
+                $0.tag = "location"
+                $0.title = "Location"
             }
-            .cellUpdate { [weak self ] (cell , row) in
-                
-                cell.accessoryView?.layer.cornerRadius = 17.0
-                cell.accessoryView?.frame = CGRect(x: 0.0, y: 0.0, width: 34.0, height: 34.0)
-                
-                if let img_url = row.imageURL {
-                    
-                    self?.selectedImageURL = img_url
-                    
-                    let message_string = String.init(format: "\nImage URL:\t%@\n", img_url.absoluteString)
-                    print( message_string )
-                    
-                }
-                else {
-                    
-                    let message_string = "\nThere was no image url\n"
-                    print( message_string )
-                }
+            <<< SliderRow() {
+                $0.title        = "Location Conf"
+                $0.value        = self.setupValues.photoDateConf
+                $0.minimumValue = 0.0
+                $0.maximumValue = 1.0
+                $0.steps        = self.setupValues.confSliderSteps
+                $0.tag          = Keys.Photograph.locationConf
             }
         
-        
+    
         /*
             Submit Row Section
         */
@@ -182,6 +202,22 @@ class PAAddPhotoViewController : FormViewController {
         
     }
     
+    fileprivate func updateImageRows() {
+        
+        let imageRow = form.rowBy(tag: "imagerow")
+        
+        if let image_url = self.selectedImageURL {
+            let img = UIImage(named: image_url.absoluteString)
+            
+            imageRow?.baseValue = img
+        }
+        else {
+            imageRow?.baseValue = nil
+            
+        }
+        
+        imageRow?.updateCell()
+    }
     private func _setupInitialValues() {
         
         setupValues.photoDate           = dateMan.getDateFromYearInt(year: 1970)
@@ -263,6 +299,12 @@ class PAAddPhotoViewController : FormViewController {
         self.newPhotograph.dateTakenConf = values[Keys.Photograph.dateTakenConf] as! Float
         
         self.newPhotograph.mainImage = (values[Keys.Photograph.localPhotoURL] as! UIImage)
+        
+        if let coords = values["location"] as? CLLocation {
+            
+            self.newPhotograph.locationTaken.coordinates = coords.coordinate
+            self.newPhotograph.locationTakenConf = values[Keys.Photograph.locationConf] as! Float
+        }
         
         return error_info
     }

@@ -10,6 +10,7 @@
 import UIKit
 import Firebase
 import GoogleCast
+import SCLAlertView
 
 fileprivate struct Action {
     
@@ -18,10 +19,14 @@ fileprivate struct Action {
 
 class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     
+    fileprivate var current_photo_to_delete : PAPhotograph?
+    
     var ref : FIRDatabaseReference!
     var repositories : [FIRDataSnapshot]! = []
     var storageRef: FIRStorageReference!
     let chromecaster = PAChromecaster.sharedInstance
+    
+    var timelineView : PATimelineView?
     
     var isConnectedToChromecast = false
     
@@ -98,13 +103,13 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         
         let rInfo = self.currentRepository ?? PARepository.Mock1()
         
-        let timelineView = PATimelineView(frame: viewRect, repoInfo: rInfo)
-        timelineView.delegate = self
+        timelineView = PATimelineView(frame: viewRect, repoInfo: rInfo)
+        timelineView?.delegate = self
         
         
         self.title = rInfo.title
         
-        self.view.addSubview(timelineView)
+        self.view.addSubview(timelineView!)
         
         
     }
@@ -170,6 +175,39 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
 /*
     ACTION HANDLERS
 */
+extension PATimelineViewController : PADataManagerDelegate {
+    func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+    
+    func PADataMangerDidConfigure() {
+        
+    }
+    
+    func PADataManagerDidUpdateProgress(progress: Double) {
+        
+    }
+    func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+    
+    func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
+        
+    }
+    
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+    }
+    
+    
+    func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+        self.currentRepository?.removePhotograph(photo: photograph)
+        self.timelineView?.deletePhotograph(photo_info: photograph)
+        
+        self.current_photo_to_delete = nil
+    }
+}
 extension PATimelineViewController : PATimelineViewDelegate {
     
     /*
@@ -191,6 +229,24 @@ extension PATimelineViewController : PATimelineViewDelegate {
         
     }
     
+    func PATimelineViewPhotographWasLongPressed(info: PAPhotograph) {
+        
+        if current_photo_to_delete == nil {
+            current_photo_to_delete = info
+        }
+        else {
+            return
+        }
+        
+        let alertView = SCLAlertView()
+        
+        alertView.addButton("Yes") {
+            PADataManager.sharedInstance.delegate = self
+            PADataManager.sharedInstance.deletePhotograph(photo: info, repo: self.currentRepository)
+        }
+        
+        alertView.showWarning("Are you sure you want to delete?", subTitle: "Are you sure you want to delete this photograph?")
+    }
     func PATimelineViewLongPress() {
         
         didTapAddButton(sender: UIBarButtonItem())

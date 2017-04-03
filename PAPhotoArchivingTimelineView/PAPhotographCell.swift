@@ -12,6 +12,7 @@ import Spring
 
 protocol PAPhotographCellDelegate {
     func PAPhotographCellWasTapped( sender : PAPhotographCell )
+    func PAPhotographCellWasLongPressed( sender : PAPhotographCell )
 }
 
 class PAPhotographCell: UIView {
@@ -67,13 +68,29 @@ class PAPhotographCell: UIView {
         tap.numberOfTapsRequired = 1
         
         self.addGestureRecognizer(tap)
+        
+        let long = UILongPressGestureRecognizer(target: self, action: #selector(PAPhotographCell.didLongPressPhotograph(sender:)))
+        
+        long.minimumPressDuration = 2.0
+        
+        self.addGestureRecognizer(long)
     }
     
     private func updateInformation() {
         
         if let info = self.photographInfo {
             
-            if let img_url = URL(string: info.mainImageURL) {
+            var download_url_str : String = ""
+            
+            if info.thumbnailURL != "" {
+                download_url_str = info.thumbnailURL
+            }
+            else {
+                download_url_str = info.mainImageURL
+            }
+            
+            
+            if let img_url = URL(string: download_url_str) {
                 
                 self.photoImageView.kf.setImage(    with: img_url,
                                                     placeholder: nil,
@@ -95,6 +112,9 @@ class PAPhotographCell: UIView {
         
     }
     
+    func didLongPressPhotograph( sender : UILongPressGestureRecognizer ) {
+        
+    }
     func didTapPhotograph( sender : UITapGestureRecognizer ) {
     
         self.delegate?.PAPhotographCellWasTapped(sender: self)
