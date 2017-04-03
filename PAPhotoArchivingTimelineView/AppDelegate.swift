@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import GoogleCast
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         setupFirebase()
+        
+        
+        let options = GCKCastOptions.init(receiverApplicationID: "8F5EA4C3")
+        GCKCastContext.setSharedInstanceWith(options)
+        
+        
+        
+        
+        
         
         return true
     }

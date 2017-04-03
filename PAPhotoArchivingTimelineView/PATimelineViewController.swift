@@ -23,6 +23,8 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     var storageRef: FIRStorageReference!
     let chromecaster = PAChromecaster.sharedInstance
     
+    var isConnectedToChromecast = false
+    
     var currentRepository : PARepository? {
         didSet {
             self.setupTimelineView()
@@ -44,7 +46,20 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         _setup()
     }
 
-    
+    func _setupCast() {
+        
+        GCKCastContext.sharedInstance().sessionManager.add(self)
+        
+        let frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        let button = GCKUICastButton.init(frame: frame)
+        button.tintColor = Color.white
+        
+        let item = UIBarButtonItem.init(customView: button)
+        self.navigationItem.rightBarButtonItem = item
+        
+        
+        
+    }
     func showAlertViewWithDevice( device : GCKDevice ) {
         
         let a = UIAlertController(title: "Device Found", message: "Would you like to connect", preferredStyle: .alert)
@@ -70,7 +85,7 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         
         //  Don't look for chromecasts at the moment
         //chromecaster.beginSearching()
-        
+
         
         self.navigationController?.navigationItem.PAClearBackButtonTitle()
     }
@@ -129,7 +144,8 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         SETUP FUNCTIONS
     */
     private func _setup() {
-        _setupAddButton()
+        //_setupAddButton()
+        _setupCast()
         _setupChromecast()
     }
     
@@ -168,10 +184,17 @@ extension PATimelineViewController : PATimelineViewDelegate {
         photo_info_vc.currentRepository = self.currentRepository
         photo_info_vc.currentPhotograph = info
         
+        if isConnectedToChromecast {
+            self.sendItemToChromecast(photo: info)
+        }
         self.present(photo_info_vc, animated: true, completion: nil)
         
     }
     
+    func PATimelineViewLongPress() {
+        
+        didTapAddButton(sender: UIBarButtonItem())
+    }
     /*
         BUTTONS
     */
@@ -188,5 +211,41 @@ extension PATimelineViewController : PATimelineViewDelegate {
         
         self.present(add_photograph_vc, animated: true, completion: nil)
     }
+    
+    
+    func sendItemToChromecast( photo : PAPhotograph ) {
+        
+        let hasConnectedSession : Bool = GCKCastContext.sharedInstance().sessionManager.hasConnectedSession()
+        
+        if hasConnectedSession {
+            
+            let metadata = GCKMediaMetadata.init()
+            metadata.setString(photo.title, forKey: kGCKMetadataKeyTitle)
+            metadata.setString(PADateManager.sharedInstance.getDateString(date: photo.dateTaken ?? Date(), formatType: .Pretty), forKey: kGCKMetadataKeySubtitle)
+            
+            let mediaInfo = GCKMediaInformation.init(contentID: photo.mainImageURL, streamType: GCKMediaStreamType.buffered, contentType: "image/jpeg", metadata: metadata, streamDuration: TimeInterval.infinity, customData: nil)
+            
+            GCKCastContext.sharedInstance().sessionManager.currentSession?.remoteMediaClient?.loadMedia(mediaInfo)
+        }
+    }
+}
+
+extension PATimelineViewController : GCKSessionManagerListener {
+    func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+        
+        isConnectedToChromecast = true
+        print("I started a session!")
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didResumeSession session: GCKSession) {
+        
+        isConnectedToChromecast = true
+        print("I resumed!")
+    }
+    
+    func sessionManager(_ sessionManager: GCKSessionManager, didEnd session: GCKSession, withError error: Error?) {
+        isConnectedToChromecast = false
+    }
+    
 }
 

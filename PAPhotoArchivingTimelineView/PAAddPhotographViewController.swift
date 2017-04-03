@@ -124,7 +124,7 @@ class PAAddPhotoViewController : FormViewController {
         form +++ Section( section_three_title )
             <<< ImageRow() {
                 $0.title = "Photograph"
-                $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum ]
+                $0.sourceTypes = [.PhotoLibrary ]
                 $0.tag          = Keys.Photograph.localPhotoURL
             }
             .cellUpdate { [weak self ] (cell , row) in

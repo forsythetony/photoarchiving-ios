@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import GoogleCast
 
 class PAStoriesViewController: UIViewController {
     
@@ -22,6 +23,23 @@ class PAStoriesViewController: UIViewController {
             
             currentPhotograph?.delegate = self
             currentPhotograph?.fetchStories()
+        }
+    }
+    
+    var isConnectedToSession : Bool {
+        get {
+            return GCKCastContext.sharedInstance().sessionManager.hasConnectedSession()
+        }
+    }
+    
+    var currentSession : GCKSession? {
+        get {
+            if self.isConnectedToSession {
+                return GCKCastContext.sharedInstance().sessionManager.currentSession
+            }
+            else {
+                return nil
+            }
         }
     }
     
@@ -109,6 +127,52 @@ class PAStoriesViewController: UIViewController {
     }
     
 
+    func sendItemToChromecast( story : PAStory ) {
+        
+        if let sess = currentSession {
+            
+            let metadata = GCKMediaMetadata.init()
+            
+            if let img_url_str = self.currentPhotograph?.mainImageURL {
+                if let img_url = URL(string: img_url_str) {
+                    
+                    let mediaImage = GCKImage.init(url: img_url, width: 300, height: 300)
+                    
+                    metadata.addImage(mediaImage)
+                }
+            }
+            
+            metadata.setString(story.title, forKey: kGCKMetadataKeyTitle)
+            
+            let mediaInfo = GCKMediaInformation.init(contentID: story.recordingURL, streamType: GCKMediaStreamType.buffered, contentType: "audio/mp4", metadata: metadata, streamDuration: story.recordingLength, customData: nil)
+            
+            sess.remoteMediaClient?.loadMedia(mediaInfo)
+            let queueItem = GCKMediaQueueItem.init(mediaInformation: mediaInfo, autoplay: true, startTime: kGCKInvalidTimeInterval, preloadTime: 0, activeTrackIDs: nil, customData: nil)
+            
+            
+            var queueItems = [GCKMediaQueueItem]()
+            queueItems.append(queueItem)
+            
+            
+            
+            
+            if let curr_photo = self.currentPhotograph {
+                
+                let imageMetadata = GCKMediaMetadata.init()
+                
+                imageMetadata.setString(curr_photo.title, forKey: kGCKMetadataKeyTitle)
+                imageMetadata.setString(PADateManager.sharedInstance.getDateString(date: curr_photo.dateTaken ?? Date(), formatType: .Pretty), forKey: kGCKMetadataKeySubtitle)
+                
+                let imageMediaInformation = GCKMediaInformation.init(contentID: curr_photo.mainImageURL, streamType: .buffered, contentType: "image/jpeg", metadata: imageMetadata, streamDuration: TimeInterval.infinity, customData: nil)
+                
+                let imageQueueItem = GCKMediaQueueItem.init(mediaInformation: imageMediaInformation, autoplay: true, startTime: kGCKInvalidTimeInterval, preloadTime: 5.0, activeTrackIDs: nil, customData: nil)
+                
+                queueItems.append(imageQueueItem)
+            }
+            
+            sess.remoteMediaClient?.queueLoad(queueItems, start: 0, repeatMode: .off)
+        }
+    }
 }
 
 extension PAStoriesViewController : UITableViewDelegate, UITableViewDataSource {
@@ -153,9 +217,16 @@ extension PAStoriesViewController : UITableViewDelegate, UITableViewDataSource {
             return
         }
         
+        if isConnectedToSession {
+            self.sendItemToChromecast(story: story_info)
+        }
+        else {
+            self.audioMan.playStory(story: story_info)
+            self.showPlayerBar()
+        }
         
-        self.audioMan.playStory(story: story_info)
-        self.showPlayerBar()
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -231,4 +302,15 @@ extension PAStoriesViewController : PAPhotographDelegate {
         
         mainTableView.reloadData()
     }
+}
+
+extension PAStoriesViewController : GCKRemoteMediaClientListener {
+    
+    
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus) {
+        
+        
+    }
+    
+    
 }

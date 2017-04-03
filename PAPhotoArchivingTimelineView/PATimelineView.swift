@@ -10,6 +10,7 @@ import UIKit
 
 protocol PATimelineViewDelegate {
     func PATimelineViewPhotographWasTapped( info : PAPhotograph )
+    func PATimelineViewLongPress()
 }
 class PATimelineView: UIView {
     
@@ -90,6 +91,12 @@ class PATimelineView: UIView {
         
         self.addSubview(mainScrollView)
         
+        
+        let long_gest = UILongPressGestureRecognizer(target: self, action: #selector(PATimelineView.didLongPress(sender:)))
+        long_gest.minimumPressDuration = 1.5
+        
+        mainScrollView.addGestureRecognizer(long_gest)
+        
         if let info = self.timelineInformation {
             
             let scrollViewContentSize = CGSize(width: info.TimelineContentWidth, height: info.ContentViewHeight)
@@ -149,46 +156,89 @@ class PATimelineView: UIView {
         
         var incViewStartingY = tInfo.TimelineLogicalStart - (incViewHeight / 2.0)
         
-        for i in startYear...endYear {
-            
-            var incViewFrame = CGRect(x: -100.0, y: incViewStartingY, width: incViewWidth, height: incViewHeight)
-            
-            var incViewType : PAIncrementViewType!
-            
-            if i == startYear  {
-                incViewType = PAIncrementViewType.EndpointStart
-            } else if i == endYear {
-                incViewType = PAIncrementViewType.EndpointEnd
-            } else if i % 10 == 0 {
-                incViewType = PAIncrementViewType.Ten
-            } else if i % 5 == 0 {
-                incViewType = PAIncrementViewType.Five
-            } else {
-                incViewType = PAIncrementViewType.Regular
-            }
-            
-            var alpha_val : CGFloat = 0.0
-            
-            if incViewFrame.origin.y > self.frame.height {
-                var newX : CGFloat = 30.0
+        if tMan.timelineStyle == .year {
+            for i in startYear...endYear {
                 
-                if let tInfo = self.timelineInformation {
-                    newX = tInfo.TimelineLeftMargin + 1
+                var incViewFrame = CGRect(x: -100.0, y: incViewStartingY, width: incViewWidth, height: incViewHeight)
+                
+                var incViewType : PAIncrementViewType!
+                
+                if i == startYear  {
+                    incViewType = PAIncrementViewType.EndpointStart
+                } else if i == endYear {
+                    incViewType = PAIncrementViewType.EndpointEnd
+                } else if i % 10 == 0 {
+                    incViewType = PAIncrementViewType.Ten
+                } else if i % 5 == 0 {
+                    incViewType = PAIncrementViewType.Five
+                } else {
+                    incViewType = PAIncrementViewType.Regular
                 }
                 
-                incViewFrame.origin.x = newX
-                alpha_val = 1.0
+                var alpha_val : CGFloat = 0.0
+                
+                if incViewFrame.origin.y > self.frame.height {
+                    var newX : CGFloat = 30.0
+                    
+                    if let tInfo = self.timelineInformation {
+                        newX = tInfo.TimelineLeftMargin + 1
+                    }
+                    
+                    incViewFrame.origin.x = newX
+                    alpha_val = 1.0
+                }
+                
+                let incView = PAIncrementView(frame: incViewFrame, year: i, type: incViewType)
+                incView.alpha = alpha_val
+                
+                self.incViews.append(incView)
+                
+                self.mainScrollView.addSubview(incView)
+                
+                incViewStartingY += incViewHeight
             }
-            
-            let incView = PAIncrementView(frame: incViewFrame, year: i, type: incViewType)
-            incView.alpha = alpha_val
-            
-            self.incViews.append(incView)
-            
-            self.mainScrollView.addSubview(incView)
-            
-            incViewStartingY += incViewHeight
         }
+        else {
+            let totalMonths = (endYear - startYear) * 12
+            
+            var counter = 0
+            
+            for i in 0...totalMonths {
+                
+                var incViewFrame = CGRect(x: -100.0, y: incViewStartingY, width: incViewWidth, height: incViewHeight)
+                
+                var incViewType : PAIncrementViewType!
+                
+                if counter == 0 && i == 0 {
+                    incViewType = PAIncrementViewType.EndpointStart
+                
+                }
+                else if i == totalMonths {
+                    incViewType = PAIncrementViewType.EndpointEnd
+                }
+                else if counter == 12 {
+                    incViewType = PAIncrementViewType.Ten
+                    counter = 0
+                }
+                else {
+                    incViewType = PAIncrementViewType.Five
+                }
+                
+                var alpha_val : CGFloat = 0.0
+                
+                
+                let incView = PAIncrementView(frame: incViewFrame, year: self.getYearVal(counter: i, startYear: startYear), type: incViewType)
+                incView.alpha = alpha_val
+                
+                self.incViews.append(incView)
+                
+                self.mainScrollView.addSubview(incView)
+                
+                incViewStartingY += incViewHeight
+                counter += 1
+            }
+        }
+       
     }
     
     private func animateTimeline() {
@@ -296,6 +346,15 @@ class PATimelineView: UIView {
                     }
                 }
             }
+    }
+    
+    @objc func didLongPress( sender : UILongPressGestureRecognizer ) {
+        self.delegate?.PATimelineViewLongPress()
+    }
+    
+    func getYearVal( counter : Int, startYear : Int ) -> Int {
+        
+        return startYear + (counter / 12)
     }
 }
 extension PATimelineView : UIScrollViewDelegate {

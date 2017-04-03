@@ -15,6 +15,7 @@ enum PADateStyleType : String {
     case FirebaseFull = "yyyy-MM-dd H:m:S"
     case YearOnly = "yyyy"
     case StorysTableView = "MMM dd, H:mm a"
+    case ShortMonth = "MMM"
 }
 class PADateManager {
     
@@ -45,11 +46,19 @@ class PADateManager {
         return formatter.string(from: date)
     }
     
-    func getLowerYearBound( year : Date ) -> Date {
+    func getLowerYearBound( year : Date, style : PATimelineStyle) -> Date {
     
-        let yearInt = self.getLowerYearBoundInt(year: year)
+        switch style {
+        case .year:
+            let yearInt = self.getLowerYearBoundInt(year: year)
+            
+            return self.getDateFromYearInt(year: yearInt)
+        default:
+            let yearInt = self.getYearIntValue(date: year)
+            
+            return self.getDateFromYearInt(year: yearInt.decrement())
+        }
         
-        return self.getDateFromYearInt(year: yearInt)
     }
     
     func getLowerYearBoundInt( year : Date ) -> Int {
@@ -77,11 +86,38 @@ class PADateManager {
         return interval
     }
     
-    func getUpperYearBound( year : Date ) -> Date {
+    func getUpperYearBound( year : Date, style : PATimelineStyle ) -> Date {
         
-        let yearInt = self.getUpperYearBoundInt(year: year)
+        switch style {
+        case .year:
+            let yearInt = self.getUpperYearBoundInt(year: year)
+            
+            return self.getDateFromYearInt(year: yearInt)
+            
+            
+        case .month:
+            let yearInt = self.getYearIntValue(date: year)
+            
+            return self.getDateFromYearInt(year: yearInt.increment())
+            
+        default:
+            break
+        }
         
-        return self.getDateFromYearInt(year: yearInt)
+    }
+    func getMonthValueForCounter( counter : Int ) -> String {
+        
+        let mod = counter % 12
+        
+        var dateComp = DateComponents.init()
+        dateComp.month = mod
+        
+        if let date = self.currentCalendar.date(from: dateComp) {
+            return self.getDateString(date: date, formatType: .ShortMonth)
+        }
+        else {
+            return "Uh oh"
+        }
     }
     func getUpperYearBoundInt( year : Date ) -> Int {
         

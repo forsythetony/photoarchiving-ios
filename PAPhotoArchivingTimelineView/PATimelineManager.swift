@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+enum PATimelineStyle {
+    case year, month
+}
+
 class PATimelineManager {
     
     private var startDate   = Date()
@@ -34,14 +38,17 @@ class PATimelineManager {
     
     var recommendedIncViewWidth : CGFloat = 0.0
     
+    var timelineStyle = PATimelineStyle.year
     
     init( _startDate : Date, _endDate : Date, _startY : CGFloat, _endY : CGFloat, _contentViewWidth : CGFloat) {
         
         self.startDate  = _startDate
         self.endDate    = _endDate
         
-        self.fixedStartDate = PADateManager.sharedInstance.getLowerYearBound(year: self.startDate)
-        self.fixedEndDate = PADateManager.sharedInstance.getUpperYearBound(year: self.endDate)
+        self.setTimelineStyle()
+        
+        self.fixedStartDate = PADateManager.sharedInstance.getLowerYearBound(year: self.startDate, style: self.timelineStyle)
+        self.fixedEndDate = PADateManager.sharedInstance.getUpperYearBound(year: self.endDate, style: self.timelineStyle)
         
         self.fixedStartDateInt = PADateManager.sharedInstance.getYearIntValue(date: self.fixedStartDate)
         self.fixedEndDateInt = PADateManager.sharedInstance.getYearIntValue(date: self.fixedEndDate)
@@ -56,14 +63,33 @@ class PATimelineManager {
         self.updateValues()
     }
     
-    
+    private func setTimelineStyle() {
+        
+        let dateDifference = PADateManager.sharedInstance.getDateSpanSeconds(startDate: self.startDate, endDate: self.endDate)
+        
+        let yearSpan = dateDifference / ( 60.0 * 60.0 * 24.0 * 365.0 )
+        
+        let threshold = 20.0
+        
+        if yearSpan > threshold {
+            self.timelineStyle = .year
+        }
+        else {
+            self.timelineStyle = .month
+        }
+        
+    }
     private func updateValues() {
         
         dateSpanSeconds = PADateManager.sharedInstance.getDateSpanSeconds(startDate: self.fixedStartDate, endDate: self.fixedEndDate)
         distanceSpan = endY - startY
         
+        if self.timelineStyle == .year {
         recommendedIncViewWidth = distanceSpan / CGFloat((self.fixedEndDateInt - self.fixedStartDateInt))
-        
+        }
+        else {
+            recommendedIncViewWidth = distanceSpan / CGFloat((self.fixedEndDateInt - self.fixedStartDateInt) * 12)
+        }
         
         self.secondsPerPoint = Double(dateSpanSeconds) / Double(distanceSpan)
     }

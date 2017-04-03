@@ -179,4 +179,8 @@ extension PARepositoryViewController: PATimelineViewDelegate {
         self.chromecaster.sendPhoto(photo: info)
         self.performSegue(withIdentifier: Constants.SegueIDs.ToPhotoInformation, sender: info)
     }
+    
+    func PATimelineViewLongPress() {
+        
+    }
 }

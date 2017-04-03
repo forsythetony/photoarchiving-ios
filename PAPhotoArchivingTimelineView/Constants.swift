@@ -128,7 +128,7 @@ struct Constants {
         static let VerticalInset            : CGFloat = 30.0
         static let MainLineWidth            : CGFloat = 1.0
         static let MainLineMargin           : CGFloat = 0.0
-        static let MainTimelineHeight       : CGFloat = 2000.0
+        static let MainTimelineHeight       : CGFloat = 5000.0
         
         
         struct IncrementLine {

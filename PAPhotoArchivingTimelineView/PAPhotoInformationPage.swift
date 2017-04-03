@@ -10,6 +10,7 @@ import Foundation
 import Eureka
 import Kingfisher
 import Spring
+import GoogleCast
 
 class PAPhotoInformationViewControllerv2 : FormViewController {
     
@@ -186,8 +187,9 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                 
             }
             .onCellSelection { [ weak self ] ( cell, row ) in
-                print("Exiting")
                 self?.presentingViewController?.dismiss(animated: true, completion: nil)
+                
+                
             }
         
         

@@ -52,7 +52,7 @@ class PARepository {
     fileprivate var refHandle: FIRDatabaseHandle!
     
     var delegate : PARepositoryDelegate?
-    
+     
     func configPhotographs() {
 
         let repo_ref = FIRDatabase.database().reference().child("repositories/" + self.uid + "/photos")

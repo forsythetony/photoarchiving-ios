@@ -186,6 +186,13 @@ class PAPhotoUploadForm : FormViewController {
         
         
     }
+    
+    func quickDisplayPhotoSelector() {
+        
+        self.photoPickerChoice = .photoLibrary
+        self.showPhotoPicker()
+    }
+    
     func displayPhotoSelector() {
         
         let typePicker = UIAlertController(title: "Source Pick", message: "Pick a source", preferredStyle: .actionSheet)

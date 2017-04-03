@@ -249,9 +249,6 @@ extension PADataManager {
         let repository_db_ref   = database_ref!.child(String.init(format: "/repositories/%@", repository.uid))
         
         
-        
-        repository_db_ref.child(Keys.Repository.totalPhotographs).setValue(repository.totalPhotographs.increment())
-        
         //  If the date on the photograph is not within the range of the repository
         //  then update either the 'end_date' or 'start_date' on the repository
         
@@ -297,6 +294,8 @@ extension PADataManager {
             }
             
             
+            self.incrementRepositoryPhotoCount(repo_id: repository.uid)
+            
             if let image_url = metaData?.downloadURLs?.first?.absoluteString {
                 
                 newPhoto.dateUploaded   = Date()
@@ -337,6 +336,23 @@ extension PADataManager {
         
         
     }
+    
+    fileprivate func incrementRepositoryPhotoCount( repo_id : String ) {
+        
+        guard isConfigured else { return }
+        
+        let number_ref = database_ref!.child("repositories").child(repo_id).child(Keys.Repository.totalPhotographs)
+        
+        number_ref.observeSingleEvent(of: .value, with: { (snapper) in
+            
+            if let val = snapper.value as? Int {
+                
+                number_ref.setValue(val.increment())
+            }
+        })
+    }
+    
+    
     
     func uploadNewRepository( repository : PARepository ) {
         
