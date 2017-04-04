@@ -276,6 +276,25 @@ extension Font {
 
 extension Color {
     
+    convenience init(hex: String) {
+        let scanner = Scanner(string: hex)
+        scanner.scanLocation = 0
+        
+        var rgbValue: UInt64 = 0
+        
+        scanner.scanHexInt64(&rgbValue)
+        
+        let r = (rgbValue & 0xff0000) >> 16
+        let g = (rgbValue & 0xff00) >> 8
+        let b = rgbValue & 0xff
+        
+        self.init(
+            red: CGFloat(r) / 0xff,
+            green: CGFloat(g) / 0xff,
+            blue: CGFloat(b) / 0xff, alpha: 1
+        )
+    }
+    
     static var MainApplicationColor : Color {
         get {
             return Color(red: 192.0.CGFloatRGBValue, green: 57.0.CGFloatRGBValue, blue: 43.0.CGFloatRGBValue, alpha: 1.0)
@@ -325,16 +344,46 @@ extension Color {
             return Color(white: 0.75, alpha: 1.0)
         }
     }
+    static var PASuccessTextColor : Color {
+        get {
+            let hexString = "4F8A10"
+            
+            return Color(hex: hexString)
+        }
+    }
     
     static var PASuccessColor : Color {
         get {
-            return Color(red: 0.0.CGFloatRGBValue, green: 122.0.CGFloatRGBValue, blue: 255.0.CGFloatRGBValue, alpha: 1.0)
+            let hexString = "DFF2BF"
+            return Color(hex: hexString)
+        }
+    }
+    
+    static var PAWarningTextColor : Color {
+        get {
+            let hexString = "9F6000"
+            return Color(hex: hexString)
+        }
+    }
+    static var PAWarningColor : Color {
+        get {
+            let hexString = "FEEFB3"
+            return Color(hex: hexString)
+        }
+    }
+    
+    static var PADangerTextColor : Color {
+        get {
+            let hexString = "D8000C"
+            return Color(hex: hexString)
         }
     }
     
     static var PADangerColor : Color {
         get {
-            return Color.red
+            let hexString = "FFBABA"
+            
+            return Color(hex: hexString)
         }
     }
 }

@@ -43,6 +43,7 @@
 		25AB18581E91FB5C00F6341A /* PACustomEurekaRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */; };
 		25AB185B1E9209DE00F6341A /* PALocationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */; };
 		25AB185D1E92A0A000F6341A /* PAImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AB185C1E92A0A000F6341A /* PAImageViewCell.xib */; };
+		25ABE84B1E92E21D0028DF29 /* PACustomNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ABE84A1E92E21D0028DF29 /* PACustomNotifications.swift */; };
 		25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */; };
 		25C2D1CE1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */; };
 		25CFCD5C1E4D34BF00263353 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */; };
@@ -132,6 +133,7 @@
 		25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACustomEurekaRows.swift; sourceTree = "<group>"; };
 		25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PALocationViewCell.xib; sourceTree = "<group>"; };
 		25AB185C1E92A0A000F6341A /* PAImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PAImageViewCell.xib; sourceTree = "<group>"; };
+		25ABE84A1E92E21D0028DF29 /* PACustomNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACustomNotifications.swift; sourceTree = "<group>"; };
 		25C2D1CB1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationPage.swift; sourceTree = "<group>"; };
 		25C2D1CD1E8AF44B00AB7CB9 /* PAPhotoInformationHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationHeaderView.swift; sourceTree = "<group>"; };
 		25CFCD5A1E4D34BF00263353 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				2539ED5A1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld */,
 				25316B4D1E8CB6F500C2B7F8 /* PARepositoryCell.swift */,
 				25316B4E1E8CB6F500C2B7F8 /* PARepositoryCell.xib */,
+				25ABE84A1E92E21D0028DF29 /* PACustomNotifications.swift */,
 			);
 			path = PAPhotoArchivingTimelineView;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25ABE84B1E92E21D0028DF29 /* PACustomNotifications.swift in Sources */,
 				25EC83B01E7999B6000AFC54 /* RepositoriesViewController.swift in Sources */,
 				25E920291E7F44D1000D1BE2 /* TAPhotoInformationViewController.swift in Sources */,
 				25D03BA81DC19DAE00045988 /* PARepositoryViewController.swift in Sources */,

@@ -18,8 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="435"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W4-li-lJs">
-                        <rect key="frame" x="20" y="0.0" width="355" height="37"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4W4-li-lJs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="37" id="djB-Gk-01F"/>
                         </constraints>
@@ -27,14 +27,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ht2-cE-thk">
+                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ht2-cE-thk">
                         <rect key="frame" x="5" y="45" width="375" height="395"/>
                     </mapView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Ht2-cE-thk" secondAttribute="bottom" constant="-5" id="LE1-fW-liT"/>
                     <constraint firstItem="4W4-li-lJs" firstAttribute="top" secondItem="QHk-rB-EeZ" secondAttribute="top" id="Mie-QM-AbZ"/>
-                    <constraint firstItem="4W4-li-lJs" firstAttribute="leading" secondItem="QHk-rB-EeZ" secondAttribute="leading" constant="20" id="OE6-T1-ZmA"/>
+                    <constraint firstItem="4W4-li-lJs" firstAttribute="leading" secondItem="QHk-rB-EeZ" secondAttribute="leading" id="OE6-T1-ZmA"/>
                     <constraint firstItem="Ht2-cE-thk" firstAttribute="top" secondItem="4W4-li-lJs" secondAttribute="bottom" constant="8" id="Wpz-gd-PwX"/>
                     <constraint firstItem="Ht2-cE-thk" firstAttribute="leading" secondItem="QHk-rB-EeZ" secondAttribute="leading" constant="5" id="b50-Et-3Zh"/>
                     <constraint firstAttribute="trailing" secondItem="Ht2-cE-thk" secondAttribute="trailing" constant="-5" id="pNx-0Y-X9Z"/>

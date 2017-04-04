@@ -18,6 +18,7 @@ target 'PAPhotoArchivingTimelineView' do
 	pod 'SnapKit', '~> 3.2.0'
 	pod 'Kingfisher', '~> 3.0'
 	pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift3'
+	pod 'Toast-Swift', '~> 2.0.0'
 	
 	pod 'google-cast-sdk'
 	pod 'SCLAlertView'

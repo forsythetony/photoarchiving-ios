@@ -172,6 +172,10 @@ class PARepositoryViewController: UIViewController, PAChromeCasterDelegate {
 }
 
 extension PARepositoryViewController: PATimelineViewDelegate {
+    internal func PATimelineViewLongPress(date: Date?) {
+        
+    }
+
     internal func PATimelineViewPhotographWasLongPressed(info: PAPhotograph) {
         
     }

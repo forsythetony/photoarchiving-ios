@@ -15,7 +15,7 @@ fileprivate enum PATimelineViewAnimationState {
 
 protocol PATimelineViewDelegate {
     func PATimelineViewPhotographWasTapped( info : PAPhotograph )
-    func PATimelineViewLongPress()
+    func PATimelineViewLongPress( date : Date? )
     func PATimelineViewPhotographWasLongPressed( info : PAPhotograph )
 }
 class PATimelineView: UIView {
@@ -405,11 +405,13 @@ class PATimelineView: UIView {
             }
         }
         
-        self.delegate?.PATimelineViewLongPress()
+        var date_pressed : Date?
         
+        if let tMan = self.timelineMan {
+            date_pressed = tMan.getDateForPoint(point: sender_center)
+        }
         
-        
-        self.delegate?.PATimelineViewLongPress()
+        self.delegate?.PATimelineViewLongPress(date: date_pressed)
     }
     
     func getYearVal( counter : Int, startYear : Int ) -> Int {

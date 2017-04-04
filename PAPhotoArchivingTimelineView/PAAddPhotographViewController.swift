@@ -45,6 +45,15 @@ class PAAddPhotoViewController : FormViewController {
     fileprivate var selectedImageURL : URL?
     var currentRepository : PARepository?
     
+    var start_date : Date? {
+        didSet {
+            if let date_picker_row = self.form.rowBy(tag: Keys.Photograph.dateTaken) {
+                
+                date_picker_row.baseValue = start_date!
+                date_picker_row.updateCell()
+            }
+        }
+    }
     fileprivate var setupValues = InitialValues()
     
     override func viewDidLoad() {
@@ -127,10 +136,10 @@ class PAAddPhotoViewController : FormViewController {
         
         form +++ Section( section_two_title )
             
-            <<< DateRow() {
+            <<< DateInlineRow() {
                 
                 $0.title        = "Date Taken"
-                $0.value        = self.setupValues.photoDate
+                $0.value        = self.start_date ?? self.setupValues.photoDate
                 $0.minimumDate  = self.setupValues.photoMinDate
                 $0.maximumDate  = self.setupValues.photoMaxDate
                 $0.tag          = Keys.Photograph.dateTaken
@@ -185,7 +194,8 @@ class PAAddPhotoViewController : FormViewController {
                 
             }
             .cellUpdate { cell, row in
-                cell.textLabel?.textColor = Color.PASuccessColor
+                cell.textLabel?.textColor = Color.PASuccessTextColor
+                cell.backgroundColor = Color.PASuccessColor
             }
             <<< ButtonRow() {
              
@@ -195,9 +205,9 @@ class PAAddPhotoViewController : FormViewController {
                 
                 self?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
-                .cellUpdate { cell, row in
-                    
-                    cell.textLabel?.textColor = Color.PADangerColor
+            .cellUpdate { cell, row in
+                cell.textLabel?.textColor = Color.PADangerTextColor
+                cell.backgroundColor = Color.PADangerColor
             }
         
     }

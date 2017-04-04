@@ -94,6 +94,18 @@ class PATimelineManager {
         self.secondsPerPoint = Double(dateSpanSeconds) / Double(distanceSpan)
     }
     
+    func getDateForPoint( point : CGPoint ) -> Date {
+        
+        //  First get the distance from the start Y point
+        let YDistance = point.y - self.startY
+        
+        let secondsFromStart = Double(YDistance) * secondsPerPoint
+        
+        let totalSecondsFromPast = self.fixedStartDateRef + secondsFromStart
+        
+        return PADateManager.sharedInstance.getDateWithSecondsFromDistantPast(seconds: totalSecondsFromPast)
+    }
+    
     func getPointForDate( date : Date ) -> CGPoint {
         
         var mainPoint = CGPoint()

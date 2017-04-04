@@ -137,6 +137,8 @@ public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegat
         
         let center = mapView.convert(mapView.centerCoordinate, toPointTo: pinView)
         pinView.center = CGPoint(x: center.x, y: center.y - (pinView.bounds.height / 2.0))
+        
+        mainValueLabel.font = UIFont.PABoldFontWithSize(size: mainValueLabel.font.pointSize)
     }
     
     override public func update() {
@@ -146,11 +148,6 @@ public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegat
         
         mainValueLabel.text = current_location.coordinate.PAValueString
         
-//        let region = MKCoordinateRegion(center: current_location.coordinate, span: MKCoordinateSpan(latitudeDelta: 10.0, longitudeDelta: 10.0))
-//        
-//        mapView.addSubview(pinView)
-//        
-//        mapView.layer.insertSublayer(ellipsisLayer, below: pinView.layer)
     }
     
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {

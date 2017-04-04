@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 import GoogleCast
 import SCLAlertView
+import Toast_Swift
 
 fileprivate struct Action {
     
@@ -36,6 +37,8 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         }
     }
     
+    fileprivate var selected_date_for_new_photo : Date?
+    
     fileprivate var _refHandle: FIRDatabaseHandle!
     
     var can_use : Bool = false
@@ -50,7 +53,33 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         
         _setup()
     }
-
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        _removeListeners()
+    }
+    private func _removeListeners() {
+        
+        let defaultCenter = NotificationCenter.default
+        
+        defaultCenter.removeObserver(self, name: Notifications.didAddPhotograph.name, object: nil)
+        defaultCenter.removeObserver(self, name: Notifications.beganUploadingPhotograph.name, object: nil)
+        defaultCenter.removeObserver(self, name: Notifications.didDeletePhotograph.name, object: nil)
+        defaultCenter.removeObserver(self, name: Notifications.errorDeletingPhotograph.name, object: nil)
+    }
+    private func _setupListeners() {
+        
+        let defaultCenter = NotificationCenter.default
+        
+        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceivePhotoUploadNotification(sender:)), name: Notifications.didAddPhotograph.name, object: nil)
+        
+        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceivePhotoBeganUploadingNotification(sender:)), name: Notifications.beganUploadingPhotograph.name, object: nil)
+        
+        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceiveDidDeletePhotographNotifcation(sender:)), name: Notifications.didDeletePhotograph.name, object: nil)
+        
+        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceiveErrorWhenDeletingPhotographNotification(sender:)), name: Notifications.errorDeletingPhotograph.name, object: nil)
+        
+    }
     func _setupCast() {
         
         GCKCastContext.sharedInstance().sessionManager.add(self)
@@ -91,7 +120,7 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         //  Don't look for chromecasts at the moment
         //chromecaster.beginSearching()
 
-        
+        _setupListeners()
         self.navigationController?.navigationItem.PAClearBackButtonTitle()
     }
     
@@ -245,16 +274,22 @@ extension PATimelineViewController : PATimelineViewDelegate {
             PADataManager.sharedInstance.deletePhotograph(photo: info, repo: self.currentRepository)
         }
         
-        alertView.showWarning("Are you sure you want to delete?", subTitle: "Are you sure you want to delete this photograph?")
+        alertView.showWarning("Careful there", subTitle: "Are you sure you want to delete this photograph?")
     }
-    func PATimelineViewLongPress() {
+    func PATimelineViewLongPress(date: Date?) {
         
-        didTapAddButton(sender: UIBarButtonItem())
+        if let pressDate = date {
+            self.selected_date_for_new_photo = pressDate
+        }
+        
+        didTapAddButton(sender: nil)
     }
+    
+    
     /*
         BUTTONS
     */
-    func didTapAddButton( sender : UIBarButtonItem ) {
+    func didTapAddButton( sender : UIBarButtonItem? ) {
         
         let message = "\nLooks like you tapped the add button there kiddo!\n"
         
@@ -263,6 +298,11 @@ extension PATimelineViewController : PATimelineViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         let add_photograph_vc = storyboard.instantiateViewController(withIdentifier: PAAddPhotoViewController.STORYBOARD_ID) as! PAAddPhotoViewController
+        
+        if let date_pressed = self.selected_date_for_new_photo {
+            add_photograph_vc.start_date = date_pressed
+        }
+        
         add_photograph_vc.currentRepository = self.currentRepository
         
         self.present(add_photograph_vc, animated: true, completion: nil)
@@ -303,5 +343,140 @@ extension PATimelineViewController : GCKSessionManagerListener {
         isConnectedToChromecast = false
     }
     
+}
+
+extension PATimelineViewController {
+    
+    func didReceivePhotoUploadNotification( sender : Notification ) {
+        
+        guard let senderData = sender.userInfo else {
+            return
+        }
+        
+        guard let status = senderData[NotificationKeys.PhotoUploaded.status] as? PhotoUploadStatus else {
+            return
+        }
+        
+        if status == .didUpload {
+            self.displaySuccessToast(message: "Uploaded photograph!", duration: 2.0, toastSuperview: self.timelineView ?? self.view)
+        }
+        else {
+            self.displayErrorToast(message: "Couldn't upload photo", duration: 2.0, toastSuperview: self.timelineView ?? self.view)
+        }
+    }
+    
+    
+    func didReceivePhotoBeganUploadingNotification( sender : Notification ) {
+        
+        guard let senderData = sender.userInfo else {
+            return
+        }
+        
+        guard let status = senderData[NotificationKeys.PhotoUploaded.status] as? PhotoUploadStatus else {
+            return
+        }
+        
+        if status == .beganUploading {
+            self.displayWarningToast(message: "Began Uploading", duration: 2.0, toastSuperview: self.timelineView ?? self.view)
+            
+        }
+        else {
+            print( "Something strange" )
+        }
+    }
+    
+    func didReceiveErrorWhenDeletingPhotographNotification( sender : Notification ) {
+        guard let senderData = sender.userInfo else {
+            return
+        }
+        
+        guard let status = senderData[NotificationKeys.PhotoDelete.status] as? PhotoDeleteStatus else {
+            return
+        }
+        
+        if status == .errorDeleting {
+            if let error_string = senderData[NotificationKeys.PhotoDelete.error] as? String {
+                self.displayWarningAlert(title: "Uh Oh", message: "Could not delete -> \(error_string)")
+            }
+            else {
+                self.displayWarningAlert(title: "Uh Oh", message: "Could not delete photo")
+            }
+        }
+        else {
+            
+        }
+    }
+    func didReceiveDidDeletePhotographNotifcation( sender : Notification ) {
+        
+        guard let senderData = sender.userInfo else {
+            return
+        }
+        
+        guard let status = senderData[NotificationKeys.PhotoDelete.status] as? PhotoDeleteStatus else {
+            return
+        }
+        
+        if status == .didDelete {
+            self.displaySuccessToast(message: "Did delete photograph!", duration: 0.5, toastSuperview: self.timelineView ?? self.view )
+            
+        }
+        else {
+            self.displayWarningAlert(title: "Uh oh", message: "Could not delete photo. Reason unknown")
+        }
+    }
+}
+
+/*
+    Toast Extensions
+*/
+
+extension UIViewController {
+    
+    func displayWarningAlert( title : String, message : String?) {
+        
+        let alert = SCLAlertView()
+        
+        alert.showWarning(title, subTitle: message ?? "")
+    }
+    func displayWarningToast( message : String, duration : TimeInterval?, toastSuperview : UIView?) {
+        
+        var style = ToastStyle()
+        
+        style.messageColor = Color.PAWarningTextColor
+        style.titleColor = Color.PAWarningTextColor
+        style.backgroundColor = Color.PAWarningColor
+        
+        let v : UIView! = toastSuperview ?? self.view
+        
+        v.makeToast(message, duration: duration ?? 3.0, position: ToastPosition.center, style: style)
+    }
+    func displayErrorToast( message : String, duration : TimeInterval?, toastSuperview : UIView?) {
+        
+        var style = ToastStyle()
+        
+        style.messageColor = Color.PADangerTextColor
+        style.titleColor = Color.PADangerTextColor
+        style.backgroundColor = Color.PADangerColor
+        
+        let v : UIView! = toastSuperview ?? self.view
+    
+        v.makeToast(message, duration: duration ?? 3.0, position: ToastPosition.center, style: style)
+
+    }
+    
+    func displaySuccessToast( message : String, duration : TimeInterval?, toastSuperview : UIView?) {
+        
+        var style = ToastStyle()
+        
+        style.titleColor = Color.PASuccessTextColor
+        style.messageColor = Color.PASuccessTextColor
+        style.backgroundColor = Color.PASuccessColor
+        
+        let v : UIView! = toastSuperview ?? self.view
+    
+        v.makeToast(message, duration: duration ?? 3.0, position: ToastPosition.center, style: style)
+
+    
+    }
 }
 

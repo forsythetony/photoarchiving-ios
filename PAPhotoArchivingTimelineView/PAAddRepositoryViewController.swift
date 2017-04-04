@@ -77,7 +77,7 @@ class PAAddRepositoryViewController : FormViewController {
             }
         
         form +++ Section("Date Information")
-            <<< DatePickerRow() {
+            <<< DateInlineRow() {
                 
                 $0.title        = "Start Date"
                 $0.minimumDate  = self.dateMan.getDateFromYearInt(year: 1500)
@@ -85,7 +85,7 @@ class PAAddRepositoryViewController : FormViewController {
                 $0.value        = default_start_date
                 $0.tag          = Keys.Repository.startDate
             }
-            <<< DatePickerRow() {
+            <<< DateInlineRow() {
                 
                 $0.title        = "End Date"
                 $0.minimumDate  = self.dateMan.getDateFromYearInt(year: 1500)
@@ -112,15 +112,22 @@ class PAAddRepositoryViewController : FormViewController {
                 }
                 
             }
+            .cellUpdate { (cell, row) in
+                cell.textLabel?.textColor = Color.PASuccessTextColor
+                cell.backgroundColor = Color.PASuccessColor
+            }
         
             <<< ButtonRow() {
                 $0.title = "Cancel"
             }
             .onCellSelection { [ weak self ] ( cell, row ) in
-                
-                print("\nYou tapped the cancel button!\n")
-                
+
                 self?.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+            .cellUpdate { (cell, row) in
+                
+                cell.textLabel?.textColor = Color.PAWarningTextColor
+                cell.backgroundColor = Color.PAWarningColor
             }
     }
     

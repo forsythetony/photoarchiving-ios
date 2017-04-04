@@ -243,6 +243,7 @@ extension PADataManager {
     func deletePhotograph( photo : PAPhotograph, repo : PARepository? ) {
         
         guard isConfigured else { return }
+
         
         guard let photo_uploaded_by = photo.uploaderID else {
             return
@@ -253,7 +254,19 @@ extension PADataManager {
         }
         
         guard currentUserID == photo_uploaded_by else {
-            print("You can't delete this file")
+            
+            let noteInfo : [String : Any] = [
+                NotificationKeys.PhotoDelete.status : PhotoDeleteStatus.errorDeleting,
+                NotificationKeys.PhotoDelete.photoID : photo.uid,
+                NotificationKeys.PhotoDelete.error : "You don't have the proper permissions to delete this file"
+            ]
+            
+            let note = Notification(name: Notifications.errorDeletingPhotograph.name, object: nil, userInfo: noteInfo)
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(note)
+            }
+            
             return
         }
         
@@ -290,7 +303,16 @@ extension PADataManager {
                     return
                 }
                 
-                print("Successfully deleted the thumbnail image!")
+                let noteInfo : [String : Any] = [
+                    NotificationKeys.PhotoDelete.status : PhotoDeleteStatus.didDelete,
+                    NotificationKeys.PhotoDelete.photoID : photo.uid
+                ]
+                
+                let note = Notification(name: Notifications.didDeletePhotograph.name, object: nil, userInfo: noteInfo)
+                
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(note)
+                }
             })
         }
         
@@ -357,6 +379,30 @@ extension PADataManager {
         
         let new_photograph_key = photographs_db_ref.childByAutoId().key
         
+        
+        
+        
+        
+        
+        
+        
+        let began_uploading_notification = Notification.init(name: Notifications.beganUploadingPhotograph.name, object: nil, userInfo: [
+            NotificationKeys.PhotoUploaded.status : PhotoUploadStatus.beganUploading,
+            NotificationKeys.PhotoUploaded.photoID : new_photograph_key
+            ])
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(began_uploading_notification)
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
         let image_metadata = FIRStorageMetadata()
         image_metadata.contentType = "image/jpeg"
         image_metadata.customMetadata = [ "photo_id" : new_photograph_key ]
@@ -389,6 +435,16 @@ extension PADataManager {
                 photo_id: new_photograph_key)
             
             NotificationCenter.default.post(note)
+            
+            
+            let didUploadNote = Notification.init(name: Notifications.didAddPhotograph.name, object: nil, userInfo: [ NotificationKeys.PhotoUploaded.status : PhotoUploadStatus.didUpload,
+                                                                                                                      NotificationKeys.PhotoUploaded.photoID : new_photograph_key
+                ])
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(didUploadNote)
+            }
+            
         }
         
         upload_task.observe(.progress) { (snap) in

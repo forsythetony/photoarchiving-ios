@@ -105,6 +105,10 @@ class PADateManager {
         }
         
     }
+    func getDateWithSecondsFromDistantPast( seconds : TimeInterval ) -> Date {
+        
+        return Date(timeInterval: seconds, since: Date.distantPast)
+    }
     func getMonthValueForCounter( counter : Int ) -> String {
         
         let mod = counter % 12
