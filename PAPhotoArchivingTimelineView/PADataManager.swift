@@ -503,12 +503,93 @@ extension PADataManager {
     }
     
     
-    
+    func updatePhotographValues( photo : PAPhotograph, repo : PARepository ) {
+        
+        guard isConfigured else { return }
+        
+        
+        let repo_db_ref = database_ref!.child(String.init(format: "repositories/%@", repo.uid))
+        
+        
+        if  let photo_date = photo.dateTaken,
+            let repo_start = repo.startDate,
+            let repo_end = repo.endDate
+        {
+            
+            let new_value = PADateManager.sharedInstance.getDateString(date: photo_date, formatType: .FirebaseFull)
+            
+            
+            switch photo_date.compareToPeriod(start_date: repo_start, end_date: repo_end) {
+            case .isBeforePeriod:
+                repo_db_ref.child(Keys.Repository.startDate).setValue(new_value)
+                repo.startDate = photo_date
+                
+            case .isAfterPeriod:
+                repo_db_ref.child(Keys.Repository.endDate).setValue(new_value)
+                repo.endDate = photo_date
+                
+                
+            default:
+                
+                break
+            }
+            
+            
+            
+            
+        }
+        
+        
+        let photo_db_ref = database_ref!.child(String.init(format: "photographs/%@", photo.uid))
+        
+        photo_db_ref.child(Keys.Photograph.title).setValue(photo.title)
+        
+        photo_db_ref.child(Keys.Photograph.description).setValue(photo.longDescription)
+        
+        photo_db_ref.child(Keys.Photograph.dateTakenConf).setValue(photo.dateTakenConf)
+        
+        if let d = photo.dateTaken {
+            let date_string = PADateManager.sharedInstance.getDateString(date: d, formatType: .FirebaseFull)
+            
+            photo_db_ref.child(Keys.Photograph.dateTaken).setValue(date_string)
+        }
+        
+        if let coord = photo.locationTaken.coordinates {
+            
+            let lat = String.init(format: "%2.7f", coord.latitude)
+            let long = String.init(format: "%2.7f", coord.longitude)
+            
+            photo_db_ref.child(Keys.Photograph.locationLatitude).setValue(coord.latitude)
+            photo_db_ref.child(Keys.Photograph.locationLongitude).setValue(coord.longitude)
+        }
+        
+        photo_db_ref.child(Keys.Photograph.locationConf).setValue(photo.locationTakenConf)
+        
+        if let state = photo.locationState {
+            photo_db_ref.child(Keys.Photograph.locationState).setValue(state)
+        }
+        
+        if let country = photo.locationCountry {
+            photo_db_ref.child(Keys.Photograph.locationCountry).setValue(country)
+        }
+        
+        if let zip = photo.locationZIP {
+            photo_db_ref.child(Keys.Photograph.locationZIP).setValue(zip)
+        }
+        
+        if let city = photo.locationCity {
+            photo_db_ref.child(Keys.Photograph.locationCity).setValue(city)
+        }
+        
+        photo_db_ref.child(String.init(format: "%@/%@", Keys.Photograph.iosData, Keys.Photograph.iOS.mapDegreesDelta)).setValue(photo.iosData.degreesDelta)
+        
+    }
     func uploadNewRepository( repository : PARepository ) {
         
         if !isConfigured { return }
         
         let db_ref = database_ref!.child("/repositories")
+        let user_db_ref = database_ref!.child(String.init(format: "users/%@", PAGlobalUser.sharedInstace.userID))
         
         let new_key = db_ref.childByAutoId().ref.key
         
@@ -527,17 +608,80 @@ extension PADataManager {
                 return
             }
             
-            let success_message = String.init(format: "\nSuccessfully uploaded repository with ID -> %@\n", new_key )
             
-            print( success_message )
         }
         
         
+        user_db_ref.child(String.init(format: "%@/%@", Keys.User.myRepositories, new_key)).setValue("true")
+        
+        user_db_ref.child(String.init(format: "%@/%@", Keys.User.joinedRepositories, new_key)).setValue("true")
+        
+        
+        
+        
+        
+        let success_message = String.init(format: "\nSuccessfully uploaded repository with ID -> %@\n", new_key )
+        
+        print( success_message )
+        
+        let note = Notification(name: Notifications.didUploadNewRepository.name, object: nil, userInfo: nil)
+        
+        NotificationCenter.default.post(note)
     }
     
+    func updateRepository( repo : PARepository ) {
+        
+        guard isConfigured else { return }
+        
+        
+        let repo_ref = database_ref!.child(String.init(format: "repositories/%@", repo.uid))
+        
+        let date_man = PADateManager.sharedInstance
+        
+        if let start_date = repo.startDate {
+            let start_date_str = date_man.getDateString(date: start_date, formatType: .FirebaseFull)
+            
+            repo_ref.child(Keys.Repository.startDate).setValue(start_date_str)
+        }
+        
+        if let end_date = repo.endDate {
+            let end_date_str = date_man.getDateString(date: end_date, formatType: .FirebaseFull)
+            
+            repo_ref.child(Keys.Repository.endDate).setValue(end_date_str)
+        }
+        
+        repo_ref.child(Keys.Repository.title).setValue(repo.title)
+        repo_ref.child(Keys.Repository.longDescription).setValue(repo.longDescription)
+        
+        
+        let note = Notification(name: Notifications.didUpdateRepository.name)
+        
+        NotificationCenter.default.post(note)
+    }
     
-    
-    
+    func deleteRepository( repo : PARepository ) {
+        
+        guard isConfigured else { return }
+        
+        guard let userID = FIRAuth.auth()?.currentUser?.uid else { return }
+        
+        guard repo.creatorID == userID else {
+            print( "You didn't create this repo".PAPadWithNewlines() )
+            return
+        }
+        
+        let repo_db_ref = database_ref!.child(String.init(format: "repositories/%@", repo.uid))
+        
+        repo_db_ref.removeValue()
+        
+        let user_db_ref = database_ref!.child(String.init(format: "users/%@", repo.uid))
+        
+        user_db_ref.child(Keys.User.myRepositories).child(repo.uid).removeValue()
+        
+        user_db_ref.child(Keys.User.joinedRepositories).child(repo.uid).removeValue()
+        
+        print(String.init(format: "Did delete repo with id -> %@", repo.uid).PAPadWithNewlines())
+    }
     
     func addPhotographToRepository( newPhoto : PAPhotograph, repository : PARepository ) {
         

@@ -11,6 +11,7 @@
 		2506A2281DD2BE940033EEDD /* PAPhotographCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */; };
 		250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B3A2B1DE8EF91002CE391 /* Helpers.swift */; };
 		250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */; };
+		252711E71E969BE900E656CF /* PAEditRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252711E61E969BE900E656CF /* PAEditRepositoryViewController.swift */; };
 		25316B461E8B260100C2B7F8 /* PANotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B451E8B260100C2B7F8 /* PANotifications.swift */; };
 		25316B4A1E8C5FD500C2B7F8 /* PANewRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */; };
 		25316B4C1E8C840000C2B7F8 /* PAStoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */; };
@@ -28,6 +29,10 @@
 		2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */; };
 		256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */; };
 		256AB0191E89301100FD9779 /* PAAddRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256AB0181E89301100FD9779 /* PAAddRepositoryViewController.swift */; };
+		25776CF71E96388B0072BFE2 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25776CF61E96388B0072BFE2 /* SWRevealViewController.m */; };
+		25776CF91E963BFC0072BFE2 /* PAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25776CF81E963BFC0072BFE2 /* PAUser.swift */; };
+		25776CFB1E9645FB0072BFE2 /* PASidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25776CFA1E9645FB0072BFE2 /* PASidePanelViewController.swift */; };
+		25776CFD1E964BD40072BFE2 /* PANavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25776CFC1E964BD40072BFE2 /* PANavigationManager.swift */; };
 		2583CA4B1DD38003004711DC /* PAPhotoInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */; };
 		2583CA4E1DD387D0004711DC /* TFPhotoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */; };
 		2583CA501DD3B546004711DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2583CA4F1DD3B546004711DC /* CoreLocation.framework */; };
@@ -103,6 +108,7 @@
 		2506A2271DD2BE940033EEDD /* PAPhotographCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotographCell.swift; sourceTree = "<group>"; };
 		250B3A2B1DE8EF91002CE391 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PAApplicationImages.xcassets; sourceTree = "<group>"; };
+		252711E61E969BE900E656CF /* PAEditRepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAEditRepositoryViewController.swift; sourceTree = "<group>"; };
 		25316B451E8B260100C2B7F8 /* PANotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANotifications.swift; sourceTree = "<group>"; };
 		25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANewRecordingViewController.swift; sourceTree = "<group>"; };
 		25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStoriesViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +126,11 @@
 		2568E9E61DD28B7B00FE911E /* PATimelineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PATimelineManager.swift; sourceTree = "<group>"; };
 		256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACurrentUploadsViewController.swift; sourceTree = "<group>"; };
 		256AB0181E89301100FD9779 /* PAAddRepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAddRepositoryViewController.swift; sourceTree = "<group>"; };
+		25776CF51E96388B0072BFE2 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		25776CF61E96388B0072BFE2 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		25776CF81E963BFC0072BFE2 /* PAUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAUser.swift; sourceTree = "<group>"; };
+		25776CFA1E9645FB0072BFE2 /* PASidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PASidePanelViewController.swift; sourceTree = "<group>"; };
+		25776CFC1E964BD40072BFE2 /* PANavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANavigationManager.swift; sourceTree = "<group>"; };
 		2583CA4A1DD38003004711DC /* PAPhotoInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInformationViewController.swift; sourceTree = "<group>"; };
 		2583CA4D1DD387D0004711DC /* TFPhotoInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TFPhotoInfo.swift; sourceTree = "<group>"; };
 		2583CA4F1DD3B546004711DC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -221,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				256AB0181E89301100FD9779 /* PAAddRepositoryViewController.swift */,
+				252711E61E969BE900E656CF /* PAEditRepositoryViewController.swift */,
 			);
 			name = "Add Repository";
 			sourceTree = "<group>";
@@ -231,6 +243,15 @@
 				256AB0151E890B1100FD9779 /* PACurrentUploadsViewController.swift */,
 			);
 			name = "Current Uploads";
+			sourceTree = "<group>";
+		};
+		25776CF41E96388B0072BFE2 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				25776CF51E96388B0072BFE2 /* SWRevealViewController.h */,
+				25776CF61E96388B0072BFE2 /* SWRevealViewController.m */,
+			);
+			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 		2583CA4C1DD387BD004711DC /* Photo Info */ = {
@@ -311,7 +332,7 @@
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
 				25AA7CDC1E52C0BF00733DC8 /* Home */,
 				25EC83AE1E79998A000AFC54 /* Repositories */,
-				25E920241E7F43AA000D1BE2 /* Timline View */,
+				25E920241E7F43AA000D1BE2 /* Timeline View */,
 				2558AE8A1E88C8DF004D7BCB /* Add Photograph */,
 				256AB0171E892FEF00FD9779 /* Add Repository */,
 				25C2D1CA1E8AF29A00AB7CB9 /* Photo Upload Form */,
@@ -321,6 +342,7 @@
 				25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */,
 				25F9B7281E8D2EC50028B91B /* PAStoryTableViewCell.swift */,
 				25F9B7291E8D2EC50028B91B /* PAStoryTableViewCell.xib */,
+				25776CFA1E9645FB0072BFE2 /* PASidePanelViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -362,6 +384,7 @@
 				25CFCD541E4D308F00263353 /* View Controllers */,
 				25C2D1C91E8AF28E00AB7CB9 /* Helpers */,
 				25D03BCB1DC19FD800045988 /* Singletons */,
+				25776CF41E96388B0072BFE2 /* SWRevealViewController */,
 				25D03BC51DC19EB100045988 /* Data Entities */,
 				25D03BC81DC19F9200045988 /* Timeline View */,
 				25D03BA51DC19DAE00045988 /* AppDelegate.swift */,
@@ -429,6 +452,8 @@
 				25D87CFF1DE99393000D2160 /* PAAudioManager.swift */,
 				25D87D011DE993BE000D2160 /* PAFileManager.swift */,
 				25D87D161DEA1511000D2160 /* PAChromecaster.swift */,
+				25776CF81E963BFC0072BFE2 /* PAUser.swift */,
+				25776CFC1E964BD40072BFE2 /* PANavigationManager.swift */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -443,13 +468,13 @@
 			name = "Add Recording";
 			sourceTree = "<group>";
 		};
-		25E920241E7F43AA000D1BE2 /* Timline View */ = {
+		25E920241E7F43AA000D1BE2 /* Timeline View */ = {
 			isa = PBXGroup;
 			children = (
 				25E920251E7F43C6000D1BE2 /* PATimelineViewController.swift */,
 				25E920271E7F4426000D1BE2 /* Timeline View */,
 			);
-			name = "Timline View";
+			name = "Timeline View";
 			sourceTree = "<group>";
 		};
 		25E920271E7F4426000D1BE2 /* Timeline View */ = {
@@ -727,6 +752,7 @@
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
 				259D5B051E95F50200C05669 /* PAUIViewControllerHelpers.swift in Sources */,
+				25776CF71E96388B0072BFE2 /* SWRevealViewController.m in Sources */,
 				25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */,
 				256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */,
 				25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */,
@@ -735,12 +761,15 @@
 				2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */,
 				25EC9C861DFBE01A00C30604 /* PAAboutPageViewController.swift in Sources */,
 				2583CA521DD3B5D2004711DC /* PAPerson.swift in Sources */,
+				25776CF91E963BFC0072BFE2 /* PAUser.swift in Sources */,
 				2568E9E31DD281A300FE911E /* PADataManager.swift in Sources */,
 				2558AE8C1E88C95E004D7BCB /* PAAddPhotographViewController.swift in Sources */,
 				2539ED5C1DFBEF24008B7D38 /* PAPhotoArchivingModel.xcdatamodeld in Sources */,
 				2583CA581DD3B748004711DC /* PARepository.swift in Sources */,
 				2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */,
 				2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */,
+				252711E71E969BE900E656CF /* PAEditRepositoryViewController.swift in Sources */,
+				25776CFD1E964BD40072BFE2 /* PANavigationManager.swift in Sources */,
 				259D5B071E95F5DD00C05669 /* PANotificationCenterHelpers.swift in Sources */,
 				25D87CF71DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift in Sources */,
 				25316B4C1E8C840000C2B7F8 /* PAStoriesViewController.swift in Sources */,
@@ -761,6 +790,7 @@
 				25EC9C841DFBADFB00C30604 /* UIImage+ImageEffects.m in Sources */,
 				25D87CFC1DE98BA5000D2160 /* PAAudioPlayerControlBar.swift in Sources */,
 				25D87D021DE993BE000D2160 /* PAFileManager.swift in Sources */,
+				25776CFB1E9645FB0072BFE2 /* PASidePanelViewController.swift in Sources */,
 				2583CA4B1DD38003004711DC /* PAPhotoInformationViewController.swift in Sources */,
 				25D87D001DE99393000D2160 /* PAAudioManager.swift in Sources */,
 				2506A2261DD2ABB00033EEDD /* PAIncrementView.swift in Sources */,

@@ -493,10 +493,10 @@ class PANewRecordingViewController : FormViewController {
             
         }
         
-        for r in rows {
-            r?.evaluateHidden()
-            r?.evaluateDisabled()
-        }
+//        for r in rows {
+//            r?.evaluateHidden()
+//            r?.evaluateDisabled()
+//        }
     }
     
     fileprivate func updateRecordingTime() {
@@ -605,11 +605,17 @@ extension BaseRow {
     func hideAndDisable() {
         self.hidden = true
         self.disabled = true
+        
+        self.evaluateHidden()
+        self.evaluateDisabled()
     }
     
     func unhideAndUndisable() {
         self.hidden = false
         self.disabled = false
+        
+        self.evaluateHidden()
+        self.evaluateDisabled()
     }
     
     func showAndEnable() {

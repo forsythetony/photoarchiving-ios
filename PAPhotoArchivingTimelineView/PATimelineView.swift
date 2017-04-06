@@ -50,7 +50,7 @@ class PATimelineView: UIView {
         
         basicSetup()
         
-        self.repoInfo.configPhotographs()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,6 +69,8 @@ class PATimelineView: UIView {
         setupIncrementViews()
         animateTimeline()
         animateIncViews()
+        addPhotographsFromLocal()
+        beginPullingPhotographs()
     }
     
     private func valuesSetup() {
@@ -89,7 +91,16 @@ class PATimelineView: UIView {
         
         
     }
-    
+    private func beginPullingPhotographs() {
+        self.repoInfo.configPhotographs()
+    }
+    private func addPhotographsFromLocal() {
+        
+        for p in repoInfo.photographs {
+            
+            self.addNewPhotograph(new_photo: p)
+        }
+    }
     private func setupScrollView() {
         
         mainScrollView.delegate         = self

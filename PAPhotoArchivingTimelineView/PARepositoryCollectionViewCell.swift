@@ -8,11 +8,13 @@
 
 import UIKit
 
+
 class PARepositoryCollectionViewCell: UICollectionViewCell {
     
     static let ReuseID = "PARepositoryCollectionViewCellReuseIdentifier"
     static let Height : CGFloat = 200.0
     static let Width : CGFloat = 200.0
+    
     
     let ImageView   = UIImageView()
     let TitleLabel  = UILabel()
@@ -58,8 +60,11 @@ class PARepositoryCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(ImageView)
         
         self.contentView.sendSubview(toBack: ImageView)
+       
         
     }
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

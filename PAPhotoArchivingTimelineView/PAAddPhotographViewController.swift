@@ -10,6 +10,7 @@ import Foundation
 import Eureka
 import ImageRow
 import CoreLocation
+import SCLAlertView
 
 fileprivate struct PAPhotographValidationError {
     
@@ -170,6 +171,7 @@ class PAAddPhotoViewController : FormViewController {
             <<< PALocationRow() {
                 $0.value    = self.myLocation
                 $0.tag      = "location"
+                $0.cell.delegate = self
             }
             <<< SliderRow() {
                 $0.title        = "Location Conf"
@@ -338,22 +340,96 @@ class PAAddPhotoViewController : FormViewController {
         
         let error_info = populatePhotographWithValues()
         
+        
+        
         if !error_info.didSucceed {
             
             return
         }
         
         
-        if let repo = self.currentRepository {
-            
-            dataMan.addPhotographToRepositoryv2(newPhoto: self.newPhotograph, repository: repo)
-            
-            presentingViewController?.dismiss(animated: true, completion: nil)
-        }
+        getLocationValues()
+        
+        
         
     }
+
+    private func displayError( message: String, title : String? = "Error") {
+        
+        let alert = SCLAlertView()
+        
+        alert.showError(title!, subTitle: message)
+    }
     
-    
+    private func getLocationValues() {
+        
+        guard let coord = self.newPhotograph.locationTaken.coordinates else { return }
+        let e = self.newPhotograph
+        guard let r = currentRepository else {
+            displayError(message: "There was no repository!")
+            return
+        }
+        
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.reverseGeocodeLocation(coord.getLocation) { (placemark, error) in
+            
+            if let error = error {
+                
+                let error_str = String.init(format: "Error getting location\nError:\t%@\n", error.localizedDescription)
+                
+                print( error_str.PAPadWithNewlines(padCount: 3) )
+                return
+            }
+            
+            
+            if let pm = placemark {
+                if pm.count > 0 {
+                    
+                    if let firstPM = pm[0] as? CLPlacemark {
+                        
+                        if let addressDict = firstPM.addressDictionary as? [AnyHashable : Any ] {
+                            
+                            if let country = addressDict["Country"] as? String {
+                                e.locationTaken.country = country
+                            }
+                            
+                            if let city = addressDict["City"] as? String {
+                                e.locationTaken.city = city
+                            }
+                            
+                            if let state = addressDict["State"] as? String {
+                                e.locationTaken.state = state
+                            }
+                            
+                            if let zip = addressDict["ZIP"] as? String {
+                                e.locationTaken.zip = zip
+                            }
+                            
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                }
+            }
+            
+            if let repo = self.currentRepository {
+                
+                self.dataMan.addPhotographToRepositoryv2(newPhoto: self.newPhotograph, repository: repo)
+                
+                self.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+            
+            
+        }
+        
+        
+        
+    }
     func showUploadsForm() {
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -370,5 +446,18 @@ extension PAAddPhotoViewController {
         get {
             return true
         }
+    }
+}
+
+extension PAAddPhotoViewController : PALocationCellDelegate {
+    
+    var degreesDelta: CLLocationDegrees {
+        get {
+            return self.newPhotograph.iosData.degreesDelta
+        }
+    }
+    
+    func didUpdateDegreesDelta(delta: CLLocationDegrees) {
+        self.newPhotograph.iosData.degreesDelta = delta
     }
 }

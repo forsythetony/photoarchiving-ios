@@ -73,12 +73,22 @@ public final class PAImageRow : Row<PAImageViewCell>, RowType {
     }
     
 }
+
+protocol PALocationCellDelegate {
+    var degreesDelta : CLLocationDegrees { get }
+    func didUpdateDegreesDelta( delta : CLLocationDegrees )
+}
 public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegate {
     
     private let CELL_HEIGHT : CGFloat = 435.0
     
     @IBOutlet weak var mapView : MKMapView!
     @IBOutlet weak var mainValueLabel : UILabel!
+    
+    var isSettingLocation = false
+    var isFirstSetting = true
+    
+    var delegate : PALocationCellDelegate?
     
     
     lazy var pinView: UIImageView = { [unowned self] in
@@ -141,6 +151,7 @@ public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegat
         mainValueLabel.font = UIFont.PABoldFontWithSize(size: mainValueLabel.font.pointSize)
     }
     
+    
     override public func update() {
         super.update()
         
@@ -148,6 +159,25 @@ public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegat
         
         mainValueLabel.text = current_location.coordinate.PAValueString
         
+        
+        
+        if isFirstSetting {
+            
+            var delta = self.delegate?.degreesDelta
+            
+            let region = MKCoordinateRegion(center: current_location.coordinate, span: MKCoordinateSpan(latitudeDelta: delta ?? 4.0, longitudeDelta: delta ?? 4.0))
+            
+            self.isSettingLocation = true
+            mapView.setRegion(region, animated: false)
+        }
+        
+        
+        if self.row.isDisabled {
+            self.mapView.isUserInteractionEnabled = false
+        }
+        else {
+            mapView.isUserInteractionEnabled = true
+        }
     }
     
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
@@ -163,8 +193,22 @@ public final class PALocationCell : Cell<CLLocation>, CellType, MKMapViewDelegat
             self?.pinView.center = CGPoint(x: self!.pinView.center.x, y: self!.pinView.center.y + 10)
         })
         
+        let delta = max(mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta)
+        
+        self.delegate?.didUpdateDegreesDelta(delta: delta)
+        
         row.value = CLLocation(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-        update()
+        if isFirstSetting {
+            isFirstSetting = false
+        }
+        
+        if !isSettingLocation {
+            update()
+        }
+        else {
+            isSettingLocation = false
+        }
+        
     }
 }
 

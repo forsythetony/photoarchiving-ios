@@ -30,6 +30,12 @@ enum Notifications : String, NotificationName {
     case audioPlayerBarDidTapPlay
     case audioPlayerBarDidTapPause
     case audioPlayerBarDidTapStop
+    
+    case didUploadNewRepository
+    
+    case didDownloadProfileImage
+    
+    case didUpdateRepository
 }
 
 enum PhotoUploadStatus : String {

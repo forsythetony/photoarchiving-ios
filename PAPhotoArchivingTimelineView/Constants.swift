@@ -38,6 +38,21 @@ enum PAColors : String, ColorValue {
 
 struct Keys {
     
+    struct User {
+        static let profileMainURL       = "profile_picture_main"
+        static let profileThumbURL      = "profile_picture_thumb"
+        static let uid                  = "user_id"
+        static let username             = "username"
+        static let firstName            = "first_name"
+        static let lastName             = "last_name"
+        static let email                = "email"
+        static let dateJoined           = "date_joined"
+        static let friends              = "friends"
+        static let repositories         = "repositories"
+        static let birthDate            = "birth_date"
+        static let myRepositories       = "my_repositories"
+        static let joinedRepositories   = "joined_repositories"
+    }
     
     struct Repository {
         static let shortDescription     = "shortDescription"
@@ -67,12 +82,20 @@ struct Keys {
         static let locationLatitude     = "location_coord_lattitude"
         static let locationConf         = "location_conf"
         static let locationCity         = "location_city"
+        static let locationZIP          = "location_zip"
         static let locationCountry      = "location_country"
         static let locationState        = "location_state"
         static let localPhotoURL        = "local_photo_url"
         static let dateUploaded         = "date_uploaded"
         static let uploaderID           = "uploader_id"
         static let hasThumbnail         = "has_thumbnail"
+        
+        static let iosData              = "ios_data"
+        
+        
+        struct iOS {
+            static let mapDegreesDelta  = "map_degrees_delta"
+        }
         
     }
     
@@ -142,6 +165,8 @@ struct Constants {
         static let SegueFromHomeToSignInPage            = "segueFromHomeToSignInPage"
         static let SegueFromHomeToRegister              = "segueFromHomeToRegister"
         static let SegueFromHomeToRepositories          = "hometorepositoriessegue"
+        static let SegueFromMenuToRepositories          = "segueFromMenuToRepositories"
+        static let SegueFromMenuToHome                  = "segueFromMenuToHome"
         //static let SegueFromTimelineViewToAddPhotograph = "seguefromtimelineviewtoaddphotograph"
         
     }

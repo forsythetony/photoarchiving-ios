@@ -8,10 +8,8 @@
 
 import UIKit
 import Kingfisher
+import SCLAlertView
 
-fileprivate struct Action {
-    static let didTapAddButton = #selector(PARepositoriesViewController.didTapAddButton(sender:))
-}
 
 class PARepositoriesViewController: UIViewController {
 
@@ -31,6 +29,7 @@ class PARepositoriesViewController: UIViewController {
     let blurredBackgroundImageView = UIImageView()
     
     var selectedRepository : PARepository?
+    var editingRepository : PARepository?
     
     var ViewWidth : CGFloat {
         get {
@@ -65,10 +64,15 @@ class PARepositoriesViewController: UIViewController {
         }
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        navigationManager.updateCurrentIndex(page: .repositories)
         
     }
     
@@ -89,8 +93,11 @@ class PARepositoriesViewController: UIViewController {
         _setupCollectionView()
         _setupImageView()
         _setupAddButton()
-        _setupBackButton()
+        _setupPanelButton()
         _setupSearchBar()
+        _setupNavigationBar()
+        
+        _searchAfterTimer()
         
     }
 
@@ -107,8 +114,21 @@ class PARepositoriesViewController: UIViewController {
     */
     private func _resetSearch() {
         
+        
+        
         Repositories.upadateSearchedRepositories(searchPackage: PASearchPackage())
+        RepositoriesCollectionView.reloadData()
         repositoriesSearchBar.resignFirstResponder()
+    }
+    private func _searchAfterTimer() {
+        
+        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { (timer) in
+            let start_package = PASearchPackage(filterMode: .creatorID, filterOperator: .equals, searchString: PAGlobalUser.sharedInstace.userID)
+            
+            self.Repositories.upadateSearchedRepositories(searchPackage: start_package)
+            
+            self.RepositoriesCollectionView.reloadData()
+        }
     }
     private func _dataSetup() {
         self.dataMan.delegate = self
@@ -143,19 +163,35 @@ class PARepositoriesViewController: UIViewController {
         
         
     }
-    
+    private func _setupPanelButton() {
+        
+        let pb = UIBarButtonItem(image: #imageLiteral(resourceName: "panel_button_white"), style: .plain, target: revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
+        
+        pb.tintColor = Color.PAWhiteOne
+        
+        navigationItem.leftBarButtonItem = pb
+    }
     private func _setupBackButton() {
         
-        //PASetupBackButton()
+        let bb = UIBarButtonItem(image: #imageLiteral(resourceName: "back_button_white"), style: .plain, target: self, action: #selector(PARepositoriesViewController.didTapBackButton(sender:)))
+        
+        bb.tintColor = Color.PAWhiteOne
+        
+        navigationItem.leftBarButtonItem = bb
     }
     
     private func _setupAddButton() {
         
-        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.didTapAddButton)
+        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(PARepositoriesViewController.didTapAddButton(sender:)))
+        
+        add_button.tintColor = Color.PAWhiteOne
         
         self.navigationItem.rightBarButtonItem = add_button
     }
     
+    func didTapBackButton( sender : UIBarButtonItem ) {
+        self.navigationController?.popViewController(animated: true)
+    }
     private func _setupImageView() {
         
         let blur = UIBlurEffect(style: .light)
@@ -239,6 +275,12 @@ class PARepositoriesViewController: UIViewController {
         }
     }
     
+    private func _setupNavigationBar() {
+        
+        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.barStyle = .black
+        navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
+    }
     
     func updateBlur() {
         
@@ -398,6 +440,8 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
             
             cell.imageCountLabel.text = String.init(format: "%d", cellInfo.totalPhotographs)
             
+            cell.delegate = self
+            
         }
         
         
@@ -497,4 +541,75 @@ extension PARepositoriesViewController : UISearchBarDelegate {
         
     }
     
+    fileprivate func deleteRepositoryAlert() {
+        guard let e = self.editingRepository else { return }
+        
+        let alert = SCLAlertView()
+        
+        alert.addButton("Yes") { 
+            self.deleteRepository()
+        }
+        
+        
+        alert.showWarning("Are you sure?", subTitle: "Are you sure you want to delete this repository?").setDismissBlock {
+            self.editingRepository = nil
+        }
+    }
+    
+    fileprivate func deleteRepository() {
+        guard let e = self.editingRepository else { return }
+        
+        self.dataMan.deleteRepository(repo: e)
+    }
+    
+    fileprivate func editRepository() {
+        guard let e = self.editingRepository else { return }
+        
+        
+        let edit_vc = UIStoryboard.PAMainStoryboard.instantiateViewController(withIdentifier: PAEditRepositoryViewController.STORYBOARD_ID) as! PAEditRepositoryViewController
+        
+        edit_vc.newRepository = e
+        
+        present(edit_vc, animated: true, completion: nil)
+    }
+}
+
+extension PARepositoriesViewController : PARepositoryCellDelegate {
+
+    
+    func didLongPressOnCell(cell: PARepositoryCell) {
+        
+        let actionSheet = UIAlertController(title: "Choose", message: "Choose", preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            self.deleteRepositoryAlert()
+            actionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            actionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        let editAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+            self.editRepository()
+            actionSheet.dismiss(animated: true, completion: nil)
+        }
+        
+        actionSheet.addAction(cancelAction)
+        actionSheet.addAction(editAction)
+        actionSheet.addAction(deleteAction)
+        
+        
+        guard let ip = RepositoriesCollectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let repo = Repositories.repositoryAtIndex(ip.item) else {
+            return
+        }
+        
+        self.editingRepository = repo
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
 }

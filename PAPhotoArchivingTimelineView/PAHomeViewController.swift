@@ -16,6 +16,8 @@ class PAHomeViewController: UIViewController {
     
     
     let dataMan : PADataManager = PADataManager.sharedInstance
+    let currentUser = PAGlobalUser.sharedInstace
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -34,6 +36,8 @@ class PAHomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         checkIfUserSignedIn()
         
+        _setupPanelButton()
+        
         
     }
 
@@ -41,6 +45,7 @@ class PAHomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         logoutBarButtonItem.tintColor = UIColor.white
+        navigationManager.updateCurrentIndex(page: .home)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -134,21 +139,15 @@ class PAHomeViewController: UIViewController {
         //      data manager.
         checkIfUserSignedIn()
     }
-
-    @IBAction func didTapRepositoriesButton(_ sender: Any) {
+    
+    private func _setupPanelButton() {
         
-        //  Make sure that there is a current user logged in
-        guard FIRAuth.auth()?.currentUser != nil else {
-            
-            let error_message = "There was no current user logged in so I can't go to the Repositories page. I shouldn't even be on this page!"
-            print( error_message )
-            return
-        }
+        let panel_button = UIBarButtonItem(image: #imageLiteral(resourceName: "panel_button_white"), landscapeImagePhone: nil, style: .plain, target: self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
+        panel_button.tintColor = Color.white
         
-        //  Push the page with all the repositories on it
-        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToRepositories, sender: nil)
-        
+        navigationItem.leftBarButtonItem = panel_button
     }
+
 }
 
 

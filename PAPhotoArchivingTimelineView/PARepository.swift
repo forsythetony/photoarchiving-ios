@@ -185,6 +185,10 @@ extension PARepository {
             newRepo.endDate = PADateManager.sharedInstance.getDateFromString(str: end_date, formatType: .FirebaseFull)
         }
         
+        if let creator_id = snap_value[Keys.Repository.creatorID] as? String {
+            newRepo.creatorID = creator_id
+        }
+        
         newRepo.uid = snap.key
         
         return newRepo

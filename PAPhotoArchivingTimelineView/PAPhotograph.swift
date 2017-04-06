@@ -12,24 +12,30 @@ import CoreLocation
 import Firebase
 import Kingfisher
 
+
+struct PAPhotographiOSInformation {
+    
+    var degreesDelta : CLLocationDegrees = 4.0
+}
 class PAPhotograph {
     
-    private static let DEFAULT_UID                      = ""
-    private static let DEFAULT_TITLE                    = ""
-    private static let DEFAULT_LONG_DESCRIPTION         = ""
-    private static let DEFAULT_DATE_UPLOADED            = Date()
-    private static let DEFAULT_THUMB_URL                = ""
-    private static let DEFAULT_MAIN_URL                 = ""
-    private static let DEFAULT_DATE_TAKEN               = Date()
-    private static let DEFAULT_DATE_CONF : Float        = 0.0
-    private static let DEFAULT_LOC_LONGITUDE : CGFloat  = 0.0
-    private static let DEFAULT_LOC_LATITUDE : CGFloat   = 0.0
-    private static let DEFAULT_LOC_STREET               = "Any Street"
-    private static let DEFAULT_LOC_CITY                 = "Any City"
-    private static let DEFAULT_LOC_STATE                = "Any State"
-    private static let DEFAULT_LOC_COUNTRY              = "Any Country"
-    private static let DEFAULT_LOC_CONF : Float         = 0.0
-    private static let DEFAULT_UPLOADER_ID              = ""
+    fileprivate static let DEFAULT_UID                      = ""
+    fileprivate static let DEFAULT_TITLE                    = ""
+    fileprivate static let DEFAULT_LONG_DESCRIPTION         = ""
+    fileprivate static let DEFAULT_DATE_UPLOADED            = Date()
+    fileprivate static let DEFAULT_THUMB_URL                = ""
+    fileprivate static let DEFAULT_MAIN_URL                 = ""
+    fileprivate static let DEFAULT_DATE_TAKEN               = Date()
+    fileprivate static let DEFAULT_DATE_CONF : Float        = 0.0
+    fileprivate static let DEFAULT_LOC_LONGITUDE : CGFloat  = 0.0
+    fileprivate static let DEFAULT_LOC_LATITUDE : CGFloat   = 0.0
+    fileprivate static let DEFAULT_LOC_STREET               = "Any Street"
+    fileprivate static let DEFAULT_LOC_ZIP                  = "Any ZIP"
+    fileprivate static let DEFAULT_LOC_CITY                 = "Any City"
+    fileprivate static let DEFAULT_LOC_STATE                = "Any State"
+    fileprivate static let DEFAULT_LOC_COUNTRY              = "Any Country"
+    fileprivate static let DEFAULT_LOC_CONF : Float         = 0.0
+    fileprivate static let DEFAULT_UPLOADER_ID              = ""
     
     var uid : String = "" {
         didSet {
@@ -53,7 +59,7 @@ class PAPhotograph {
     var localImageURL : URL?
     var uploaderID : String?
     var hasThumbnail = false
-    
+    var iosData : PAPhotographiOSInformation = PAPhotographiOSInformation()
     
     var delegate : PAPhotographDelegate?
     
@@ -193,13 +199,27 @@ class PAPhotograph {
         let location_state = snapData[Keys.Photograph.locationState]        as? String ?? PAPhotograph.DEFAULT_LOC_STATE
         let location_country = snapData[Keys.Photograph.locationCountry]    as? String ?? PAPhotograph.DEFAULT_LOC_COUNTRY
         
-        location.coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(lattitude), longitude: CLLocationDegrees(longitude))
+        let location_zip = snapData[Keys.Photograph.locationZIP] as? String ?? PAPhotograph.DEFAULT_LOC_ZIP
+        
+        if lattitude != PAPhotograph.DEFAULT_LOC_LATITUDE && longitude != PAPhotograph.DEFAULT_LOC_LONGITUDE {
+            location.coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(lattitude), longitude: CLLocationDegrees(longitude))
+            
+        }
+        else {
+            location.coordinates = nil
+        }
         
         location.city       = location_city
         location.state      = location_state
         location.country    = location_country
         
         newPhoto.locationTaken = location
+        
+        newPhoto.locationTakenConf = snapData[Keys.Photograph.locationConf] as? Float ?? PAPhotograph.DEFAULT_LOC_CONF
+        
+        if let degreesDelta = snapData[Keys.Photograph.iosData]?[Keys.Photograph.iOS.mapDegreesDelta] as? CLLocationDegrees {
+            newPhoto.iosData.degreesDelta = degreesDelta
+        }
         
         return newPhoto
         
@@ -281,6 +301,9 @@ class PAPhotograph {
 //        
         
         jsonArray[Keys.Photograph.hasThumbnail] = self.hasThumbnail.PAFirebaseValue
+        jsonArray[Keys.Photograph.iosData] = [
+            Keys.Photograph.iOS.mapDegreesDelta : self.iosData.degreesDelta
+        ]
         
         return jsonArray
     }
@@ -316,7 +339,7 @@ extension PAPhotograph {
         
         info.append(dateTakenInfo)
         
-        let locationInfo = PAPhotoInfoLocation(_uuid: self.uid, _title: self.title, _type: .Location, _cityName: self.locationTaken.city, _stateName: self.locationTaken.state, _coordinates: self.locationTaken.coordinates!, _confidence: 0.4)
+        let locationInfo = PAPhotoInfoLocation(_uuid: self.uid, _title: self.title, _type: .Location, _cityName: self.locationTaken.city, _stateName: self.locationTaken.state, _coordinates: self.locationTaken.coordinates ?? CLLocationCoordinate2D.defaultLocation, _confidence: 0.4)
         
         info.append(locationInfo)
         
@@ -437,5 +460,58 @@ extension PAPhotograph {
 
 extension PAPhotograph {
     
+    func getPhotographCopy() -> PAPhotograph {
+        
+        let np = PAPhotograph()
+        
+        np.uid = self.uid
+        np.dateTaken = self.dateTaken
+        np.dateTakenConf = self.dateTakenConf
+        np.longDescription = self.longDescription
+        np.locationTakenConf = self.locationTakenConf
+        np.locationTaken = PALocation()
+        np.locationTaken.coordinates = self.locationTaken.coordinates
+        
+        return np
+    }
     
+    var hasLocation : Bool {
+        get {
+            return self.locationTaken.coordinates != nil
+        }
+    }
+    
+    var locationState : String? {
+        get {
+            if self.locationTaken.state != PAPhotograph.DEFAULT_LOC_STATE {
+                return self.locationTaken.state
+            }
+            
+            return nil
+        }
+    }
+    
+    var locationZIP : String? {
+        if self.locationTaken.zip != PAPhotograph.DEFAULT_LOC_ZIP {
+            return self.locationTaken.zip
+        }
+        
+        return nil
+    }
+    
+    var locationCity : String? {
+        if self.locationTaken.city != PAPhotograph.DEFAULT_LOC_CITY {
+            return self.locationTaken.city
+        }
+        
+        return nil
+    }
+    
+    var locationCountry : String? {
+        if self.locationTaken.country != PAPhotograph.DEFAULT_LOC_COUNTRY {
+            return self.locationTaken.country
+        }
+        
+        return nil
+    }
 }

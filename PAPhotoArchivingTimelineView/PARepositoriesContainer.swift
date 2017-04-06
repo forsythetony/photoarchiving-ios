@@ -29,7 +29,7 @@ enum PARepositoriesFilterMode : String
     case startYear = "startYear"
     case endYear = "endYear"
     case photoCount = "photoCount"
-    
+    case creatorID = "creator"
     
     static func descriptorForSearchString( str : String ) -> PARepositoriesFilterMode {
         
@@ -46,6 +46,9 @@ enum PARepositoriesFilterMode : String
         }
         else if search_str.hasPrefix(self.endYear.rawValue.lowercased()) {
             return self.endYear
+        }
+        else if search_str.hasPrefix(self.creatorID.rawValue.lowercased()) {
+            return self.creatorID
         }
         else {
             return self.title
@@ -196,6 +199,14 @@ class PARepositoryContainer {
                 }
                 
                 return false
+                
+            case .creatorID:
+                if searchPackage.searchString == repo.creatorID {
+                    return true
+                }
+                else {
+                    return false
+                }
             }
             
             

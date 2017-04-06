@@ -1,12 +1,13 @@
 //
-//  PAAddRepositoryViewController.swift
+//  PAEditRepositoryViewController.swift
 //  PAPhotoArchivingTimelineView
 //
-//  Created by Tony Forsythe on 3/27/17.
+//  Created by Tony Forsythe on 4/6/17.
 //  Copyright © 2017 Tony Forsythe. All rights reserved.
 //
 
 import Foundation
+
 import Eureka
 import SCLAlertView
 
@@ -15,12 +16,16 @@ fileprivate struct FormKeys {
     static let basicSection = "basicSection"
 }
 
-class PAAddRepositoryViewController : FormViewController {
+class PAEditRepositoryViewController : FormViewController {
     
-    static let STORYBOARD_ID = "PAAddRepositoryViewControllerStoryboardID"
+    static let STORYBOARD_ID = "PAEditRepositoryViewControllerStoryboardID"
     
     
-    var newRepository : PARepository = PARepository()
+    var newRepository : PARepository? {
+        didSet {
+            updateFormData()
+        }
+    }
     let dateMan = PADateManager.sharedInstance
     
     
@@ -43,8 +48,8 @@ class PAAddRepositoryViewController : FormViewController {
         _removeListeners()
     }
     /*
-        SETUP FUNCTIONS
-    */
+     SETUP FUNCTIONS
+     */
     private func _setup() {
         
         _setupForm()
@@ -55,12 +60,12 @@ class PAAddRepositoryViewController : FormViewController {
         
         let c = NotificationCenter.default
         
-        c.addObserver(self, selector: #selector(PAAddRepositoryViewController.didReceiveSuccessfulRepoUploadNotification(note:)), name: Notifications.didUploadNewRepository.name, object: nil)
+        c.addObserver(self, selector: #selector(PAEditRepositoryViewController.didReceiveSucessfulUpdateNotification(note:)), name: Notifications.didUpdateRepository.name, object: nil)
     }
     
     private func _removeListeners() {
         
-        NotificationCenter.default.removeObserver(self, name: Notifications.didUploadNewRepository.name, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notifications.didUpdateRepository.name, object: nil)
     }
     private func _setupForm() {
         
@@ -76,7 +81,7 @@ class PAAddRepositoryViewController : FormViewController {
             header.height = { 0.0 }
             section.tag = FormKeys.basicSection
             //section.header = header
-        }
+            }
             <<< TextRow() {
                 
                 $0.title        = "Title"
@@ -96,7 +101,7 @@ class PAAddRepositoryViewController : FormViewController {
                 $0.title = "Choose Thumbnail"
                 $0.hidden = true
                 
-            }
+        }
         
         form +++ Section("Date Information")
             <<< DateInlineRow() {
@@ -114,64 +119,70 @@ class PAAddRepositoryViewController : FormViewController {
                 $0.maximumDate  = Date()
                 $0.value        = default_end_date
                 $0.tag          = Keys.Repository.endDate
-            }
+        }
         
         
         form +++ Section()
             <<< ButtonRow() {
-                $0.title = "Submit"
-            }
-            .onCellSelection { [ weak self ] ( cell, row ) in
-                
-                print("\nYou tapped the submit button!\n")
-                
-                if let error = self?.pullUserInputIntoRepository() {
-                    self?.handleErrorMessage(error_message: error)
+                $0.title = "Save"
                 }
-                else {
+                .onCellSelection { [ weak self ] ( cell, row ) in
                     
-                    PADataManager.sharedInstance.uploadNewRepository(repository: (self?.newRepository)!)
+                    print("\nYou tapped the submit button!\n")
+                    
+                    if let error = self?.pullUserInputIntoRepository() {
+                        self?.handleErrorMessage(error_message: error)
+                    }
+                    else {
+                        
+                        if let r = self?.newRepository {
+                            
+                            PADataManager.sharedInstance.updateRepository(repo: r)
+                        }
+                    }
+                    
                 }
-                
+                .cellUpdate { (cell, row) in
+                    cell.textLabel?.textColor = Color.PASuccessTextColor
+                    cell.backgroundColor = Color.PASuccessColor
             }
-            .cellUpdate { (cell, row) in
-                cell.textLabel?.textColor = Color.PASuccessTextColor
-                cell.backgroundColor = Color.PASuccessColor
-            }
-        
+            
             <<< ButtonRow() {
                 $0.title = "Cancel"
-            }
-            .onCellSelection { [ weak self ] ( cell, row ) in
-
-                self?.presentingViewController?.dismiss(animated: true, completion: nil)
-            }
-            .cellUpdate { (cell, row) in
-                
-                cell.textLabel?.textColor = Color.PAWarningTextColor
-                cell.backgroundColor = Color.PAWarningColor
-            }
+                }
+                .onCellSelection { [ weak self ] ( cell, row ) in
+                    
+                    self?.presentingViewController?.dismiss(animated: true, completion: nil)
+                }
+                .cellUpdate { (cell, row) in
+                    
+                    cell.textLabel?.textColor = Color.PAWarningTextColor
+                    cell.backgroundColor = Color.PAWarningColor
+                }
+        
+        updateFormData()
+        
     }
     
     /*
-        ERROR HANDLING
-    */
+     ERROR HANDLING
+     */
     func handleErrorMessage( error_message : String ) {
         print( String.init(format: "\n%@\n", error_message) )
     }
     
     /*
-        ACTION HANDLERS
-    */
+     ACTION HANDLERS
+     */
     func validateUserInput() -> String? {
         
         let values = form.values()
         
         //  Make sure that the start date is before the end date
         guard   let start_date = values[Keys.Repository.startDate] as? Date,
-                let end_date = values[Keys.Repository.endDate] as? Date else
+            let end_date = values[Keys.Repository.endDate] as? Date else
         {
-                
+            
             let error_message = "Either the start date or end date were not set!"
             return error_message
         }
@@ -200,6 +211,20 @@ class PAAddRepositoryViewController : FormViewController {
         
     }
     
+    func updateFormData() {
+        
+        guard let newRepo = self.newRepository else { return }
+        
+        let formValues = [
+            Keys.Repository.title : newRepo.title,
+            Keys.Repository.longDescription : newRepo.longDescription,
+            Keys.Repository.startDate : newRepo.startDate ?? Date(),
+            Keys.Repository.endDate : newRepo.endDate ?? Date()
+        ] as [String : Any]
+        
+        form.setValues(formValues)
+        tableView?.reloadData()
+    }
     func pullUserInputIntoRepository() -> String? {
         
         if let error = validateUserInput()
@@ -209,14 +234,16 @@ class PAAddRepositoryViewController : FormViewController {
         
         let values = form.values()
         
+        guard let newRepo = self.newRepository else { return nil }
+        
         //  General Information
-        self.newRepository.title            = values[Keys.Repository.title] as! String
-        self.newRepository.longDescription  = values[Keys.Repository.longDescription] as! String
+        newRepo.title            = values[Keys.Repository.title] as! String
+        newRepo.longDescription  = values[Keys.Repository.longDescription] as! String
         
         
         //  Boundary Dates
-        self.newRepository.startDate    = (values[Keys.Repository.startDate] as! Date)
-        self.newRepository.endDate      = (values[Keys.Repository.endDate] as! Date)
+        newRepo.startDate    = (values[Keys.Repository.startDate] as! Date)
+        newRepo.endDate      = (values[Keys.Repository.endDate] as! Date)
         
         return nil
     }
@@ -230,12 +257,12 @@ class PAAddRepositoryViewController : FormViewController {
         
     }
     
-    func didReceiveSuccessfulRepoUploadNotification( note : Notification ) {
+    func didReceiveSucessfulUpdateNotification( note : Notification ) {
         
         let alert = SCLAlertView()
         
         
-        alert.showSuccess("Uploaded!", subTitle: "Sucessfully added the repository!").setDismissBlock {
+        alert.showSuccess("Updated!", subTitle: "Sucessfully updated the repository!").setDismissBlock {
             self.presentingViewController?.dismiss(animated: true, completion: nil)
         }
     }

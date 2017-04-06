@@ -96,6 +96,7 @@ class PATimelineViewController: UIViewController {
     // MARK: - Setup
     
     private func _setup() {
+        _setupBackButton()
         _setupCast()
     }
     
@@ -165,6 +166,15 @@ class PATimelineViewController: UIViewController {
         navigationItem.rightBarButtonItem = add_button
         
     }
+    private func _setupBackButton() {
+        
+        let bb = UIBarButtonItem(image: #imageLiteral(resourceName: "back_button_white"), style: .plain, target: self, action: #selector(PARepositoriesViewController.didTapBackButton(sender:)))
+        
+        bb.tintColor = Color.PAWhiteOne
+        
+        navigationItem.leftBarButtonItem = bb
+    }
+    
     
     // MARK: - Teardown
 
@@ -179,6 +189,11 @@ class PATimelineViewController: UIViewController {
         
         NotificationCenter.default.PARemoveAllNotificationsWithName(    listener: self,
                                                                         names: notificationsToRemove)
+    }
+    
+    
+    func didTapBackButton( sender : UIBarButtonItem ) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -463,5 +478,8 @@ extension UIViewController {
 
     
     }
+    
+    
+    
 }
 

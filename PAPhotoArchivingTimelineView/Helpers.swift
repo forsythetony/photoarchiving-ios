@@ -503,7 +503,7 @@ extension String {
         
         for _ in 0..<padCount! {
             newString.insert("\n", at: self.startIndex)
-            newString.insert("\n", at: self.endIndex)
+            newString.append("\n")
         }
         
         return newString
