@@ -103,7 +103,7 @@ extension PAUser {
         n.storiesUploaded           = snapData.getIntValue(k: Keys.User.storiesUploaded)
         
         n.dateJoined    = snapData.getFirebaseDateValue(k: Keys.User.dateJoined)
-        //n.birthDate     = snapData.getFirebaseDateValue(k: Keys.User.birthDate)
+        n.birthDate     = snapData.getFirebaseDateValue(k: Keys.User.birthDate)
         
         return n
     }

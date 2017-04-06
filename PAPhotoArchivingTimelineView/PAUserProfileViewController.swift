@@ -74,7 +74,8 @@ class PAUserProfileViewController: FormViewController {
             FieldTags.photosUploaded.rawValue : self.user.photosUploadedString,
             FieldTags.storiesUploaded.rawValue : self.user.storiesUploadedString,
             FieldTags.firstname.rawValue : self.user.firstName,
-            FieldTags.lastname.rawValue : self.user.lastName
+            FieldTags.lastname.rawValue : self.user.lastName,
+            FieldTags.birthdate.rawValue : self.user.birthDate ?? Date()
         ] as [String : Any]
         
         form.setValues(values)
@@ -187,8 +188,11 @@ class PAUserProfileViewController: FormViewController {
                 $0.tag = FieldTags.lastname.rawValue
             }
             <<< DateInlineRow() {
-                $0.title = "Date Taken"
-                $0.value = Date()
+                $0.title = "BirthDate"
+                $0.tag = FieldTags.birthdate.rawValue
+                $0.minimumDate = PADateManager.sharedInstance.getDateFromYearInt(year: 1900)
+                $0.maximumDate = Date()
+                $0.disabled = true
             }
             <<< TextRow() {
                 $0.title = "Email"
@@ -250,15 +254,18 @@ class PAUserProfileViewController: FormViewController {
         
         let nameRow = rowByID(id: .firstname)
         let lastNameRow = rowByID(id: .lastname)
+        let birthdateRow = rowByID(id: .birthdate)
         
         if isEditingForm {
             
             nameRow?.enableField()
             lastNameRow?.enableField()
+            birthdateRow?.enableField()
         }
         else {
             nameRow?.disableField()
             lastNameRow?.disableField()
+            birthdateRow?.disableField()
             
         }
     }

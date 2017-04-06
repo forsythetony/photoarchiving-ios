@@ -452,6 +452,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
         if let p = currentPhotograph {
             
             editingPhotograph = p.getPhotographCopy()
+            
         }
         else {
             displayError(message: "Couldn't get the current photograph!")

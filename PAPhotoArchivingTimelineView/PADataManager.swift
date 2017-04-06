@@ -540,11 +540,11 @@ extension PADataManager {
         
         user_db_path.child(Keys.User.lastName).setValue(user.lastName)
         
-//        if let bd = user.birthDate {
-//            let bd_str = PADateManager.sharedInstance.getDateString(date: bd, formatType: .FirebaseFull)
-//            
-//            user_db_path.child(Keys.User.birthDate).setValue(bd_str)
-//        }
+        if let bd = user.birthDate {
+            let bd_str = PADateManager.sharedInstance.getDateString(date: bd, formatType: .FirebaseFull)
+            
+            user_db_path.child(Keys.User.birthDate).setValue(bd_str)
+        }
     }
     
     func updatePhotographValues( photo : PAPhotograph, repo : PARepository ) {

@@ -20,22 +20,22 @@ protocol PATimelineViewDelegate {
 }
 class PATimelineView: UIView {
     
-    private var timelineMan : PATimelineManager?
+    fileprivate var timelineMan : PATimelineManager?
     
-    private var timelineInformation : PATimelineInformation?
-    private let mainScrollView = UIScrollView()
-    private var repoInfo : PARepository!
+    fileprivate var timelineInformation : PATimelineInformation?
+    fileprivate let mainScrollView = UIScrollView()
+    fileprivate var repoInfo : PARepository!
     
-    private var incViews = [(PAIncrementView, PATimelineViewAnimationState)]()
-    private var mainTimeline : UIView?
+    fileprivate var incViews = [(PAIncrementView, PATimelineViewAnimationState)]()
+    fileprivate var mainTimeline : UIView?
     
-    private var springInfo = PASpringAnimationInformation()
-    private var currAnimationIndex = 0
-    private var animationTimer : Timer?
+    fileprivate var springInfo = PASpringAnimationInformation()
+    fileprivate var currAnimationIndex = 0
+    fileprivate var animationTimer : Timer?
     
     fileprivate var isAnimatingIncViews = false
     
-    private var photographCellViews = [PAPhotographCell]()
+    fileprivate var photographCellViews = [PAPhotographCell]()
     
     
     
@@ -564,4 +564,113 @@ struct PASpringAnimationInformation {
     var SpringDamping : CGFloat = 20.0
     var SpringVeloctiy : CGFloat = 0.9
     var DelayBetweenAnimations : TimeInterval = 0.03
+}
+
+enum PADistanceResultSeverity : CGFloat {
+    case fine = 100.0
+    case troublesome = 40.0
+    case catastrophic = 20.0
+}
+
+struct PADistanceResult {
+    var cellOneID : String = ""
+    var cellTwoID : String = ""
+    var distance : CGFloat = 0.0
+    var severity : PADistanceResultSeverity = .fine
+}
+
+extension PATimelineView {
+    
+    func calculateDensityValues() {
+        
+        let c = photographCellViews.count
+        
+        var results = [PADistanceResult]()
+        
+        var counter = 0
+        
+        for i in 0..<c {
+            
+            let cellOne = photographCellViews[i]
+            
+            if (i + 1) == c {
+                break
+            }
+            else {
+                
+                for j in (i+1)..<c {
+                    
+                    let cellTwo = photographCellViews[j]
+                    
+                    let r = getDistanceResult(cellOne: cellOne, cellTwo: cellTwo)
+                    
+                    results.append(r)
+                }
+            }
+        }
+        
+        
+        var catCount = 0
+        var fineCount = 0
+        var troublesomecount = 0
+        var total = results.count
+        
+        for r in results {
+            
+            if r.severity == .catastrophic {
+                catCount += 1
+            }
+            else if r.severity == .troublesome {
+                troublesomecount += 1
+            }
+            else {
+                fineCount += 1
+            }
+        }
+        
+        
+        let print_message = String.init(format: "\nTotal:\t%d\nCat:\t%d\nTroublesome:\t%d\nFine:\t%d\n", results.count, catCount, troublesomecount, fineCount)
+        
+        print( print_message.PAPadWithNewlines(padCount: 2) )
+        
+        
+        let percentCat = Float(catCount) / Float(total)
+        let percentTrouble = Float(troublesomecount) / Float(total)
+        let percentFine = Float(fineCount) / Float(total)
+        
+        
+        let percent_message = String.init(format: "\nCat %%:\t%f\nTrouble %%:\t%f\nFine %%:\t%f\n", percentCat, percentTrouble, percentFine)
+        
+        print( percent_message.PAPadWithNewlines() )
+        
+        
+    }
+    
+    
+}
+
+fileprivate func getDistanceResult( cellOne : PAPhotographCell, cellTwo : PAPhotographCell) -> PADistanceResult {
+    
+    var r = PADistanceResult()
+    
+    r.cellOneID = cellOne.photographInfo?.uid ?? "1"
+    r.cellTwoID = cellTwo.photographInfo?.uid ?? "2"
+    
+    
+    let dist = CGFloat(fabsf(Float(cellOne.center.verticalDistanceToPoint(pnt: cellTwo.center))))
+    
+    
+    if dist < PADistanceResultSeverity.catastrophic.rawValue {
+        r.severity = .catastrophic
+    }
+    else if dist < PADistanceResultSeverity.troublesome.rawValue {
+        r.severity = .troublesome
+    }
+    else {
+        r.severity = .fine
+    }
+    
+    r.distance = dist
+    
+    return r
 }

@@ -16,6 +16,7 @@ import Toast_Swift
 fileprivate struct Action {
     
     static let addButton = #selector(PATimelineViewController.didTapAddButton(sender:))
+    static let timelineValues = #selector(PATimelineViewController.calcTimelineValues(sender:))
 }
 
 class PATimelineViewController: UIViewController {
@@ -98,6 +99,7 @@ class PATimelineViewController: UIViewController {
     private func _setup() {
         _setupBackButton()
         _setupCast()
+        _setupAddButton()
     }
     
     private func _setupListeners() {
@@ -161,7 +163,7 @@ class PATimelineViewController: UIViewController {
     
     private func _setupAddButton() {
         
-        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.addButton)
+        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.timelineValues)
         
         navigationItem.rightBarButtonItem = add_button
         
@@ -287,6 +289,10 @@ extension PATimelineViewController : PATimelineViewDelegate {
     /*
         BUTTONS
     */
+    func calcTimelineValues( sender : UIBarButtonItem? ) {
+        
+        self.timelineView?.calculateDensityValues()
+    }
     func didTapAddButton( sender : UIBarButtonItem? ) {
         
         let message = "\nLooks like you tapped the add button there kiddo!\n"

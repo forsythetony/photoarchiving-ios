@@ -193,16 +193,17 @@ class PAPhotograph {
         
         let location = PALocation()
         
-        let lattitude = snapData[Keys.Photograph.locationLatitude]         as? CGFloat ?? PAPhotograph.DEFAULT_LOC_LATITUDE
-        let longitude = snapData[Keys.Photograph.locationLongitude]         as? CGFloat ?? PAPhotograph.DEFAULT_LOC_LONGITUDE
+        let lattitude = snapData[Keys.Photograph.locationLatitude]         as? NSNumber ?? NSNumber(value: Float(PAPhotograph.DEFAULT_LOC_LATITUDE))
+        let longitude = snapData[Keys.Photograph.locationLongitude]         as? NSNumber ?? NSNumber(value: Float(PAPhotograph.DEFAULT_LOC_LONGITUDE))
+        
         let location_city = snapData[Keys.Photograph.locationCity]          as? String ?? PAPhotograph.DEFAULT_LOC_CITY
         let location_state = snapData[Keys.Photograph.locationState]        as? String ?? PAPhotograph.DEFAULT_LOC_STATE
         let location_country = snapData[Keys.Photograph.locationCountry]    as? String ?? PAPhotograph.DEFAULT_LOC_COUNTRY
         
         let location_zip = snapData[Keys.Photograph.locationZIP] as? String ?? PAPhotograph.DEFAULT_LOC_ZIP
         
-        if lattitude != PAPhotograph.DEFAULT_LOC_LATITUDE && longitude != PAPhotograph.DEFAULT_LOC_LONGITUDE {
-            location.coordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(lattitude), longitude: CLLocationDegrees(longitude))
+        if lattitude.floatValue != Float(PAPhotograph.DEFAULT_LOC_LATITUDE) && longitude.floatValue != Float(PAPhotograph.DEFAULT_LOC_LONGITUDE) {
+            location.coordinates = CLLocationCoordinate2D(latitude: lattitude.doubleValue, longitude: longitude.doubleValue)
             
         }
         else {
