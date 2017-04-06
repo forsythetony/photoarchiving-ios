@@ -16,6 +16,7 @@ enum PADateStyleType : String {
     case YearOnly = "yyyy"
     case StorysTableView = "MMM dd, H:mm a"
     case ShortMonth = "MMM"
+    case Pretty2 = "MMMM d, YYYY"
 }
 class PADateManager {
     
@@ -38,8 +39,6 @@ class PADateManager {
         }
     }
     func getDateString( date : Date, formatType type : PADateStyleType ) -> String {
-        
-        var dateString = ""
         
         formatter.dateFormat = type.rawValue
         

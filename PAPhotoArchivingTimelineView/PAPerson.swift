@@ -38,6 +38,12 @@ class PAUser : PAPerson {
     var dateJoined : Date?
     var email : String = ""
     
+    var repositoriesCreated : Int?
+    var totalRepositoriesJoined : Int?
+    var storiesUploaded : Int?
+    var photosUploaded : Int?
+    
+    
     
 }
 
@@ -64,6 +70,15 @@ extension Dictionary where Key == String {
         
         return Date()
     }
+    
+    func getIntValue( k : String, defaultValue : Int? = 0 ) -> Int {
+        
+        if let ret_val = self[k] as? Int {
+            return ret_val
+        }
+        
+        return defaultValue!
+    }
 }
 extension PAUser {
     
@@ -81,9 +96,64 @@ extension PAUser {
         n.profileThumbImageURL  = snapData.getStringValue(k: Keys.User.profileThumbURL)
         n.email                 = snapData.getStringValue(k: Keys.User.email)
         
+        
+        n.totalRepositoriesJoined   = snapData.getIntValue(k: Keys.User.repositoriesJoined)
+        n.repositoriesCreated       = snapData.getIntValue(k: Keys.User.repositoriesCreated)
+        n.photosUploaded            = snapData.getIntValue(k: Keys.User.photosUploaded)
+        n.storiesUploaded           = snapData.getIntValue(k: Keys.User.storiesUploaded)
+        
         n.dateJoined    = snapData.getFirebaseDateValue(k: Keys.User.dateJoined)
-        n.birthDate     = snapData.getFirebaseDateValue(k: Keys.User.birthDate)
+        //n.birthDate     = snapData.getFirebaseDateValue(k: Keys.User.birthDate)
         
         return n
+    }
+}
+
+extension PAUser {
+    var repositoriesJoinedString : String {
+        get {
+            if let t = self.totalRepositoriesJoined {
+                return String(t)
+            }
+            else {
+                return "0"
+            }
+        }
+    }
+    
+    var repositoriesCreatedString : String {
+        get {
+            if let t = self.repositoriesCreated {
+                return String(t)
+            }
+            
+            return "0"
+        }
+    }
+    
+    var photosUploadedString : String {
+        get {
+            if let t = self.photosUploaded {
+                return String(t)
+            }
+            
+            return "0"
+        }
+    }
+    
+    var storiesUploadedString : String {
+        get {
+            if let t = self.storiesUploaded {
+                return String(t)
+            }
+            
+            return "0"
+        }
+    }
+    
+    var fullNameString : String {
+        get {
+            return String.init(format: "%@ %@", self.firstName, self.lastName)
+        }
     }
 }

@@ -52,6 +52,10 @@ struct Keys {
         static let birthDate            = "birth_date"
         static let myRepositories       = "my_repositories"
         static let joinedRepositories   = "joined_repositories"
+        static let photosUploaded       = "photos_uploaded"
+        static let storiesUploaded      = "stories_uploaded"
+        static let repositoriesCreated  = "repositories_created"
+        static let repositoriesJoined   = "repositories_joined"
     }
     
     struct Repository {
@@ -171,6 +175,8 @@ struct Constants {
         static let SegueFromMenuToHome                  = "segueFromMenuToHome"
         static let SegueFromMenuToMyRepositories        = "segueFromSidePanelToMyRepositories"
         static let SegueFromMyRepositoriesToTimeline    = "segueFromMyRepositoriesViewToTimelineView"
+        static let SegueFromMenuToMyProfile             = "segueFromMenuToMyProfile"
+        
         //static let SegueFromTimelineViewToAddPhotograph = "seguefromtimelineviewtoaddphotograph"
         
     }

@@ -36,12 +36,17 @@ class PAGlobalUser {
     
     private var _configTimer : Timer?
     
-    private var _user : PAUser? {
+    fileprivate var _user : PAUser? {
         didSet {
             didSetupuser()
         }
     }
     
+    var user : PAUser {
+        get {
+            return _user ?? PAUser()
+        }
+    }
     var userID : String {
         get {
             if let uid = _userID {
@@ -158,6 +163,58 @@ class PAGlobalUser {
             
         }
         
+        monitorChanges()
+        
     }
+    
+    private func monitorChanges() {
+        
+        let db_path = FIRDatabase.database().reference().child(String.init(format: "users/%@/", self.userID))
+        
+        db_path.child(Keys.User.photosUploaded).observe(.value, with: { (snapshot) in
+            
+            if let v = snapshot.value as? Int {
+                self._user?.photosUploaded = v
+            }
+        })
+        
+        
+        db_path.child(Keys.User.storiesUploaded).observe(.value, with: { (snapshot) in
+            
+            if let v = snapshot.value as? Int {
+                self._user?.storiesUploaded = v
+            }
+        })
+        
+        db_path.child(Keys.User.repositoriesCreated).observe(.value, with: { (snapshot) in
+            
+            if let v = snapshot.value as? Int {
+                self._user?.repositoriesCreated = v
+            }
+        })
+        
+        db_path.child(Keys.User.repositoriesJoined).observe(.value, with: { (snapshot) in
+            
+            if let v = snapshot.value as? Int {
+                self._user?.totalRepositoriesJoined = v
+            }
+            
+        })
+    }
+    
+}
+
+extension PAUser {
+    var dateJoinedString : String {
+        get {
+            if let d = dateJoined {
+                return PADateManager.sharedInstance.getDateString(date: d, formatType: .Pretty2)
+            }
+            else {
+                return "Unavailable"
+            }
+        }
+    }
+    
     
 }

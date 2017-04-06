@@ -97,7 +97,7 @@ class PARepositoriesViewController: UIViewController {
         _setupSearchBar()
         _setupNavigationBar()
         
-        _searchAfterTimer()
+        //_searchAfterTimer()
         
     }
 

@@ -350,6 +350,7 @@ extension PADataManager {
             decrementRepositoryPhotoCount(repo_id: repo.uid)
         }
         
+        decrementValueAtPath(path: String.init(format: "users/%@/%@", currentUserID, Keys.User.photosUploaded))
         
         self.delegate?.PADataManagerDidDeletePhotograph(photograph: photo)
         
@@ -461,6 +462,11 @@ extension PADataManager {
                 repo_id: repository.uid,
                 photo_id: new_photograph_key)
             
+            
+            
+            
+            self.incrementUserPhotoUploads(user_id: self.currentUserID)
+            
             NotificationCenter.default.post(note)
             
             
@@ -524,6 +530,22 @@ extension PADataManager {
         })
     }
     
+    func updateUserValues( user : PAUser ) {
+        
+        guard isConfigured else { return }
+        
+        let user_db_path = database_ref!.child(String.init(format: "users/%@", user.uid))
+        
+        user_db_path.child(Keys.User.firstName).setValue(user.firstName)
+        
+        user_db_path.child(Keys.User.lastName).setValue(user.lastName)
+        
+//        if let bd = user.birthDate {
+//            let bd_str = PADateManager.sharedInstance.getDateString(date: bd, formatType: .FirebaseFull)
+//            
+//            user_db_path.child(Keys.User.birthDate).setValue(bd_str)
+//        }
+    }
     
     func updatePhotographValues( photo : PAPhotograph, repo : PARepository ) {
         
@@ -640,7 +662,7 @@ extension PADataManager {
         
         
         
-        
+        incrementRepositoriesCreated(user_id: currentUserID)
         
         let success_message = String.init(format: "\nSuccessfully uploaded repository with ID -> %@\n", new_key )
         
@@ -703,6 +725,13 @@ extension PADataManager {
         user_db_ref.child(Keys.User.joinedRepositories).child(repo.uid).removeValue()
         
         print(String.init(format: "Did delete repo with id -> %@", repo.uid).PAPadWithNewlines())
+        
+        
+        decrementRepositoriesJoined(user_id: currentUserID)
+        
+        decrementRepositoriesCreated(user_id: currentUserID)
+        
+        
     }
     
     func addPhotographToRepository( newPhoto : PAPhotograph, repository : PARepository ) {
@@ -898,6 +927,8 @@ extension PADataManager {
             
             let done_message = String.init(format: "\nFinished uploading everything, photo_id -> %@, story_id -> %@\n", photograph.uid, new_story.uid)
             print( done_message )
+            
+            self.incrementStoryUploads(user_id: self.currentUserID)
         }
         
         
@@ -939,6 +970,8 @@ extension PADataManager {
         
         story_db_ref.removeValue()
         photograph_story_ref.removeValue()
+        
+        decrementValueAtPath(path: String.init(format: "users/%@/%@", currentUserID, Keys.User.storiesUploaded))
         
         self.delegate?.PADataManagerDidDeleteStoryFromPhotograph(story: story, photograph: photograph)
         
@@ -1042,5 +1075,84 @@ class PAUploadsManager : NSObject {
     func getInformationForIndexPath( i : Int ) -> PAPhotoUploadInformation? {
         
         return self.currentPhotoUploads[self.sortedPhotoIDs[i]]
+    }
+}
+
+extension PADataManager {
+    
+    func incrementValueAtPath( path : String ) {
+        
+        guard isConfigured else { return }
+        
+        let ref = database_ref!.child(path)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let value = snapshot.value as? Int {
+                
+                ref.setValue(value.increment())
+            }
+        })
+    }
+    func decrementValueAtPath( path : String ) {
+        guard isConfigured else { return }
+        
+        let ref = database_ref!.child(path)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let value = snapshot.value as? Int {
+                
+                ref.setValue(value.decrement())
+            }
+        })
+    }
+    
+    func incrementUserPhotoUploads( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.photosUploaded)
+        
+        incrementValueAtPath(path: path)
+    }
+    
+    func incrementUserRepositoriesJoined( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.repositoriesJoined)
+        
+        incrementValueAtPath(path: path)
+    }
+    
+    func incrementRepositoriesCreated( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.repositoriesCreated)
+        
+        incrementValueAtPath(path: path)
+    }
+    
+    func incrementStoryUploads( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.storiesUploaded)
+        
+        incrementValueAtPath(path: path)
+    }
+    
+    func decrementRepositoriesJoined( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.repositoriesJoined)
+        
+        decrementValueAtPath(path: path)
+    }
+    
+    func decrementRepositoriesCreated( user_id : String ) {
+        guard isConfigured else { return }
+        
+        let path = String.init(format: "users/%@/%@", user_id, Keys.User.repositoriesCreated)
+        
+        decrementValueAtPath(path: path)
     }
 }
