@@ -12,6 +12,7 @@
 		250B3A2C1DE8EF91002CE391 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B3A2B1DE8EF91002CE391 /* Helpers.swift */; };
 		250B3A2E1DE8FB70002CE391 /* PAApplicationImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */; };
 		252711E71E969BE900E656CF /* PAEditRepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252711E61E969BE900E656CF /* PAEditRepositoryViewController.swift */; };
+		252711EA1E96AF2900E656CF /* PAMyRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252711E91E96AF2900E656CF /* PAMyRepositoriesViewController.swift */; };
 		25316B461E8B260100C2B7F8 /* PANotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B451E8B260100C2B7F8 /* PANotifications.swift */; };
 		25316B4A1E8C5FD500C2B7F8 /* PANewRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */; };
 		25316B4C1E8C840000C2B7F8 /* PAStoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */; };
@@ -109,6 +110,7 @@
 		250B3A2B1DE8EF91002CE391 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		250B3A2D1DE8FB70002CE391 /* PAApplicationImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PAApplicationImages.xcassets; sourceTree = "<group>"; };
 		252711E61E969BE900E656CF /* PAEditRepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAEditRepositoryViewController.swift; sourceTree = "<group>"; };
+		252711E91E96AF2900E656CF /* PAMyRepositoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAMyRepositoriesViewController.swift; sourceTree = "<group>"; };
 		25316B451E8B260100C2B7F8 /* PANotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANotifications.swift; sourceTree = "<group>"; };
 		25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANewRecordingViewController.swift; sourceTree = "<group>"; };
 		25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAStoriesViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +222,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		252711E81E96AF0000E656CF /* My Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				252711E91E96AF2900E656CF /* PAMyRepositoriesViewController.swift */,
+			);
+			name = "My Repositories";
+			sourceTree = "<group>";
+		};
 		2558AE8A1E88C8DF004D7BCB /* Add Photograph */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +342,7 @@
 				25CFCD551E4D309600263353 /* Sign In and Registration */,
 				25AA7CDC1E52C0BF00733DC8 /* Home */,
 				25EC83AE1E79998A000AFC54 /* Repositories */,
+				252711E81E96AF0000E656CF /* My Repositories */,
 				25E920241E7F43AA000D1BE2 /* Timeline View */,
 				2558AE8A1E88C8DF004D7BCB /* Add Photograph */,
 				256AB0171E892FEF00FD9779 /* Add Repository */,
@@ -747,6 +758,7 @@
 				25D03BCA1DC19FAB00045988 /* PATimelineView.swift in Sources */,
 				255C4F041DE9120400EBD24C /* PAMainImageViewController.swift in Sources */,
 				25316B461E8B260100C2B7F8 /* PANotifications.swift in Sources */,
+				252711EA1E96AF2900E656CF /* PAMyRepositoriesViewController.swift in Sources */,
 				25E920261E7F43C6000D1BE2 /* PATimelineViewController.swift in Sources */,
 				25316B4F1E8CB6F500C2B7F8 /* PARepositoryCell.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,

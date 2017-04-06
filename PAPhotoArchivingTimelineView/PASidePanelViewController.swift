@@ -260,6 +260,9 @@ extension PASidePanelViewController : UITableViewDelegate, UITableViewDataSource
         case .repositories:
             performSegue(withIdentifier: Constants.SegueIDs.SegueFromMenuToRepositories, sender: nil)
             
+        case .myRepositories:
+            performSegue(withIdentifier: Constants.SegueIDs.SegueFromMenuToMyRepositories, sender: nil)
+            
         default:
             break
         }

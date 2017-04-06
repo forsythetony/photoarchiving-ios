@@ -12,6 +12,7 @@ import Foundation
 enum PANavigationPages : String {
     case home = "Home"
     case repositories = "Repositories"
+    case myRepositories = "My Repositories"
     case profile = "My Profile"
     case people = "People"
     case settings = "Settings"
@@ -25,6 +26,7 @@ class PANavigationManager {
     let allPages = [
         PANavigationPages.home,
         PANavigationPages.repositories,
+        PANavigationPages.myRepositories,
         PANavigationPages.people,
         PANavigationPages.profile,
         PANavigationPages.settings

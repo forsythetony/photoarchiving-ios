@@ -221,6 +221,28 @@ class PADataManager {
             }
         })
     }
+    
+    func pullRepositoriesForUserID( userID : String ) {
+        
+        guard isConfigured else { return }
+        
+        let joined_repos_ref = database_ref!.child(String.init(format: "users/%@/%@", userID, Keys.User.joinedRepositories))
+        
+        joined_repos_ref.observe(.childAdded, with: { (snapshot) in
+            
+            let repo_key = snapshot.key
+            
+            self.database_ref!.child(String.init(format: "repositories/%@", repo_key)).observeSingleEvent(of: .value, with: { (repo_snapshot) in
+                
+                if let new_repo = PARepository.CreateWithFirebaseSnapshot(snap: repo_snapshot) {
+                    self.delegate?.PADataManagerDidGetNewRepository(new_repo)
+                }
+            })
+        })
+        
+        
+        
+    }
 }
 
 

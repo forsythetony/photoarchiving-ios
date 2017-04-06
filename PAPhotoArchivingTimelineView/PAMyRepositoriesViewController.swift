@@ -1,20 +1,19 @@
 //
-//  PARepositoriesViewController.swift
+//  PAMyRepositoriesViewController.swift
 //  PAPhotoArchivingTimelineView
 //
-//  Created by Tony Forsythe on 12/9/16.
-//  Copyright © 2016 Tony Forsythe. All rights reserved.
+//  Created by Tony Forsythe on 4/6/17.
+//  Copyright © 2017 Tony Forsythe. All rights reserved.
 //
 
+import Foundation
 import UIKit
-import Kingfisher
 import SCLAlertView
 
-
-class PARepositoriesViewController: UIViewController {
-
+class PAMyRepositoriesViewController: UIViewController {
+    
     @IBOutlet weak var RepositoriesCollectionView: UICollectionView!
-
+    
     @IBOutlet weak var repositoriesSearchBar: UISearchBar!
     
     let dataMan = PADataManager.sharedInstance
@@ -63,16 +62,16 @@ class PARepositoriesViewController: UIViewController {
             return insets
         }
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        navigationManager.updateCurrentIndex(page: .repositories)
+        navigationManager.updateCurrentIndex(page: .myRepositories)
         
     }
     
@@ -84,7 +83,7 @@ class PARepositoriesViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         // Do any additional setup after loading the view.
         self.title = "Browse"
@@ -100,18 +99,18 @@ class PARepositoriesViewController: UIViewController {
         _searchAfterTimer()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     
     
     
     /*
-        SETUP FUNCTIONS
-    */
+     SETUP FUNCTIONS
+     */
     private func _resetSearch() {
         
         
@@ -137,7 +136,7 @@ class PARepositoriesViewController: UIViewController {
             self.dataMan.configure()
         }
         else {
-            self.dataMan.pullRepositories()
+            self.dataMan.pullRepositoriesForUserID(userID: PAGlobalUser.sharedInstace.userID)
         }
         
     }
@@ -145,7 +144,7 @@ class PARepositoriesViewController: UIViewController {
     private func _setupSearchBar() {
         
         repositoriesSearchBar.delegate      = self
-        repositoriesSearchBar.placeholder 	= "Search Repositories"
+        repositoriesSearchBar.placeholder 	= "Search Your Repositories"
         
         repositoriesSearchBar.searchBarStyle = .minimal
         repositoriesSearchBar.tintColor = Color.white
@@ -173,7 +172,7 @@ class PARepositoriesViewController: UIViewController {
     }
     private func _setupBackButton() {
         
-        let bb = UIBarButtonItem(image: #imageLiteral(resourceName: "back_button_white"), style: .plain, target: self, action: #selector(PARepositoriesViewController.didTapBackButton(sender:)))
+        let bb = UIBarButtonItem(image: #imageLiteral(resourceName: "back_button_white"), style: .plain, target: self, action: #selector(PAMyRepositoriesViewController.didTapBackButton(sender:)))
         
         bb.tintColor = Color.PAWhiteOne
         
@@ -182,7 +181,7 @@ class PARepositoriesViewController: UIViewController {
     
     private func _setupAddButton() {
         
-        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(PARepositoriesViewController.didTapAddButton(sender:)))
+        let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(PAMyRepositoriesViewController.didTapAddButton(sender:)))
         
         add_button.tintColor = Color.PAWhiteOne
         
@@ -230,8 +229,8 @@ class PARepositoriesViewController: UIViewController {
     }
     
     /*
-        BUTTON ACTION HANDLERS
-    */
+     BUTTON ACTION HANDLERS
+     */
     func didTapAddButton( sender : UIBarButtonItem ) {
         
         let message = "Looks like you tapped the add button there kiddo!"
@@ -256,7 +255,7 @@ class PARepositoriesViewController: UIViewController {
         
         
         switch segueID {
-        case Constants.SegueIDs.SegueFromRepositoriesToTimelineView:
+        case Constants.SegueIDs.SegueFromMyRepositoriesToTimeline:
             
             guard let selectedRepository = self.selectedRepository else {
                 TFLogger.log(logString: "There was no selected repository...")
@@ -305,23 +304,23 @@ class PARepositoriesViewController: UIViewController {
     }
 }
 
-extension PARepositoriesViewController : PADataManagerDelegate {
+extension PAMyRepositoriesViewController : PADataManagerDelegate {
     internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
         
     }
-
+    
     internal func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
     }
-
+    
     internal func PADataManagerDidUpdateProgress(progress: Double) {
         
     }
-
+    
     internal func PADataManagerDidFinishUploadingStory(storyID: String) {
         
     }
-
+    
     
     func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
         
@@ -344,7 +343,7 @@ extension PARepositoriesViewController : PADataManagerDelegate {
 }
 
 
-extension PARepositoriesViewController : UICollectionViewDataSource, UICollectionViewDelegate {
+extension PAMyRepositoriesViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -355,7 +354,7 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
         
         self.selectedRepository = selectedRepo
         
-        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromRepositoriesToTimelineView, sender: nil)
+        self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromMyRepositoriesToTimeline, sender: nil)
     }
     
     
@@ -375,35 +374,35 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
         
         
         /*let cell = collectionView.dequeueReusableCell(  withReuseIdentifier: PARepositoryCollectionViewCell.ReuseID,
-                                                        for: indexPath) as! PARepositoryCollectionViewCell
-        
-        if let cellInfo = self.Repositories.repositoryAtIndex(indexPath.item) {
-            
-            let imgPath = cellInfo.thumbnailURL
-            
-            if imgPath == "" {
-                cell.TitleLabel.textColor = Color.white
-            }
-            else {
-                
-                cell.ImageView.kf.setImage(with: URL(string: imgPath )! )
-                cell.TitleLabel.textColor = Color.black
-            }
-            
-            
-            let repoTitle = cellInfo.title
-            
-            cell.TitleLabel.text = repoTitle
-            
-        }
-        
-        
-        cell.backgroundColor = Color.black
-        
-        return cell
-        
-        
-        */
+         for: indexPath) as! PARepositoryCollectionViewCell
+         
+         if let cellInfo = self.Repositories.repositoryAtIndex(indexPath.item) {
+         
+         let imgPath = cellInfo.thumbnailURL
+         
+         if imgPath == "" {
+         cell.TitleLabel.textColor = Color.white
+         }
+         else {
+         
+         cell.ImageView.kf.setImage(with: URL(string: imgPath )! )
+         cell.TitleLabel.textColor = Color.black
+         }
+         
+         
+         let repoTitle = cellInfo.title
+         
+         cell.TitleLabel.text = repoTitle
+         
+         }
+         
+         
+         cell.backgroundColor = Color.black
+         
+         return cell
+         
+         
+         */
         
         
         
@@ -451,16 +450,16 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
     }
 }
 
-extension PARepositoriesViewController : UICollectionViewDelegateFlowLayout {
+extension PAMyRepositoriesViewController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         /*
-        let availableWidth = (self.ViewWidth - (self.HorizontalSectionPadding * 2.0)) - (self.ItemsPerRow.decrement().CGFloatValue * self.HorizontalSpacingBetweenItems)
- 
-        let cellWidth   = availableWidth / CGFloat(self.ItemsPerRow)
-        let cellHeight  = cellWidth
-        */
+         let availableWidth = (self.ViewWidth - (self.HorizontalSectionPadding * 2.0)) - (self.ItemsPerRow.decrement().CGFloatValue * self.HorizontalSpacingBetweenItems)
+         
+         let cellWidth   = availableWidth / CGFloat(self.ItemsPerRow)
+         let cellHeight  = cellWidth
+         */
         
         let cellWidth = PARepositoryCell.CELL_WITDTH
         let cellHeight = PARepositoryCell.CELL_HEIGHT
@@ -485,14 +484,14 @@ extension PARepositoriesViewController : UICollectionViewDelegateFlowLayout {
     
 }
 
-extension PARepositoriesViewController : UIScrollViewDelegate {
+extension PAMyRepositoriesViewController : UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         repositoriesSearchBar.resignFirstResponder()
     }
 }
-extension PARepositoriesViewController : UISearchBarDelegate {
+extension PAMyRepositoriesViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if let newText = searchBar.text {
@@ -546,7 +545,7 @@ extension PARepositoriesViewController : UISearchBarDelegate {
         
         let alert = SCLAlertView()
         
-        alert.addButton("Yes") { 
+        alert.addButton("Yes") {
             self.deleteRepository()
         }
         
@@ -574,8 +573,8 @@ extension PARepositoriesViewController : UISearchBarDelegate {
     }
 }
 
-extension PARepositoriesViewController : PARepositoryCellDelegate {
-
+extension PAMyRepositoriesViewController : PARepositoryCellDelegate {
+    
     
     func didLongPressOnCell(cell: PARepositoryCell) {
         

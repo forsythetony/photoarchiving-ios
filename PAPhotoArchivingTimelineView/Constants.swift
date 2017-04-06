@@ -150,7 +150,9 @@ struct Constants {
         }
     }
     
-    
+    struct MapView {
+        static let DefaultDegreesSpan                   = 2.0
+    }
     
     struct SegueIDs {
         static let ToAddUser                            = "segueToAddUser"
@@ -167,6 +169,8 @@ struct Constants {
         static let SegueFromHomeToRepositories          = "hometorepositoriessegue"
         static let SegueFromMenuToRepositories          = "segueFromMenuToRepositories"
         static let SegueFromMenuToHome                  = "segueFromMenuToHome"
+        static let SegueFromMenuToMyRepositories        = "segueFromSidePanelToMyRepositories"
+        static let SegueFromMyRepositoriesToTimeline    = "segueFromMyRepositoriesViewToTimelineView"
         //static let SegueFromTimelineViewToAddPhotograph = "seguefromtimelineviewtoaddphotograph"
         
     }
