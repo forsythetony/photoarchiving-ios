@@ -11,6 +11,31 @@ import UIKit
 
 typealias Color = UIColor
 
+protocol ColorValue {
+    var colorVal : Color { get }
+}
+
+extension RawRepresentable where RawValue == String, Self : ColorValue {
+    
+    var colorVal : Color {
+        get {
+            return Color(hex: self.rawValue)
+        }
+    }
+}
+
+enum PAColors : String, ColorValue {
+    
+    case successText    = "4F8A10"
+    case success        = "DFF2BF"
+    case warming        = "9F6000"
+    case warningText    = "FEEFB3"
+    case danger         = "FFBABA"
+    case dangerText     = "D8000C"
+    
+    case PAWhiteOne     = "cccccc"
+}
+
 struct Keys {
     
     

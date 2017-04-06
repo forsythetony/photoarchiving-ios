@@ -39,6 +39,8 @@
 		2583CA5C1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */; };
 		25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */; };
 		25918EDD1E8D19F600CB697A /* PAAudioControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */; };
+		259D5B051E95F50200C05669 /* PAUIViewControllerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259D5B041E95F50200C05669 /* PAUIViewControllerHelpers.swift */; };
+		259D5B071E95F5DD00C05669 /* PANotificationCenterHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259D5B061E95F5DD00C05669 /* PANotificationCenterHelpers.swift */; };
 		25AA7CDE1E52C0D200733DC8 /* PAHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */; };
 		25AB18581E91FB5C00F6341A /* PACustomEurekaRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */; };
 		25AB185B1E9209DE00F6341A /* PALocationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */; };
@@ -129,6 +131,8 @@
 		2583CA5B1DD3C727004711DC /* PAPhotoInfoRegularTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAPhotoInfoRegularTableViewCell.swift; sourceTree = "<group>"; };
 		25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PARepositoryTypeBar.swift; sourceTree = "<group>"; };
 		25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAAudioControlBar.swift; sourceTree = "<group>"; };
+		259D5B041E95F50200C05669 /* PAUIViewControllerHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAUIViewControllerHelpers.swift; sourceTree = "<group>"; };
+		259D5B061E95F5DD00C05669 /* PANotificationCenterHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PANotificationCenterHelpers.swift; sourceTree = "<group>"; };
 		25AA7CDD1E52C0D200733DC8 /* PAHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PAHomeViewController.swift; sourceTree = "<group>"; };
 		25AB18571E91FB5C00F6341A /* PACustomEurekaRows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACustomEurekaRows.swift; sourceTree = "<group>"; };
 		25AB185A1E9209DE00F6341A /* PALocationViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PALocationViewCell.xib; sourceTree = "<group>"; };
@@ -242,6 +246,15 @@
 			name = "Photo Info";
 			sourceTree = "<group>";
 		};
+		259D5B081E95F73C00C05669 /* Stories View */ = {
+			isa = PBXGroup;
+			children = (
+				25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */,
+				25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */,
+			);
+			name = "Stories View";
+			sourceTree = "<group>";
+		};
 		25AA7CDC1E52C0BF00733DC8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +281,8 @@
 				2568E9DE1DD27D5100FE911E /* Constants.swift */,
 				250B3A2B1DE8EF91002CE391 /* Helpers.swift */,
 				25316B451E8B260100C2B7F8 /* PANotifications.swift */,
+				259D5B041E95F50200C05669 /* PAUIViewControllerHelpers.swift */,
+				259D5B061E95F5DD00C05669 /* PANotificationCenterHelpers.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -301,8 +316,7 @@
 				256AB0171E892FEF00FD9779 /* Add Repository */,
 				25C2D1CA1E8AF29A00AB7CB9 /* Photo Upload Form */,
 				25C2D1CF1E8AF45200AB7CB9 /* Photo Information View */,
-				25316B491E8C5FD500C2B7F8 /* PANewRecordingViewController.swift */,
-				25316B4B1E8C840000C2B7F8 /* PAStoriesViewController.swift */,
+				259D5B081E95F73C00C05669 /* Stories View */,
 				25918EDA1E8CF6BF00CB697A /* PARepositoryTypeBar.swift */,
 				25918EDC1E8D19F600CB697A /* PAAudioControlBar.swift */,
 				25F9B7281E8D2EC50028B91B /* PAStoryTableViewCell.swift */,
@@ -449,8 +463,8 @@
 		25EC83AE1E79998A000AFC54 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				25EC9C7B1DFB7A4C00C30604 /* Repositories View */,
 				25EC83AF1E7999B6000AFC54 /* RepositoriesViewController.swift */,
+				25EC9C7B1DFB7A4C00C30604 /* Repositories View */,
 			);
 			name = Repositories;
 			sourceTree = "<group>";
@@ -712,6 +726,7 @@
 				25316B4F1E8CB6F500C2B7F8 /* PARepositoryCell.swift in Sources */,
 				25D03BA61DC19DAE00045988 /* AppDelegate.swift in Sources */,
 				2568E9E71DD28B7B00FE911E /* PATimelineManager.swift in Sources */,
+				259D5B051E95F50200C05669 /* PAUIViewControllerHelpers.swift in Sources */,
 				25918EDB1E8CF6BF00CB697A /* PARepositoryTypeBar.swift in Sources */,
 				256AB0161E890B1100FD9779 /* PACurrentUploadsViewController.swift in Sources */,
 				25C2D1CC1E8AF2BE00AB7CB9 /* PAPhotoInformationPage.swift in Sources */,
@@ -726,6 +741,7 @@
 				2583CA581DD3B748004711DC /* PARepository.swift in Sources */,
 				2568E9E11DD27DC900FE911E /* ContentAddSelectorViewController.swift in Sources */,
 				2539ED5E1DFBFA23008B7D38 /* PAPhotoUploadForm.swift in Sources */,
+				259D5B071E95F5DD00C05669 /* PANotificationCenterHelpers.swift in Sources */,
 				25D87CF71DE97A5C000D2160 /* PAPhotoInfoLocationTableViewCell.swift in Sources */,
 				25316B4C1E8C840000C2B7F8 /* PAStoriesViewController.swift in Sources */,
 				25D87CFE1DE98C21000D2160 /* PATimeLabel.swift in Sources */,

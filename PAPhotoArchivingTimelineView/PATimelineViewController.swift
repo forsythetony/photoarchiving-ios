@@ -18,14 +18,13 @@ fileprivate struct Action {
     static let addButton = #selector(PATimelineViewController.didTapAddButton(sender:))
 }
 
-class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
+class PATimelineViewController: UIViewController {
     
     fileprivate var current_photo_to_delete : PAPhotograph?
     
-    var ref : FIRDatabaseReference!
-    var repositories : [FIRDataSnapshot]! = []
-    var storageRef: FIRStorageReference!
-    let chromecaster = PAChromecaster.sharedInstance
+    var ref             : FIRDatabaseReference!
+    var repositories    : [FIRDataSnapshot]! = []
+    var storageRef      : FIRStorageReference!
     
     var timelineView : PATimelineView?
     
@@ -33,7 +32,7 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
     
     var currentRepository : PARepository? {
         didSet {
-            self.setupTimelineView()
+            _setupTimelineView()
         }
     }
     
@@ -48,6 +47,10 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
             return .lightContent
         }
     }
+    
+    
+    // MARK: - UIViewController Overrides
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,93 +61,12 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         
         _removeListeners()
     }
-    private func _removeListeners() {
-        
-        let defaultCenter = NotificationCenter.default
-        
-        defaultCenter.removeObserver(self, name: Notifications.didAddPhotograph.name, object: nil)
-        defaultCenter.removeObserver(self, name: Notifications.beganUploadingPhotograph.name, object: nil)
-        defaultCenter.removeObserver(self, name: Notifications.didDeletePhotograph.name, object: nil)
-        defaultCenter.removeObserver(self, name: Notifications.errorDeletingPhotograph.name, object: nil)
-    }
-    private func _setupListeners() {
-        
-        let defaultCenter = NotificationCenter.default
-        
-        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceivePhotoUploadNotification(sender:)), name: Notifications.didAddPhotograph.name, object: nil)
-        
-        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceivePhotoBeganUploadingNotification(sender:)), name: Notifications.beganUploadingPhotograph.name, object: nil)
-        
-        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceiveDidDeletePhotographNotifcation(sender:)), name: Notifications.didDeletePhotograph.name, object: nil)
-        
-        defaultCenter.addObserver(self, selector: #selector(PATimelineViewController.didReceiveErrorWhenDeletingPhotographNotification(sender:)), name: Notifications.errorDeletingPhotograph.name, object: nil)
-        
-    }
-    func _setupCast() {
-        
-        GCKCastContext.sharedInstance().sessionManager.add(self)
-        
-        let frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        let button = GCKUICastButton.init(frame: frame)
-        button.tintColor = Color.white
-        
-        let item = UIBarButtonItem.init(customView: button)
-        self.navigationItem.rightBarButtonItem = item
-        
-        
-        
-    }
-    func showAlertViewWithDevice( device : GCKDevice ) {
-        
-        let a = UIAlertController(title: "Device Found", message: "Would you like to connect", preferredStyle: .alert)
-        
-        let noAction = UIAlertAction(title: "Take no action", style: .cancel, handler: { action in
-
-        })
-        
-        let connectAction = UIAlertAction(title: "Connect", style: .default, handler: { action in
-            
-            self.chromecaster.connectToDevice(dev: device)
-        })
-        
-        a.addAction(noAction)
-        a.addAction(connectAction)
-        
-        self.present(a, animated: true, completion: nil)
-        
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //  Don't look for chromecasts at the moment
-        //chromecaster.beginSearching()
-
         _setupListeners()
-        self.navigationController?.navigationItem.PAClearBackButtonTitle()
-    }
-    
-    func setupTimelineView() {
-        var viewRect = self.view.bounds
-        viewRect.origin.x = 0.0
-        viewRect.origin.y = 0.0
-        
-        
-        let rInfo = self.currentRepository ?? PARepository.Mock1()
-        
-        timelineView = PATimelineView(frame: viewRect, repoInfo: rInfo)
-        timelineView?.delegate = self
-        
-        
-        self.title = rInfo.title
-        
-        self.view.addSubview(timelineView!)
-        
-        
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        navigationController?.navigationItem.PAClearBackButtonTitle()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -166,44 +88,103 @@ class PATimelineViewController: UIViewController, PAChromeCasterDelegate {
         }
     }
     
-    func didConnectToDevice(device: GCKDevice) {
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Setup
+    
+    private func _setup() {
+        _setupCast()
+    }
+    
+    private func _setupListeners() {
+        
+        let defaultCenter = NotificationCenter.default
+        
+        defaultCenter.addObserver(  self,
+                                    selector: #selector(PATimelineViewController.didReceivePhotoUploadNotification(sender:)),
+                                    name: Notifications.didAddPhotograph.name,
+                                    object: nil)
+        
+        defaultCenter.addObserver(  self, selector:
+            #selector(PATimelineViewController.didReceivePhotoBeganUploadingNotification(sender:)),
+                                    name: Notifications.beganUploadingPhotograph.name,
+                                    object: nil)
+        
+        defaultCenter.addObserver(  self,
+                                    selector: #selector(PATimelineViewController.didReceiveDidDeletePhotographNotifcation(sender:)),
+                                    name: Notifications.didDeletePhotograph.name,
+                                    object: nil)
+        
+        defaultCenter.addObserver(  self, selector:
+            #selector(PATimelineViewController.didReceiveErrorWhenDeletingPhotographNotification(sender:)),
+                                    name: Notifications.errorDeletingPhotograph.name,
+                                    object: nil)
+    }
+    
+    func _setupCast() {
+        
+        GCKCastContext.sharedInstance().sessionManager.add(self)
+        
+        let frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        let button = GCKUICastButton.init(frame: frame)
+        button.tintColor = Color.white
+        
+        let item = UIBarButtonItem.init(customView: button)
+        navigationItem.rightBarButtonItem = item
+        
+        
         
     }
     
-    func didFindNewDevice(device: GCKDevice) {
-        self.showAlertViewWithDevice(device: device)
-    }
-    
-    /*
-        SETUP FUNCTIONS
-    */
-    private func _setup() {
-        //_setupAddButton()
-        _setupCast()
-        _setupChromecast()
+    private func _setupTimelineView() {
+        var viewRect = self.view.bounds
+        viewRect.origin.x = 0.0
+        viewRect.origin.y = 0.0
+        
+        
+        let rInfo = currentRepository ?? PARepository.Mock1()
+        
+        timelineView = PATimelineView(frame: viewRect, repoInfo: rInfo)
+        timelineView?.delegate = self
+        
+        
+        title = rInfo.title
+        
+        view.addSubview(timelineView!)
+        
+        
     }
     
     private func _setupAddButton() {
         
         let add_button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Action.addButton)
         
-        self.navigationItem.rightBarButtonItem = add_button
-
-        
-//        self.navigationController?.navigationBar.barStyle = .black
-//        self.navigationController?.navigationBar.tintColor = Color.white
+        navigationItem.rightBarButtonItem = add_button
         
     }
     
-    private func _setupChromecast() {
+    // MARK: - Teardown
+
+    private func _removeListeners() {
         
-        self.chromecaster.delegate = self
+        let notificationsToRemove = [
+            Notifications.didAddPhotograph.name,
+            Notifications.beganUploadingPhotograph.name,
+            Notifications.didDeletePhotograph.name,
+            Notifications.errorDeletingPhotograph.name
+        ]
+        
+        NotificationCenter.default.PARemoveAllNotificationsWithName(    listener: self,
+                                                                        names: notificationsToRemove)
     }
 }
 
-/*
-    ACTION HANDLERS
-*/
+// MARK: - Delegate Handlers
+
+// MARK: PADataManager
 extension PATimelineViewController : PADataManagerDelegate {
     func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
@@ -237,6 +218,8 @@ extension PATimelineViewController : PADataManagerDelegate {
         self.current_photo_to_delete = nil
     }
 }
+
+// MARK: TimelineView
 extension PATimelineViewController : PATimelineViewDelegate {
     
     /*
@@ -326,6 +309,9 @@ extension PATimelineViewController : PATimelineViewDelegate {
     }
 }
 
+// MARK: - Notification Listeners
+
+// MARK: GCKSessionManager
 extension PATimelineViewController : GCKSessionManagerListener {
     func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
         
@@ -344,6 +330,8 @@ extension PATimelineViewController : GCKSessionManagerListener {
     }
     
 }
+
+// MARK: Custom Notifications
 
 extension PATimelineViewController {
     
@@ -426,10 +414,7 @@ extension PATimelineViewController {
     }
 }
 
-/*
-    Toast Extensions
-*/
-
+// MARK: - Display Extensions
 extension UIViewController {
     
     func displayWarningAlert( title : String, message : String?) {

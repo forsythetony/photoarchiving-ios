@@ -289,7 +289,17 @@ extension PADataManager {
                 return
             }
             
-            print("Successfully deleted the image!")
+            let noteInfo : [String : Any] = [
+                NotificationKeys.PhotoDelete.status : PhotoDeleteStatus.didDelete,
+                NotificationKeys.PhotoDelete.photoID : photo.uid
+            ]
+            
+            let note = Notification(name: Notifications.didDeletePhotograph.name, object: nil, userInfo: noteInfo)
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(note)
+            }
+            
         })
         
         
@@ -303,16 +313,9 @@ extension PADataManager {
                     return
                 }
                 
-                let noteInfo : [String : Any] = [
-                    NotificationKeys.PhotoDelete.status : PhotoDeleteStatus.didDelete,
-                    NotificationKeys.PhotoDelete.photoID : photo.uid
-                ]
                 
-                let note = Notification(name: Notifications.didDeletePhotograph.name, object: nil, userInfo: noteInfo)
                 
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(note)
-                }
+                
             })
         }
         
@@ -321,6 +324,8 @@ extension PADataManager {
             let repo_ref = database_ref!.child(String.init(format: "repositories/%@/photos/%@", repo.uid, photo.uid))
             
             repo_ref.removeValue()
+            
+            decrementRepositoryPhotoCount(repo_id: repo.uid)
         }
         
         
@@ -468,7 +473,20 @@ extension PADataManager {
         
         
     }
-    
+    fileprivate func decrementRepositoryPhotoCount( repo_id : String ) {
+        
+        guard isConfigured else { return }
+        
+        let number_ref = database_ref!.child("repositories").child(repo_id).child(Keys.Repository.totalPhotographs)
+        
+        number_ref.observeSingleEvent(of: .value, with: { (snapper) in
+            
+            if let val = snapper.value as? Int {
+                
+                number_ref.setValue(val.decrement())
+            }
+        })
+    }
     fileprivate func incrementRepositoryPhotoCount( repo_id : String ) {
         
         guard isConfigured else { return }

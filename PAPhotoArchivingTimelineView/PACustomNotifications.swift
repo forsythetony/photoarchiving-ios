@@ -26,27 +26,41 @@ enum Notifications : String, NotificationName {
     case beganUploadingPhotograph
     case errorDeletingPhotograph
     case didDeletePhotograph
+    
+    case audioPlayerBarDidTapPlay
+    case audioPlayerBarDidTapPause
+    case audioPlayerBarDidTapStop
 }
 
 enum PhotoUploadStatus : String {
-    case didUpload = "Did Upload"
-    case uploadFailed = "Upload Failed"
-    case beganUploading = "Began Uploading"
+    
+    case didUpload          = "Did Upload"
+    case uploadFailed       = "Upload Failed"
+    case beganUploading     = "Began Uploading"
+    
 }
+
+
 enum PhotoDeleteStatus : String {
-    case didDelete = "Did Delete"
-    case errorDeleting = "Error Deleting"
+    
+    case didDelete      = "Did Delete"
+    case errorDeleting  = "Error Deleting"
+    
 }
+
 struct NotificationKeys {
+    
     struct PhotoUploaded {
-        static let status = "uploadStatus"
-        static let photoID = "photoID"
-        static let error = "uploadError"
+        
+        static let status   = "uploadStatus"
+        static let photoID  = "photoID"
+        static let error    = "uploadError"
     }
     
     struct PhotoDelete {
-        static let status = "deleteStatus"
-        static let photoID = "photoID"
-        static let error = "deleteError"
+        
+        static let status   = "deleteStatus"
+        static let photoID  = "photoID"
+        static let error    = "deleteError"
     }
 }

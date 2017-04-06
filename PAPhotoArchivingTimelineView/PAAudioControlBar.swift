@@ -20,14 +20,18 @@ protocol PAAudioControlBarDelegate {
 }
 class PAAudioControlBar: UIView {
     
+    private enum AudioControlBarActionType {
+        case play, pause, stop
+    }
+    
     static let BAR_HEIGHT : CGFloat = 60.0
     
-    var progressBar : UIProgressView!
-    var currTimeLabel : UILabel!
+    var progressBar     : UIProgressView!
+    var currTimeLabel   : UILabel!
     var playPauseButton : UIButton!
-    var stopButton : UIButton!
-    var totalTimeLabel : UILabel!
-    var titleLabel : UILabel!
+    var stopButton      : UIButton!
+    var totalTimeLabel  : UILabel!
+    var titleLabel      : UILabel!
     
     var delegate : PAAudioControlBarDelegate?
     
@@ -179,22 +183,56 @@ class PAAudioControlBar: UIView {
     @objc func didTapPlayPause( sender : UIButton ) {
         
         if self.currentState == .isPlaying {
-            self.delegate?.PAAudioControlBarDidClickPause()
+            delegate?.PAAudioControlBarDidClickPause()
+            _postNotification(actionType: .pause)
         }
         else {
-            self.delegate?.PAAudioControlBarDidClickPlay()
+            delegate?.PAAudioControlBarDidClickPlay()
+            _postNotification(actionType: .play)
         }
     }
     
     @objc func didTapStop( sender : UIButton ) {
-        self.delegate?.PAAudioControlBarDidClickStop()
+        delegate?.PAAudioControlBarDidClickStop()
+        _postNotification(actionType: .stop)
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    
+    // MARK: - Helper Functions
+    
+    private func _postNotification( actionType : AudioControlBarActionType ) {
+        
+        var noteName : Notification.Name?
+        
+        switch actionType {
+            
+        case .pause:
+            noteName = Notifications.audioPlayerBarDidTapPause.name
+            
+        case .play:
+            noteName = Notifications.audioPlayerBarDidTapPlay.name
+            
+        case .stop:
+            noteName = Notifications.audioPlayerBarDidTapStop.name
+            
+        default:
+            break
+            
+        }
+        
+        
+        
+        
+        guard let name = noteName else {
+            return
+        }
+        
+        let note = Notification(    name: name,
+                                    object: nil,
+                                    userInfo: nil)
+        
+        NotificationCenter.default.post(note)
     }
-    */
+
 
 }

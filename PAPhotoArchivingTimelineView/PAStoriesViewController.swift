@@ -53,11 +53,8 @@ class PAStoriesViewController: UIViewController {
     
     
     
-    
-    
-    
-    
-    
+    // MARK: View Controller Overrides
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,9 +67,28 @@ class PAStoriesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _setupListeners()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        _teardown()
+    }
+    // MARK: Setup Functions
 
     private func _setup() {
+        
+        _setupViews()
+    }
+    
+    private func _setupViews() {
+        
         _setupTableView()
+        
         
         mainTitleLabel = UILabel(frame: CGRect.zero)
         mainTitleLabel.textAlignment = .center
@@ -109,9 +125,6 @@ class PAStoriesViewController: UIViewController {
         }
         
     }
-    @objc func didTapExit() {
-        self.presentingViewController?.dismiss(animated: false, completion: nil)
-    }
     private func _setupTableView() {
         
         mainTableView = UITableView(frame: self.view.bounds, style: .plain)
@@ -125,6 +138,51 @@ class PAStoriesViewController: UIViewController {
         
         
     }
+    
+    private func _setupListeners() {
+        
+        let center = NotificationCenter.default
+        
+        center.addObserver( self,
+                            selector: #selector(PAStoriesViewController.didReceiveAudioControlBarPlayNotification(note:)),
+                            name: Notifications.audioPlayerBarDidTapPlay.name,
+                            object: nil)
+        
+        center.addObserver( self,
+                            selector: #selector(PAStoriesViewController.didReceiveAudioControlBarPauseNotification(note:)),
+                            name: Notifications.audioPlayerBarDidTapPause.name,
+                            object: nil)
+        
+        center.addObserver( self,
+                            selector: #selector(PAStoriesViewController.didReceiveAudioControlBarStopNotificationn(note:)),
+                            name: Notifications.audioPlayerBarDidTapStop.name,
+                            object: nil)
+    }
+    
+    // MARK: Teardown
+    
+    private func _teardown() {
+        
+        _removeListeners()
+    }
+    
+    private func _removeListeners() {
+        
+        let notifications = [
+            Notifications.audioPlayerBarDidTapPause.name,
+            Notifications.audioPlayerBarDidTapStop.name,
+            Notifications.audioPlayerBarDidTapPlay.name
+        ]
+        
+        NotificationCenter.default.PARemoveAllNotificationsWithName(    listener: self,
+                                                                        names: notifications)
+    }
+    // MARK: Action Handlers
+
+    @objc func didTapExit() {
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
+    }
+    
     
 
     func sendItemToChromecast( story : PAStory ) {
@@ -317,4 +375,37 @@ extension PAStoriesViewController : GCKRemoteMediaClientListener {
     }
     
     
+}
+
+extension PAStoriesViewController {
+    
+    func didReceiveAudioControlBarPauseNotification( note : Notification ) {
+        
+        printNotificationLogMessage(note: note)
+    }
+    
+    func didReceiveAudioControlBarPlayNotification( note : Notification ) {
+        
+        printNotificationLogMessage(note: note)
+    }
+    
+    func didReceiveAudioControlBarStopNotificationn( note : Notification ) {
+        
+        printNotificationLogMessage(note: note)
+    }
+}
+
+extension PAStoriesViewController {
+    
+    fileprivate func printNotificationLogMessage( note : Notification) {
+        
+        let class_name = String(describing: PAStoriesViewController.self)
+        let note_name = note.name.rawValue
+        
+        var format_string = "Did act on notification -> %@ in class -> %@".PAPadWithNewlines()
+        
+        let message_string = String.init(format: format_string, note_name, class_name)
+        
+        print( message_string )
+    }
 }

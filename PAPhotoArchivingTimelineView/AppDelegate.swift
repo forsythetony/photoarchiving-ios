@@ -19,24 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .highlighted)
-        
-        let textAttributes = [ NSForegroundColorAttributeName : Color.white ]
-        
-        UINavigationBar.appearance().titleTextAttributes = textAttributes
-        
-        
-        setupFirebase()
-        
-        
-        let options = GCKCastOptions.init(receiverApplicationID: "8F5EA4C3")
-        GCKCastContext.setSharedInstanceWith(options)
-        
-        
-        
-        
-        
+        _setupAppearance()
+        _setupFirebase()
+        _setupChromecast()
         
         return true
     }
@@ -64,13 +49,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
-    private func setupFirebase() {
+    private func _setupAppearance() {
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : Color.clear], for: .highlighted)
+        
+        let textAttributes = [ NSForegroundColorAttributeName : Color.white ]
+        
+        UINavigationBar.appearance().titleTextAttributes = textAttributes
+    }
+    
+    private func _setupChromecast() {
+        
+        let options = GCKCastOptions.init(receiverApplicationID: "8F5EA4C3")
+        GCKCastContext.setSharedInstanceWith(options)
+    }
+    
+    private func _setupFirebase() {
         FIRApp.configure()
         
         PADataManager.sharedInstance.configure()
-        
-        //MockDataGenerator.sharedInstance.configureDatabase()
     }
 }
 

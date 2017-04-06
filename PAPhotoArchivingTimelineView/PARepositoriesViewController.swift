@@ -17,6 +17,7 @@ class PARepositoriesViewController: UIViewController {
 
     @IBOutlet weak var RepositoriesCollectionView: UICollectionView!
 
+    @IBOutlet weak var repositoriesSearchBar: UISearchBar!
     
     let dataMan = PADataManager.sharedInstance
     
@@ -74,6 +75,7 @@ class PARepositoriesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        _resetSearch()
         
     }
     override func viewDidLoad() {
@@ -87,6 +89,8 @@ class PARepositoriesViewController: UIViewController {
         _setupCollectionView()
         _setupImageView()
         _setupAddButton()
+        _setupBackButton()
+        _setupSearchBar()
         
     }
 
@@ -101,6 +105,11 @@ class PARepositoriesViewController: UIViewController {
     /*
         SETUP FUNCTIONS
     */
+    private func _resetSearch() {
+        
+        Repositories.upadateSearchedRepositories(searchPackage: PASearchPackage())
+        repositoriesSearchBar.resignFirstResponder()
+    }
     private func _dataSetup() {
         self.dataMan.delegate = self
         
@@ -111,6 +120,33 @@ class PARepositoriesViewController: UIViewController {
             self.dataMan.pullRepositories()
         }
         
+    }
+    
+    private func _setupSearchBar() {
+        
+        repositoriesSearchBar.delegate      = self
+        repositoriesSearchBar.placeholder 	= "Search Repositories"
+        
+        repositoriesSearchBar.searchBarStyle = .minimal
+        repositoriesSearchBar.tintColor = Color.white
+        repositoriesSearchBar.barTintColor = Color.yellow
+        
+        let attributed_placeholder = NSAttributedString(    string: "Search Repositories",
+                                                            attributes: [ NSForegroundColorAttributeName : PAColors.PAWhiteOne.colorVal])
+        
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = attributed_placeholder
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = Color.white
+        
+        repositoriesSearchBar.setImage(#imageLiteral(resourceName: "search_bar_icon_white"), for: .search, state: .normal)
+        repositoriesSearchBar.setImage(#imageLiteral(resourceName: "search_bar_cancel_icon"), for: .clear, state: .normal)
+        repositoriesSearchBar.setImage(#imageLiteral(resourceName: "search_bar_cancel_icon"), for: .clear, state: .highlighted)
+        
+        
+    }
+    
+    private func _setupBackButton() {
+        
+        //PASetupBackButton()
     }
     
     private func _setupAddButton() {
@@ -146,15 +182,14 @@ class PARepositoriesViewController: UIViewController {
     }
     
     private func _setupCollectionView() {
-//        
-//        self.RepositoriesCollectionView.register(PARepositoryCollectionViewCell.self, forCellWithReuseIdentifier: PARepositoryCollectionViewCell.ReuseID)
-//        
-        self.RepositoriesCollectionView.register(UINib.init(nibName: "PARepositoryCell", bundle: Bundle.main), forCellWithReuseIdentifier: PARepositoryCell.REUSE_ID)
         
-        self.RepositoriesCollectionView.delegate = self
-        self.RepositoriesCollectionView.dataSource = self
         
-        self.RepositoriesCollectionView.backgroundColor = Color.clear
+        RepositoriesCollectionView.register(UINib.init(nibName: "PARepositoryCell", bundle: Bundle.main), forCellWithReuseIdentifier: PARepositoryCell.REUSE_ID)
+        
+        RepositoriesCollectionView.delegate     = self
+        RepositoriesCollectionView.dataSource   = self
+        
+        RepositoriesCollectionView.backgroundColor = Color.clear
         
     }
     
@@ -165,13 +200,15 @@ class PARepositoriesViewController: UIViewController {
         
         let message = "Looks like you tapped the add button there kiddo!"
         
-        print(String.init(format: "\n%@\n", message))
+        print(String.init(format: "%@".PAPadWithNewlines(), message))
         
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let storyboard = UIStoryboard.PAMainStoryboard
         
         let add_repository_vc = storyboard.instantiateViewController(withIdentifier: PAAddRepositoryViewController.STORYBOARD_ID) as! PAAddRepositoryViewController
         
-        self.present(add_repository_vc, animated: true, completion: nil)
+        present(    add_repository_vc,
+                    animated: true,
+                    completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -338,12 +375,16 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
             let imgPath = cellInfo.thumbnailURL
             
             if imgPath == "" {
-                //cell.TitleLabel.textColor = Color.white
+                
+                cell.thumbnailImageView.image = #imageLiteral(resourceName: "repository_thumbnail_default")
             }
             else {
                 
-                cell.thumbnailImageView.kf.setImage(with: URL(string: imgPath )! )
-                //cell.TitleLabel.textColor = Color.black
+                cell.thumbnailImageView.kf.setImage(    with: URL(string: imgPath)!,
+                                                        placeholder: #imageLiteral(resourceName: "repository_thumbnail_default"),
+                                                        options: nil,
+                                                        progressBlock: nil,
+                                                        completionHandler: nil)
             }
             
             let start_year = PADateManager.sharedInstance.getDateString(date: cellInfo.startDate!, formatType: .YearOnly)
@@ -397,4 +438,63 @@ extension PARepositoriesViewController : UICollectionViewDelegateFlowLayout {
         
         return self.SectionInsets.left
     }
+    
+}
+
+extension PARepositoriesViewController : UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        repositoriesSearchBar.resignFirstResponder()
+    }
+}
+extension PARepositoriesViewController : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let newText = searchBar.text {
+            
+            let filterMode = getFilterModeForString(searchString: newText)
+            
+            Repositories.upadateSearchedRepositories(searchPackage: filterMode)
+            
+            RepositoriesCollectionView.reloadData()
+        }
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+        
+    }
+    
+    private func getFilterModeForString( searchString : String ) -> PASearchPackage {
+        
+        
+        var searchPackage = PASearchPackage()
+        searchPackage.searchString = searchString
+        
+        let splitter = ":"
+        
+        guard searchString.range(of: splitter) != nil else {
+            return searchPackage
+        }
+        
+        
+        let search_array = searchString.components(separatedBy: splitter)
+        
+        if search_array.count == 2 {
+            searchPackage.filterMode = PARepositoriesFilterMode.descriptorForSearchString(str: search_array[0])
+            searchPackage.searchString = search_array[1]
+            
+        }
+        else if search_array.count == 3 {
+            searchPackage.filterMode = PARepositoriesFilterMode.descriptorForSearchString(str: search_array[0])
+            searchPackage.searchString = search_array[2]
+            searchPackage.filterOperator = PAOperator.getOperatorTypeForString(str: search_array[1])
+        }
+        
+        print( searchPackage.JSONStringDescriptor() )
+        
+        return searchPackage
+        
+    }
+    
 }

@@ -497,6 +497,18 @@ extension Color {
 
 extension String {
     
+    func PAPadWithNewlines( padCount : Int? = 1 ) -> String {
+        
+        var newString = self
+        
+        for _ in 0..<padCount! {
+            newString.insert("\n", at: self.startIndex)
+            newString.insert("\n", at: self.endIndex)
+        }
+        
+        return newString
+    }
+    
     var boolValue : Bool {
         get {
             if self.lowercased() == "true" {
@@ -643,3 +655,4 @@ extension UIStoryboard {
         }
     }
 }
+

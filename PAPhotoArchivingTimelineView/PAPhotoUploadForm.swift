@@ -15,6 +15,7 @@ class PAPhotoUploadForm : FormViewController {
     var repository : PARepository?
     
     var photoPickerController : UIImagePickerController?
+    
     var photoPickerChoice : UIImagePickerControllerSourceType = .photoLibrary {
         didSet {
             guard let pickerController = self.photoPickerController else { return }
@@ -31,11 +32,28 @@ class PAPhotoUploadForm : FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        _setup()
+    }
+    
+    // MARK: - Setup Functions
+
+    
+    private func _setup() {
+        
+        _setupForm()
+        _setupPicker()
+    }
+    
+    private func _setupSingletons() {
+        
         dataMan.delegate = self
         
         if !dataMan.isConfigured {
             dataMan.configure()
         }
+    }
+    
+    private func _setupForm() {
         
         
         form = Section("Photograph") { section in
@@ -48,64 +66,80 @@ class PAPhotoUploadForm : FormViewController {
             section.header = header
             
             }
-        
-            <<< ButtonRow() { btnRow in
             
-                btnRow.title = "Select Photograph"
+        <<< ButtonRow() { btnRow in
+            
+            btnRow.title = "Select Photograph"
             
             } . onCellSelection({ (cellOf, rowOf) in
                 
                 self.displayPhotoSelector()
             })
         +++ Section("Basic Information")
-            <<< TextRow() { row in
-                row.title = "Title"
-                row.placeholder = "Enter Title"
-                row.tag = Keys.Photograph.title
-            }
-            <<< TextAreaRow() { row in
-                
-                row.title = "Description"
-                row.value = ""
-                row.placeholder = "Enter a description"
-                row.tag = Keys.Photograph.description
+        <<< TextRow() { row in
+            row.title = "Title"
+            row.placeholder = "Enter Title"
+            row.tag = Keys.Photograph.title
+        }
+        <<< TextAreaRow() { row in
             
-            }
+            row.title = "Description"
+            row.value = ""
+            row.placeholder = "Enter a description"
+            row.tag = Keys.Photograph.description
             
+        }
+        
         +++ Section("Date Taken")
-            <<< DateRow() { dateRow in
-                    dateRow.title = "Date Taken"
-                    dateRow.maximumDate = Date()
-                    dateRow.value = PADateManager.sharedInstance.randomDateBetweenYears(startYear: 1900, endYear: 2000)
-                    dateRow.tag = Keys.Photograph.dateTaken
-            }
-            <<< SliderRow() { sRow in
-                sRow.title = "Confidence"
-                sRow.minimumValue = 0
-                sRow.maximumValue = 100
-                sRow.value = 50
-                sRow.steps = 100
-                sRow.tag = Keys.Photograph.dateTakenConf
-                
-            }
+        <<< DateRow() { dateRow in
+            dateRow.title = "Date Taken"
+            dateRow.maximumDate = Date()
+            dateRow.value = PADateManager.sharedInstance.randomDateBetweenYears(startYear: 1900, endYear: 2000)
+            dateRow.tag = Keys.Photograph.dateTaken
+        }
+        <<< SliderRow() { sRow in
+            sRow.title = "Confidence"
+            sRow.minimumValue = 0
+            sRow.maximumValue = 100
+            sRow.value = 50
+            sRow.steps = 100
+            sRow.tag = Keys.Photograph.dateTakenConf
+            
+        }
         +++ Section("Completion")
-            <<< ButtonRow() { btnRow in
-                btnRow.title = "Submit"
+        <<< ButtonRow() { btnRow in
+            btnRow.title = "Submit"
             } .onCellSelection({ (_, _) in
                 self.didTapSubmit()
             })
-            <<< ButtonRow() { btnRow in
-                btnRow.title = "Cancel"
+        <<< ButtonRow() { btnRow in
+            btnRow.title = "Cancel"
             } .onCellSelection({ (_, _) in
                 self.didTapCancel()
             }).cellSetup({ (cell, row) in
                 cell.textLabel?.textColor = Color.PADarkBlue
             })
         
-        
-        self.setupPicker()
     }
     
+    private func _setupPicker() {
+        
+        photoPickerController = UIImagePickerController()
+        
+        guard let pp = photoPickerController else { return }
+        
+        pp.delegate = self
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            pp.sourceType = .photoLibrary
+        }
+        
+        pp.allowsEditing = true
+        
+    }
+    
+    // MARK: - Action Handlers
+
     func didTapSubmit() {
         updatePhotoInfo()
         
@@ -120,6 +154,12 @@ class PAPhotoUploadForm : FormViewController {
         
     }
     
+    func didTapCancel() {
+        
+    }
+    
+    // MARK: - Helper Functions
+
     func showAlertViewWithMessage( message : String ) {
         if self.isShowingAlert { return }
         
@@ -136,6 +176,7 @@ class PAPhotoUploadForm : FormViewController {
             self.isShowingAlert = true
         })
     }
+    
     func valueForKey( key : String ) -> Any? {
     
         return self.form.rowBy(tag: key)?.baseValue
@@ -166,26 +207,8 @@ class PAPhotoUploadForm : FormViewController {
         
         
     }
-    func didTapCancel() {
-        
-    }
-    func setupPicker() {
-        
-        self.photoPickerController = UIImagePickerController()
-        
-        guard let pp = self.photoPickerController else { return }
-        
-        pp.delegate = self
-        
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            pp.sourceType = .photoLibrary
-        }
-        
-        
-        pp.allowsEditing = true
-        
-        
-    }
+    
+    
     
     func quickDisplayPhotoSelector() {
         
@@ -195,24 +218,30 @@ class PAPhotoUploadForm : FormViewController {
     
     func displayPhotoSelector() {
         
-        let typePicker = UIAlertController(title: "Source Pick", message: "Pick a source", preferredStyle: .actionSheet)
+        let typePicker = UIAlertController( title: "Source Pick",
+                                            message: "Pick a source",
+                                            preferredStyle: .actionSheet)
         
-        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: { (alertAction) in
+        let photoLibraryAction = UIAlertAction( title: "Photo Library",
+                                                style: .default,
+                                                handler: { (alertAction) in
             
             self.photoPickerChoice = .photoLibrary
             self.showPhotoPicker()
         })
         
-        
-        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: { (alertAction) in
+        let cameraAction = UIAlertAction(   title: "Camera",
+                                            style: .default,
+                                            handler: { (alertAction) in
             
             self.photoPickerChoice = .camera
             self.showPhotoPicker()
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alertAction) in
+        let cancelAction = UIAlertAction(   title: "Cancel",
+                                            style: .cancel,
+                                            handler: { (alertAction) in
             
-            //  Cancel
         })
         
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -233,15 +262,15 @@ class PAPhotoUploadForm : FormViewController {
     func showPhotoPicker() {
         guard let pp = self.photoPickerController else { return }
         
-        self.present(pp, animated: true, completion: nil)
+        present(pp, animated: true, completion: nil)
     }
+    
     func updateImage( newImage : UIImage ) {
         
-        guard let sectionOne = self.form.sectionBy(tag: "Photograph") else {
+        guard let sectionOne = form.sectionBy(tag: "Photograph") else {
             TFLogger.log(logString: "Couldn't get the section")
             return
         }
-        
         
         if let customHeaderView = sectionOne.header as? HeaderFooterView<PACustomHeaderView> {
             

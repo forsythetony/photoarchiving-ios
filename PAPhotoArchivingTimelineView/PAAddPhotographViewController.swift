@@ -33,6 +33,12 @@ fileprivate struct InitialValues {
 
 class PAAddPhotoViewController : FormViewController {
     
+    private enum SectionTitles : String {
+        case photograph     = "Photograph"
+        case general        = "General Photo Information"
+        case date           = "Date Information"
+        case location       = "Location Information"
+    }
     
     static let STORYBOARD_ID = "paaddphotoviewcontroller"
     
@@ -54,6 +60,7 @@ class PAAddPhotoViewController : FormViewController {
             }
         }
     }
+    
     fileprivate var setupValues = InitialValues()
     
     override func viewDidLoad() {
@@ -62,9 +69,13 @@ class PAAddPhotoViewController : FormViewController {
         _setup()
     }
     
-    /*
-        SETUP FUNCTIONS
-    */
+    
+    
+    
+    
+    
+    // MARK: Setup Functions
+    
     private func _setup() {
         
         _setupInitialValues()
@@ -73,10 +84,7 @@ class PAAddPhotoViewController : FormViewController {
     
     private func _setupForm() {
         
-        
-        let section_three_title = "Image"
-        
-        form +++ Section( section_three_title )
+        form +++ Section( SectionTitles.photograph.rawValue )
             <<< ImageRow() {
                 $0.title = "Photograph"
                 $0.sourceTypes = [.PhotoLibrary ]
@@ -106,9 +114,8 @@ class PAAddPhotoViewController : FormViewController {
         /*
             General Information Section
         */
-        let section_one_title = "General Photo Information"
         
-        form +++ Section(section_one_title)
+        form +++ Section( SectionTitles.general.rawValue )
             <<< TextRow() {
                 
                 $0.title        = "Photo Title"
@@ -132,9 +139,8 @@ class PAAddPhotoViewController : FormViewController {
         /*
             Date Information Section
         */
-        let section_two_title = "Date Information"
         
-        form +++ Section( section_two_title )
+        form +++ Section( SectionTitles.date.rawValue )
             
             <<< DateInlineRow() {
                 
@@ -159,13 +165,11 @@ class PAAddPhotoViewController : FormViewController {
         /*
             Photograph Location Information
         */
-        let location_section_title = "Location Information"
         
-        form +++ Section( location_section_title )
+        form +++ Section( SectionTitles.location.rawValue )
             <<< PALocationRow() {
-                $0.value = self.myLocation
-                $0.tag = "location"
-                $0.title = "Location"
+                $0.value    = self.myLocation
+                $0.tag      = "location"
             }
             <<< SliderRow() {
                 $0.title        = "Location Conf"
@@ -194,8 +198,9 @@ class PAAddPhotoViewController : FormViewController {
                 
             }
             .cellUpdate { cell, row in
-                cell.textLabel?.textColor = Color.PASuccessTextColor
-                cell.backgroundColor = Color.PASuccessColor
+                
+                cell.textLabel?.textColor   = PAColors.successText.colorVal
+                cell.backgroundColor        = PAColors.success.colorVal
             }
             <<< ButtonRow() {
              
@@ -206,28 +211,12 @@ class PAAddPhotoViewController : FormViewController {
                 self?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
             .cellUpdate { cell, row in
-                cell.textLabel?.textColor = Color.PADangerTextColor
-                cell.backgroundColor = Color.PADangerColor
+                
+                cell.textLabel?.textColor   = PAColors.dangerText.colorVal
+                cell.backgroundColor        = PAColors.danger.colorVal
             }
-        
     }
     
-    fileprivate func updateImageRows() {
-        
-        let imageRow = form.rowBy(tag: "imagerow")
-        
-        if let image_url = self.selectedImageURL {
-            let img = UIImage(named: image_url.absoluteString)
-            
-            imageRow?.baseValue = img
-        }
-        else {
-            imageRow?.baseValue = nil
-            
-        }
-        
-        imageRow?.updateCell()
-    }
     private func _setupInitialValues() {
         
         setupValues.photoDate           = dateMan.getDateFromYearInt(year: 1970)
@@ -242,10 +231,31 @@ class PAAddPhotoViewController : FormViewController {
     }
     
     
+    // MARK: Update Functions
+
+    fileprivate func updateImageRows() {
+        
+        let imageRow = form.rowBy(tag: "imagerow")
+        
+        if let image_url = self.selectedImageURL {
+            
+            let img = UIImage(named: image_url.absoluteString)
+            
+            imageRow?.baseValue = img
+        }
+        else {
+            imageRow?.baseValue = nil
+            
+        }
+        
+        imageRow?.updateCell()
+    }
     
-    /*
-        ACTION HANDLERS
-    */
+    
+    
+    
+    // MARK: Action Handlers
+
     fileprivate func validateFormValuesForSubmission() -> PAPhotographValidationError {
         
         var errorInformation = PAPhotographValidationError()
@@ -256,40 +266,47 @@ class PAAddPhotoViewController : FormViewController {
         
         guard let title_value = values[Keys.Photograph.title] as? String else {
             
-            errorInformation.errorMessage = "Title was not set"
-            errorInformation.didSucceed = false
+            errorInformation.errorMessage   = "Title was not set"
+            errorInformation.didSucceed     = false
+            
             return errorInformation
         }
         
         guard title_value != "" else {
-            errorInformation.errorMessage = "Title was not set"
-            errorInformation.didSucceed = false
+            
+            errorInformation.errorMessage   = "Title was not set"
+            errorInformation.didSucceed     = false
+            
             return errorInformation
         }
         
         guard self.selectedImageURL != nil else {
             
-            errorInformation.errorMessage = "There was no image selected!"
-            errorInformation.didSucceed = false
+            errorInformation.errorMessage   = "There was no image selected!"
+            errorInformation.didSucceed     = false
             
             return errorInformation
         }
         
-        guard let date_taken = values[Keys.Photograph.dateTaken] as? Date else {
+        guard let _ = values[Keys.Photograph.dateTaken] as? Date else {
             
-            errorInformation.errorMessage = "Date taken was not set"
-            errorInformation.didSucceed = false
+            errorInformation.errorMessage   = "Date taken was not set"
+            errorInformation.didSucceed     = false
+            
             return errorInformation
         }
-        errorInformation.didSucceed = true
-        errorInformation.errorMessage = "No error"
+        
+        errorInformation.didSucceed     = true
+        errorInformation.errorMessage   = "No error"
         
         return errorInformation
     }
     
+    // MARK: Helper Functions
+
     fileprivate func populatePhotographWithValues() -> PAPhotographValidationError {
         
-        let error_info = self.validateFormValuesForSubmission()
+        let error_info = validateFormValuesForSubmission()
         
         if !error_info.didSucceed {
             
@@ -298,22 +315,20 @@ class PAAddPhotoViewController : FormViewController {
         
         let values = form.values()
         
-        self.newPhotograph.title = values[Keys.Photograph.title] as! String
+        newPhotograph.title = values[Keys.Photograph.title] as! String
         
         if let photo_description = values[Keys.Photograph.description] as? String {
-            self.newPhotograph.longDescription = photo_description
+            newPhotograph.longDescription = photo_description
         }
         
-        self.newPhotograph.dateTaken = values[Keys.Photograph.dateTaken] as! Date
-        
-        self.newPhotograph.dateTakenConf = values[Keys.Photograph.dateTakenConf] as! Float
-        
-        self.newPhotograph.mainImage = (values[Keys.Photograph.localPhotoURL] as! UIImage)
+        newPhotograph.dateTaken     = values[Keys.Photograph.dateTaken]         as! Date
+        newPhotograph.dateTakenConf = values[Keys.Photograph.dateTakenConf]     as! Float
+        newPhotograph.mainImage     = (values[Keys.Photograph.localPhotoURL]    as! UIImage)
         
         if let coords = values["location"] as? CLLocation {
             
-            self.newPhotograph.locationTaken.coordinates = coords.coordinate
-            self.newPhotograph.locationTakenConf = values[Keys.Photograph.locationConf] as! Float
+            newPhotograph.locationTaken.coordinates = coords.coordinate
+            newPhotograph.locationTakenConf         = values[Keys.Photograph.locationConf] as! Float
         }
         
         return error_info
@@ -321,18 +336,19 @@ class PAAddPhotoViewController : FormViewController {
     
     func submitPhotograph() {
         
-        let error_info = self.populatePhotographWithValues()
+        let error_info = populatePhotographWithValues()
         
         if !error_info.didSucceed {
+            
             return
         }
         
         
         if let repo = self.currentRepository {
             
-            self.dataMan.addPhotographToRepositoryv2(newPhoto: self.newPhotograph, repository: repo)
+            dataMan.addPhotographToRepositoryv2(newPhoto: self.newPhotograph, repository: repo)
             
-            self.presentingViewController?.dismiss(animated: true, completion: nil)
+            presentingViewController?.dismiss(animated: true, completion: nil)
         }
         
     }
