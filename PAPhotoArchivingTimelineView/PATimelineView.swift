@@ -475,11 +475,12 @@ extension PATimelineView : UIScrollViewDelegate {
         
         let viewWindowString = NSStringFromCGRect(viewWindow)
         
-        // print("View window -> \(viewWindowString)")
+        
         
         if self.isAnimatingIncViews {
             self.finishIncViewAnimations()
         }
+        
     }
     
     
