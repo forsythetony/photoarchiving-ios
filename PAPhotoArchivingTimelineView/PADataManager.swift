@@ -1604,7 +1604,7 @@ extension PADataManager {
         
         guard checkIsConfigured() else { return }
         
-        let created_repos_path = String.init(format: "%@/%@/%@/", Keys.Database.users, user_id, Keys.User.repositoriesCreated)
+        let created_repos_path = String.init(format: "%@/%@/%@/", Keys.Database.users, user_id, Keys.User.myRepositories)
         
         let created_repos_ref = database_ref!.child(created_repos_path)
         

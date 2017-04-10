@@ -67,6 +67,12 @@ class PAEditRepositoryViewController : FormViewController {
         
         NotificationCenter.default.removeObserver(self, name: Notifications.didUpdateRepository.name, object: nil)
     }
+    
+    private enum FieldTags : String {
+        
+        case thumbnailImage
+    }
+    
     private func _setupForm() {
         
         //  DEFAULTS

@@ -128,8 +128,7 @@ class PAGlobalUser {
                 _configTimer?.invalidate()
                 self.setupWithUserID(uid: uid)
                 _isConfigured = false
-                gatherJoinedRepositories()
-                gatherCreatedRepositories() 
+
                 return
             }
         }
@@ -218,6 +217,9 @@ class PAGlobalUser {
             }
             
         })
+        
+        gatherJoinedRepositories()
+        gatherCreatedRepositories()
     }
     
     func gatherJoinedRepositories() {
