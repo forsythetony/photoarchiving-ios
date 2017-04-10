@@ -478,6 +478,11 @@ extension PADataManager {
                 NotificationCenter.default.post(didUploadNote)
             }
             
+            
+            
+            self.postPhotographAddedToRepositoryNotification(   photograph_id: new_photograph_key,
+                                                                repo_id: repository.uid,
+                                                                user_id: self.currentUserID)
         }
         
         upload_task.observe(.progress) { (snap) in
@@ -671,6 +676,8 @@ extension PADataManager {
         let note = Notification(name: Notifications.didUploadNewRepository.name, object: nil, userInfo: nil)
         
         NotificationCenter.default.post(note)
+        
+        postUserCreatedRepositoryNotification(user_id: PAGlobalUser.sharedInstace.userID, repo_id: new_key)
     }
     
     func updateRepository( repo : PARepository ) {
@@ -734,6 +741,42 @@ extension PADataManager {
         
     }
     
+    func addUserToRepository( repository_id : String ) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let current_user = currentUserID
+        
+        let joined_repositories_path = String.init( format: "%@/%@/%@/%@",
+                                                    Keys.Database.users,
+                                                    current_user,
+                                                    Keys.User.joinedRepositories,
+                                                    repository_id)
+        
+        let joined_repositories_ref = database_ref!.child(joined_repositories_path)
+        
+        joined_repositories_ref.setValue(Constants.trueString) { (error, ref) in
+            
+            if let error = error {
+                let error_message = String.init(    format: "Error adding repository (%@) to joined repositories for user (%@) error -> %@",
+                                                    repository_id,
+                                                    current_user, 
+                                                    error.localizedDescription)
+                
+                print( error_message.PAPadWithNewlines(padCount: 2) )
+                
+                return
+            }
+            
+            
+            
+            
+            self.incrementUserRepositoriesJoined(user_id: current_user)
+            
+            self.addUserToSubscriptionList(list_type: .repository, user_id: current_user, id_to_observe: repository_id)
+        }
+        
+    }
     func addPhotographToRepository( newPhoto : PAPhotograph, repository : PARepository ) {
         
         if !isConfigured { return }
@@ -1154,5 +1197,309 @@ extension PADataManager {
         let path = String.init(format: "users/%@/%@", user_id, Keys.User.repositoriesCreated)
         
         decrementValueAtPath(path: path)
+    }
+}
+
+
+
+
+
+
+
+
+/*
+ 
+    TEMP DEBUG STUFF
+*/
+extension PADataManager {
+    
+    fileprivate enum NotificationSubscriptionType : String {
+        case user = "user"
+        case repository = "repository"
+    }
+    
+    func postPhotographAddedToRepositoryNotification( photograph_id : String, repo_id : String, user_id : String) {
+        
+        guard isConfigured else {
+            let error_message = "The database is not configured"
+            
+            print( error_message.PAPadWithNewlines(padCount: 2) )
+            
+            return
+        }
+        
+        //  Create the notification
+        
+        var note = PADatabaseNotification()
+        
+        note.notificationType = .photoAddedToRepository
+        note.notificationData[Keys.DatabaseNotification.Data.photographID] = photograph_id
+        note.notificationData[Keys.DatabaseNotification.Data.repositoryID] = repo_id
+        
+        note.postingUserID = user_id
+        
+        let dispatch_base_path = "notifications_dispatch/"
+        
+        let note_key = database_ref!.child(dispatch_base_path).childByAutoId().key
+        note.notificationID = note_key
+        
+        database_ref!.child(String.init(format: "%@/%@", dispatch_base_path, note_key)).setValue(note.jsonCompaitableArray)
+        
+        postNotificationToSubscribers(notification: note, note_type: .repository, target_uid: repo_id)
+        
+    }
+    
+    func postStoryAddedToRepositoryNotification( story_id : String, repo_id : String, user_id : String ) {
+        
+        guard isConfigured else {
+            let error_message = "The database is not configured"
+            
+            print( error_message.PAPadWithNewlines(padCount: 2) )
+            
+            return
+        }
+        
+        //  Create the notification
+        
+        var note = PADatabaseNotification()
+        
+        note.notificationType = .storyAddedToRepository
+        note.notificationData[Keys.DatabaseNotification.Data.storyID] = story_id
+        note.notificationData[Keys.DatabaseNotification.Data.repositoryID] = repo_id
+        
+        note.postingUserID = user_id
+        
+        let dispatch_base_path = "notifications_dispatch/"
+        
+        let note_key = database_ref!.child(dispatch_base_path).childByAutoId().key
+        note.notificationID = note_key
+        
+        database_ref!.child(String.init(format: "%@/%@", dispatch_base_path, note_key)).setValue(note.jsonCompaitableArray)
+        
+        postNotificationToSubscribers(notification: note, note_type: .repository, target_uid: repo_id)
+        
+    }
+    
+    func postUserCreatedRepositoryNotification( user_id : String, repo_id : String ) {
+        
+        guard isConfigured else {
+            let error_message = "The database is not configured"
+            
+            print( error_message.PAPadWithNewlines(padCount: 2) )
+            
+            return
+        }
+        
+        //  Create the notification
+        
+        var note = PADatabaseNotification()
+        
+        note.notificationType = .userCreatedRepository
+        note.notificationData[Keys.DatabaseNotification.Data.repositoryID] = repo_id
+        
+        note.postingUserID = user_id
+        
+        let dispatch_base_path = "notifications_dispatch/"
+        
+        let note_key = database_ref!.child(dispatch_base_path).childByAutoId().key
+        note.notificationID = note_key
+        
+        database_ref!.child(String.init(format: "%@/%@", dispatch_base_path, note_key)).setValue(note.jsonCompaitableArray)
+        
+        postNotificationToSubscribers(notification: note, note_type: .user, target_uid: user_id)
+        
+    }
+    
+    private func postNotificationToSubscribers( notification : PADatabaseNotification, note_type : NotificationSubscriptionType, target_uid : String) {
+        
+        guard isConfigured else {
+            let error_message = "The database is not configured"
+            
+            print( error_message.PAPadWithNewlines(padCount: 2) )
+            
+            return
+        }
+        
+        
+        let subscriptions_base_path = "subscription_lists"
+        let subscription_path = String.init(format: "%@/%@/%@", subscriptions_base_path, note_type.rawValue, target_uid)
+        
+        let notifications_base_path = "notifications_v2"
+        
+        database_ref!.child(subscription_path).observe(.childAdded, with: { (snapshot) in
+            
+            let user_id = snapshot.key
+            
+            print( String.init(format: "The user id for this subscription path -> (%@)", user_id).PAPadWithNewlines(padCount: 2) )
+            
+            
+            let note_path = String.init(format: "%@/%@/%@", notifications_base_path, user_id, notification.notificationID)
+            
+            self.database_ref!.child(note_path).setValue(notification.jsonCompaitableArray)
+        })
+    }
+    
+    func postFakeNotification() {
+        
+        guard isConfigured else {
+            let error_message = "The datamanager was not configured!"
+            
+            print( error_message.PAPadWithNewlines(padCount: 3) )
+            
+            return
+        }
+        
+        let notification_disp_endpoint = "notifications_dispatch"
+        
+        
+        let notifications_disp_ref = database_ref!.child(String.init(format: "%@/", notification_disp_endpoint))
+        
+        let notification_id = notifications_disp_ref.childByAutoId().key
+        
+        let notification_package = PADataManager.getFakeNotificationPackage(note_id: notification_id)
+        
+        let notification_db_ref = database_ref!.child(String.init(format: "%@/%@", notification_disp_endpoint, notification_id))
+        
+        notification_db_ref.setValue(notification_package) { (error, db_ref) in
+            
+            if let error = error {
+                let error_message = String.init(format: "There was an error writing the notificatino to the database -> %@", error.localizedDescription)
+                
+                print( error_message.PAPadWithNewlines(padCount: 2) )
+                
+                return
+            }
+            
+            
+            let success_message = String.init(format: "Successfully wrote the notification with id -> (%@) to the database", notification_id)
+            
+            print( success_message.PAPadWithNewlines(padCount: 2) )
+        }
+    }
+    
+    fileprivate func addUserToSubscriptionList( list_type : NotificationSubscriptionType, user_id : String, id_to_observe : String) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let base_subscriptions_path = "subscription_lists"
+        
+        let path_to_observer = String.init(format: "%@/%@/%@/%@", base_subscriptions_path, list_type.rawValue, id_to_observe, user_id)
+        
+        let db_path = database_ref!.child(path_to_observer)
+        
+        db_path.setValue("true") { (error, ref) in
+            
+            if let error = error {
+                let error_message = String.init(format: "There was an error adding the user (%@) to the subscription list for value (%@) error -> %@", user_id, id_to_observe, error.localizedDescription)
+                
+                print( error_message.PAPadWithNewlines(padCount: 3) )
+                
+                return
+            }
+            
+            let success_message = String.init(format: "Successfully began observing (%@) for user (%@)", id_to_observe, user_id)
+            
+            print( success_message.PAPadWithNewlines(padCount: 3) )
+        }
+        
+        
+    }
+    
+    
+    private static func getFakeNotificationPackage( note_id : String ) -> [ String : Any ] {
+        
+        var package = [ String : Any ]()
+        
+        let k_notification_id = "notification_id"
+        let notification_id = note_id
+        
+        let k_poster_id = "poster_id"
+        let poster_id = "0ZZ3DlzVEDckVgrSOqwxjSqdCed2"
+        
+        let k_post_date = "notification_posted_date"
+        let post_date = PADateManager.sharedInstance.getDateString(date: Date(), formatType: .FirebaseFull)
+        
+        let k_notification_type = "notification_type"
+        let notification_type = PADatabaseNotificationType.userCreatedRepository.rawValue
+        
+        let k_target_id = "target_id"
+        let target_id = poster_id
+        
+        
+        package[k_notification_id] = notification_id
+        package[k_poster_id] = poster_id
+        package[k_post_date] = post_date
+        package[k_notification_type] = notification_type
+        package[k_target_id] = target_id
+
+        return package
+    }
+}
+
+
+extension PADataManager {
+    
+    func checkIsConfigured() -> Bool {
+        
+        guard isConfigured else {
+            
+            let error_message = "The database is not configured"
+            
+            print( error_message.PAPadWithNewlines(padCount: 2) )
+            
+            return false
+        }
+        
+        return true
+        
+    }
+    
+    
+    func beginObservingStories( handler : @escaping ((FIRDataSnapshot) -> Void)) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let current_user_id = self.currentUserID
+        
+        let notifications_base_path = "notifications_v2"
+        
+        let db_path = String.init(format: "%@/%@/", notifications_base_path, current_user_id)
+        
+        let db_ref = database_ref!.child(db_path)
+
+        db_ref.observe(.childAdded, with: handler)
+        
+    }
+    
+    func beginObservingJoinedRepositoriesForUser( user_id : String, handler : @escaping ((String) -> Void)) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let joined_repos_path = String.init(    format: "%@/%@/%@/",
+                                                Keys.Database.users,
+                                                user_id ,
+                                                Keys.User.joinedRepositories)
+        
+        let joined_repos_ref = database_ref!.child(joined_repos_path)
+        
+        joined_repos_ref.observe(.childAdded, with: { (snapshot) in
+            
+            handler(snapshot.key)
+        })
+        
+    }
+    
+    func beginObservingCreatedRepositoriesForUser( user_id : String, handler : @escaping ((String) -> Void)) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let created_repos_path = String.init(format: "%@/%@/%@/", Keys.Database.users, user_id, Keys.User.repositoriesCreated)
+        
+        let created_repos_ref = database_ref!.child(created_repos_path)
+        
+        created_repos_ref.observe(.childAdded, with: { (snapshot) in
+            
+            handler(snapshot.key)
+        })
     }
 }

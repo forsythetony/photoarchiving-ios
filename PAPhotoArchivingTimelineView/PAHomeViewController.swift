@@ -14,10 +14,12 @@ class PAHomeViewController: UIViewController {
     
     @IBOutlet weak var logoutBarButtonItem: UIBarButtonItem!
     
+    @IBOutlet weak var notificationsTableView: UITableView!
     
     let dataMan : PADataManager = PADataManager.sharedInstance
     let currentUser = PAGlobalUser.sharedInstace
     
+    var notifications = [PADatabaseNotification]()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -27,16 +29,11 @@ class PAHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNeedsStatusBarAppearanceUpdate()
-        self.navigationController?.navigationBar.barStyle = .black
-        
-        self.navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
-        logoutBarButtonItem.tintColor = UIColor.white
         
         // Do any additional setup after loading the view.
         checkIfUserSignedIn()
         
-        _setupPanelButton()
+        _setup()
         
         
     }
@@ -140,6 +137,29 @@ class PAHomeViewController: UIViewController {
         checkIfUserSignedIn()
     }
     
+    
+
+    
+    /*
+        SETUP FUNCTIONS
+    */
+    
+    private func _setup() {
+        
+        _setupNavigationBar()
+        _setupPanelButton()
+        _setupTableView()
+    }
+    
+    private func _setupNavigationBar() {
+        
+        self.setNeedsStatusBarAppearanceUpdate()
+        self.navigationController?.navigationBar.barStyle = .black
+        
+        self.navigationController!.navigationBar.barTintColor = Color.MainApplicationColor
+        logoutBarButtonItem.tintColor = UIColor.white
+    }
+    
     private func _setupPanelButton() {
         
         let panel_button = UIBarButtonItem(image: #imageLiteral(resourceName: "panel_button_white"), landscapeImagePhone: nil, style: .plain, target: self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
@@ -147,9 +167,116 @@ class PAHomeViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = panel_button
     }
-
+    
+    
+    private func _setupTableView() {
+        
+        let notification_cell_nib = UINib(nibName: "PANotificationTableViewCell", bundle: Bundle.main)
+        
+        notificationsTableView.register(notification_cell_nib, forCellReuseIdentifier: PANotificationTableViewCell.REUSE_IDENTIFIER)
+        
+        
+    }
+   
+    private func _setupData() {
+        
+        if dataMan.isConfigured {
+            _beginObservingNotifications()
+        }
+        else {
+            dataMan.configure()
+        }
+    }
+    
+    fileprivate func _beginObservingNotifications() {
+        
+        dataMan.beginObservingStories { (snapShot) in
+            
+            if let new_notification = PADatabaseNotification.buildFromSnapshot(snapshot: snapShot) {
+                
+                self.addNewNotification(notification: new_notification)
+            }
+        }
+    }
+    
+    
+    func addNewNotification( notification : PADatabaseNotification ) {
+        
+        
+        self.notifications.insert(notification, at: 0)
+        
+        self.notificationsTableView.beginUpdates()
+        
+        let new_index_path = IndexPath(row: 0, section: 0)
+        self.notificationsTableView.insertRows(at: [new_index_path], with: .left)
+        
+        self.notificationsTableView.endUpdates()
+    }
 }
 
+/*
+    TABLE VIEW DELEGATE AND DATASOURCE RESPONDERS
+*/
+extension PAHomeViewController : UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return notifications.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PANotificationTableViewCell.REUSE_IDENTIFIER) as? PANotificationTableViewCell else {
+            
+            return UITableViewCell()
+        }
+        
+        
+        let cell_info = notifications[indexPath.row]
+        
+        let date_posted = PADateManager.sharedInstance.getDateString(date: cell_info.datePosted, formatType: .Pretty2)
+        
+        
+        var notification_string = ""
+        var notification_icon = #imageLiteral(resourceName: "default_notification_icon")
+        
+        switch cell_info.notificationType {
+        case .photoAddedToRepository:
+            notification_string = "Photo was added to repository"
+            notification_icon = #imageLiteral(resourceName: "story_added_notification_icon")
+            break
+            
+        case .storyAddedToRepository:
+            notification_string = "Story was added to repository"
+            notification_icon = #imageLiteral(resourceName: "story_added_notification_icon")
+            break
+            
+        case .userCreatedRepository:
+            notification_string = "User created repository"
+            notification_icon = #imageLiteral(resourceName: "story_added_notification_icon")
+            break
+            
+        case .userAddedFriend:
+            notification_string = "User added friend"
+            notification_icon = #imageLiteral(resourceName: "story_added_notification_icon")
+            break
+            
+            
+        default:
+            break
+        }
+        
+        
+        cell.notificationTypeImageView.image    = notification_icon
+        cell.textView.text                      = notification_string
+        cell.datePostedLabel.text               = date_posted
+        
+        return cell
+    }
+}
 
 extension PAHomeViewController : PALoginViewControllerDelegate {
     
@@ -205,9 +332,8 @@ extension PAHomeViewController : PADataManagerDelegate {
         
     }
 
-    
     func PADataMangerDidConfigure() {
-        //  I don't think there needs to be any implementation here
+        _beginObservingNotifications()
     }
     
     func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {

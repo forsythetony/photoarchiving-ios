@@ -124,9 +124,35 @@ struct Keys {
             static let photoUploadInformation = "photo_upload_info"
         }
     }
+    
+    struct DatabaseNotification {
+        static let notificationID = "notification_id"
+        static let notificationType = "notification_type"
+        static let postingUserID = "posting_user_id"
+        static let notificationData = "notification_data"
+        static let datePosted = "date_posted"
+        
+        
+        struct Data {
+            static let photographID = "photograph_id"
+            static let repositoryID = "repository_id"
+            static let storyID = "story_id"
+            static let friendAddedID = "friend_added_id"
+        }
+    }
+    
+    struct Database {
+        static let repositories         = "repositories"
+        static let subscriptionLists    = "subscription_lists"
+        static let photographs          = "photographs"
+        static let users                = "users"
+    }
 }
 
 struct Constants {
+    
+    static let trueString   = "true"
+    static let falseString  = "false"
     
     static let AlphabetUppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
                                     "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f",

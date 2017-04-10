@@ -608,15 +608,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is the Home View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kta-B4-4Bm">
-                                <rect key="frame" x="62" y="323" width="250" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Lsm-e6-Ia8">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Lsm-e6-Ia8" secondAttribute="trailing" id="265-n3-BiF"/>
+                            <constraint firstItem="LIm-ok-zJu" firstAttribute="top" secondItem="Lsm-e6-Ia8" secondAttribute="bottom" id="57J-Bz-j57"/>
+                            <constraint firstItem="Lsm-e6-Ia8" firstAttribute="leading" secondItem="bGQ-Ee-Vwr" secondAttribute="leading" id="RtG-on-ikc"/>
+                            <constraint firstItem="Lsm-e6-Ia8" firstAttribute="top" secondItem="iYU-21-gUs" secondAttribute="bottom" id="mjO-L2-DHx"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="oBL-AI-hbe">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="7pi-w7-hpu">
@@ -627,6 +630,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logoutBarButtonItem" destination="7pi-w7-hpu" id="Tcv-ft-Tyu"/>
+                        <outlet property="notificationsTableView" destination="Lsm-e6-Ia8" id="8wB-OX-mXu"/>
                         <segue destination="761-3E-t7F" kind="presentation" identifier="segueFromHomeToSignInPage" id="MGD-zO-cmt"/>
                         <segue destination="3Pp-pn-KXk" kind="presentation" identifier="segueFromHomeToRegister" id="Al4-GN-h8v"/>
                         <segue destination="Zgf-3a-nNA" kind="show" identifier="hometorepositoriessegue" id="mMB-3v-HdP"/>
@@ -634,7 +638,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5sL-Ap-4cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-257" y="5671"/>
+            <point key="canvasLocation" x="-258.39999999999998" y="5670.3148425787113"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="50P-pF-Oli">
@@ -1133,9 +1137,9 @@
         <image name="temp_logo" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vpu-UX-0J5"/>
         <segue reference="R9I-vE-Uxn"/>
-        <segue reference="awf-up-EU9"/>
+        <segue reference="Vpu-UX-0J5"/>
+        <segue reference="mMB-3v-HdP"/>
         <segue reference="5gN-WE-TIe"/>
     </inferredMetricsTieBreakers>
 </document>

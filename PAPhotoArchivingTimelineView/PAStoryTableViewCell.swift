@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Spring
 
 class PAStoryTableViewCell: UITableViewCell {
     
     static let REUSE_ID = "PAStoryTableViewCell"
-    static let CELL_HEIGHT : CGFloat = 120.0
+    static let CELL_HEIGHT : CGFloat = 99.0
     
     @IBOutlet weak var mainTitleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -19,6 +20,7 @@ class PAStoryTableViewCell: UITableViewCell {
     @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var uploaderIDLabel: UILabel!
     
+    @IBOutlet weak var userImageView: SpringImageView!
     
     
     
@@ -26,6 +28,11 @@ class PAStoryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        userImageView.layer.cornerRadius = userImageView.bounds.height / 2.0
+        userImageView.clipsToBounds = true
+        userImageView.contentMode = .scaleAspectFill
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

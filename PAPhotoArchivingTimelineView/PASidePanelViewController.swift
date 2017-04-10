@@ -134,6 +134,13 @@ class PASidePanelViewController: UIViewController {
         
         self.view.addSubview(profileImageView)
         
+        //  Profile Image View Gesture Recognizer
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(PASidePanelViewController.didTapProfileImageView(sender:)))
+
+        profileImageView.addGestureRecognizer(tapper)
+        
+        profileImageView.isUserInteractionEnabled = true
+        
         profileImageView.snp.makeConstraints { (maker) in
             maker.width.equalTo(profileImageSize)
             maker.height.equalTo(profileImageSize)
@@ -206,6 +213,21 @@ class PASidePanelViewController: UIViewController {
     
 }
 
+/*
+    ACTION HANDLERS
+*/
+extension PASidePanelViewController {
+    
+    func didTapProfileImageView( sender : UITapGestureRecognizer ) {
+        
+        print( "Posting the fake notification!".PAPadWithNewlines(padCount: 2) )
+        
+        PADataManager.sharedInstance.postFakeNotification()
+    }
+    
+    
+    
+}
 extension PASidePanelViewController : UITableViewDelegate, UITableViewDataSource {
     
     

@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import GoogleCast
+import Kingfisher
+import Spring
 
 class PAStoriesViewController: UIViewController {
     
@@ -67,10 +69,13 @@ class PAStoriesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         _setupListeners()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -94,6 +99,7 @@ class PAStoriesViewController: UIViewController {
         mainTitleLabel.textAlignment = .center
         mainTitleLabel.font = UIFont.PABoldFontWithSize(size: 25.0)
         mainTitleLabel.text = "Stories"
+        mainTitleLabel.backgroundColor = Color.clear
         
         exitButton = UIButton(frame: CGRect.zero)
         exitButton.setTitle("Exit", for: .normal)
@@ -157,6 +163,9 @@ class PAStoriesViewController: UIViewController {
                             selector: #selector(PAStoriesViewController.didReceiveAudioControlBarStopNotificationn(note:)),
                             name: Notifications.audioPlayerBarDidTapStop.name,
                             object: nil)
+        
+        center.addObserver(self, selector: #selector(PAStoriesViewController.didReceiveStoryUpdateNotification(note:)), name: Notifications.storyDidRetrieveUploaderProfileURL.name, object: nil)
+        
     }
     
     // MARK: Teardown
@@ -171,7 +180,8 @@ class PAStoriesViewController: UIViewController {
         let notifications = [
             Notifications.audioPlayerBarDidTapPause.name,
             Notifications.audioPlayerBarDidTapStop.name,
-            Notifications.audioPlayerBarDidTapPlay.name
+            Notifications.audioPlayerBarDidTapPlay.name,
+            Notifications.storyDidRetrieveUploaderProfileURL.name
         ]
         
         NotificationCenter.default.PARemoveAllNotificationsWithName(    listener: self,
@@ -260,6 +270,23 @@ extension PAStoriesViewController : UITableViewDelegate, UITableViewDataSource {
         cell.dateLabel.text = PADateManager.sharedInstance.getDateString(date: story_info.dateUploaded ?? Date(), formatType: .StorysTableView)
         cell.lengthLabel.text = story_info.recordingLength.PATimeString
         cell.uploaderIDLabel.text = story_info.uploaderID
+        
+        if let p = story_info.uploaderProfileURL {
+            
+            let u = URL(string: p)
+            
+            cell.userImageView.kf.setImage(with: u)
+            
+            
+            cell.userImageView.kf.setImage(with: u, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cacheType, url) in
+                
+                cell.userImageView.animation = Constants.Spring.Animations.zoomIn
+                
+                cell.userImageView.duration = 0.6
+                
+                cell.userImageView.animate()
+            })
+        }
         
         return cell
         
@@ -407,5 +434,13 @@ extension PAStoriesViewController {
         let message_string = String.init(format: format_string, note_name, class_name)
         
         print( message_string )
+    }
+}
+
+extension PAStoriesViewController {
+    
+    func didReceiveStoryUpdateNotification( note : Notification ) {
+        
+        mainTableView.reloadData()
     }
 }

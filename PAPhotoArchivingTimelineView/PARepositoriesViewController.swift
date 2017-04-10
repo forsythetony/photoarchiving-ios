@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 import SCLAlertView
-
+import Spring
 
 class PARepositoriesViewController: UIViewController {
 
@@ -423,10 +423,17 @@ extension PARepositoriesViewController : UICollectionViewDataSource, UICollectio
             else {
                 
                 cell.thumbnailImageView.kf.setImage(    with: URL(string: imgPath)!,
-                                                        placeholder: #imageLiteral(resourceName: "repository_thumbnail_default"),
+                                                        placeholder: nil,
                                                         options: nil,
                                                         progressBlock: nil,
-                                                        completionHandler: nil)
+                                                        completionHandler: { (image, error, cacheType, url) in
+                                                            
+                                                            cell.thumbnailImageView.animation = Constants.Spring.Animations.fadeIn
+                                                            
+                                                            cell.thumbnailImageView.duration = 0.7
+                                                            
+                                                            cell.thumbnailImageView.animate()
+                })
             }
             
             let start_year = PADateManager.sharedInstance.getDateString(date: cellInfo.startDate!, formatType: .YearOnly)
@@ -579,6 +586,15 @@ extension PARepositoriesViewController : PARepositoryCellDelegate {
     
     func didLongPressOnCell(cell: PARepositoryCell) {
         
+        guard let ip = RepositoriesCollectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let repo = Repositories.repositoryAtIndex(ip.item) else {
+            return
+        }
+        
+        
         let actionSheet = UIAlertController(title: "Choose", message: "Choose", preferredStyle: .actionSheet)
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
@@ -595,18 +611,35 @@ extension PARepositoriesViewController : PARepositoryCellDelegate {
             actionSheet.dismiss(animated: true, completion: nil)
         }
         
+        let unjoinRepository = UIAlertAction(title: "Unsubscribe", style: .destructive) { (action) in
+            
+            
+        }
+        
+        let joinRepository = UIAlertAction(title: "Subscribe", style: .default) { (action) in
+            
+            PADataManager.sharedInstance.addUserToRepository(repository_id: repo.uid)
+        }
+        
+        
         actionSheet.addAction(cancelAction)
-        actionSheet.addAction(editAction)
-        actionSheet.addAction(deleteAction)
         
+        let global_user = PAGlobalUser.sharedInstace
         
-        guard let ip = RepositoriesCollectionView.indexPath(for: cell) else {
-            return
+        if global_user.doesUserHaveCreatedRepository(repo_id: repo.uid) {
+            actionSheet.addAction(editAction)
+            actionSheet.addAction(deleteAction)
         }
-        
-        guard let repo = Repositories.repositoryAtIndex(ip.item) else {
-            return
+        else {
+            
+            if global_user.doesUserHaveJoinedRepository(repo_id: repo.uid) {
+                actionSheet.addAction(unjoinRepository)
+            }
+            else {
+                actionSheet.addAction(joinRepository)
+            }
         }
+
         
         self.editingRepository = repo
         

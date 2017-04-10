@@ -21,6 +21,9 @@ class PAGlobalUser {
     private var _profileImageString : String?
     private var _isConfigured = false
     
+    private var _joinedRepositories = [String]()
+    private var _createdRepositories = [String]()
+    
     lazy var timerFireLimit : Int = {
        
         let fireInterval = 0.01
@@ -58,6 +61,11 @@ class PAGlobalUser {
         
     }
     
+    var joinedRepositories : [String] {
+        get {
+            return _joinedRepositories
+        }
+    }
     var userEmail : String {
         get {
             if let e = _user?.email {
@@ -112,6 +120,8 @@ class PAGlobalUser {
                 _configTimer?.invalidate()
                 self.setupWithUserID(uid: uid)
                 _isConfigured = false
+                gatherJoinedRepositories()
+                gatherCreatedRepositories() 
                 return
             }
         }
@@ -202,6 +212,28 @@ class PAGlobalUser {
         })
     }
     
+    func gatherJoinedRepositories() {
+        
+        PADataManager.sharedInstance.beginObservingJoinedRepositoriesForUser(user_id: userID) { (newRepoID) in
+            self._joinedRepositories.append(newRepoID)
+        }
+    }
+    
+    func gatherCreatedRepositories() {
+        PADataManager.sharedInstance.beginObservingCreatedRepositoriesForUser(user_id: userID) { (createdRepoID) in
+            
+            self._createdRepositories.append(createdRepoID)
+        }
+    }
+    func doesUserHaveJoinedRepository( repo_id : String ) -> Bool {
+        
+        return _joinedRepositories.contains(repo_id)
+    }
+    
+    func doesUserHaveCreatedRepository( repo_id : String ) -> Bool {
+        
+        return _createdRepositories.contains(repo_id)
+    }
 }
 
 extension PAUser {

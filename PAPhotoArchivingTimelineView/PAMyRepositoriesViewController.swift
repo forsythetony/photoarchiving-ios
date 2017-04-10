@@ -422,10 +422,17 @@ extension PAMyRepositoriesViewController : UICollectionViewDataSource, UICollect
             else {
                 
                 cell.thumbnailImageView.kf.setImage(    with: URL(string: imgPath)!,
-                                                        placeholder: #imageLiteral(resourceName: "repository_thumbnail_default"),
+                                                        placeholder: nil,
                                                         options: nil,
                                                         progressBlock: nil,
-                                                        completionHandler: nil)
+                                                        completionHandler: { (image, error, cacheType, url) in
+                                                            
+                                                            cell.thumbnailImageView.animation = Constants.Spring.Animations.fadeIn
+                                                            
+                                                            cell.thumbnailImageView.duration = 0.7
+                                                            
+                                                            cell.thumbnailImageView.animate()
+                })
             }
             
             let start_year = PADateManager.sharedInstance.getDateString(date: cellInfo.startDate!, formatType: .YearOnly)

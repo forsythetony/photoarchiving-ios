@@ -22,12 +22,38 @@ class PAStory {
     var dateRecorded = Date()
     var tempRecordingURL : URL?
     var dateUploaded : Date?
-    var uploaderID : String?
+    var uploaderID : String? {
+        didSet {
+            didSetUploaderID()
+        }
+    }
+    
+    var uploaderProfileURL : String?
     
 }
 
 extension PAStory {
     
+    func didSetUploaderID() {
+        
+        guard let uploader_id = uploaderID else {
+            return
+        }
+        
+        
+        let base_ref = FIRDatabase.database().reference()
+        
+        base_ref.child(String.init(format: "users/%@/%@", uploader_id, Keys.User.profileMainURL)).observeSingleEvent(of: .value, with: { (snapshot) in
+          
+            if let profile_img_url_str = snapshot.value as? String {
+                self.uploaderProfileURL = profile_img_url_str
+                
+                let note = Notification(name: Notifications.storyDidRetrieveUploaderProfileURL.name)
+                
+                NotificationCenter.default.post(note)
+            }
+        })
+    }
     static func getNewStory() -> PAStory {
         
         let story = PAStory()

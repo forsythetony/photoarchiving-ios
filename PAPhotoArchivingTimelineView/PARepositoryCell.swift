@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Spring
 
 protocol PARepositoryCellDelegate {
     func didLongPressOnCell( cell : PARepositoryCell)
@@ -31,7 +32,7 @@ class PARepositoryCell: UICollectionViewCell {
     
     var delegate : PARepositoryCellDelegate?
     
-    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var thumbnailImageView: SpringImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

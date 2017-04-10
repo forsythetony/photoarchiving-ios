@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Spring
 
 class PARepositoryCollectionViewCell: UICollectionViewCell {
     
@@ -16,7 +16,7 @@ class PARepositoryCollectionViewCell: UICollectionViewCell {
     static let Width : CGFloat = 200.0
     
     
-    let ImageView   = UIImageView()
+    let ImageView   = SpringImageView()
     let TitleLabel  = UILabel()
     
     override init(frame: CGRect) {
