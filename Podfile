@@ -22,6 +22,7 @@ target 'PAPhotoArchivingTimelineView' do
 	
 	pod 'google-cast-sdk'
 	pod 'SCLAlertView'
+	pod 'SwiftSpinner'
 	
 	# pod 'SwiftyTools', :git => 'https://github.com/forsythetony/SwiftyTools'
 end

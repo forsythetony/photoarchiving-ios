@@ -335,6 +335,10 @@ class PACustomHeaderView : UIView {
 }
 
 extension PAPhotoUploadForm : PADataManagerDelegate {
+    func PADataManagerDidCreateUser(new_user: PAUserUploadPackage?, error: Error?) {
+        
+    }
+
     internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
         
     }

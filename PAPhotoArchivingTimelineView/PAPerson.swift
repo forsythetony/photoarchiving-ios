@@ -109,6 +109,42 @@ extension PAUser {
     }
 }
 
+class PAUserUploadPackage : PAUser {
+    
+    var password = ""
+    var profileImageTemp : UIImage?
+    
+}
+
+extension PAUserUploadPackage {
+    var jsonCompatibleArray : [ String : Any ] {
+        get {
+            var ret_arr = [String : Any]()
+            
+            ret_arr[Keys.User.uid] = uid
+            ret_arr[Keys.User.firstName] = firstName
+            ret_arr[Keys.User.lastName] = lastName
+            ret_arr[Keys.User.profileMainURL] = profileImageURL
+            ret_arr[Keys.User.email] = email
+            
+            
+            ret_arr[Keys.User.dateJoined] = PADateManager.sharedInstance.getDateString(date: dateJoined ?? Date(), formatType: .FirebaseFull)
+            
+            if let birth_date = birthDate {
+                
+                ret_arr[Keys.User.birthDate] = PADateManager.sharedInstance.getDateString(date: birth_date, formatType: .FirebaseFull)
+            }
+            
+            ret_arr[Keys.User.repositoriesJoined]   = totalRepositoriesJoined ?? 0
+            ret_arr[Keys.User.photosUploaded]       = photosUploaded ?? 0
+            ret_arr[Keys.User.storiesUploaded]      = storiesUploaded ?? 0
+            ret_arr[Keys.User.repositoriesCreated]  = repositoriesCreated ?? 0
+            
+            
+            return ret_arr
+        }
+    }
+}
 extension PAUser {
     var repositoriesJoinedString : String {
         get {

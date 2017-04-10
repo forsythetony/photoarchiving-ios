@@ -203,6 +203,10 @@ class PATimelineViewController: UIViewController {
 
 // MARK: PADataManager
 extension PATimelineViewController : PADataManagerDelegate {
+    func PADataManagerDidCreateUser(new_user: PAUserUploadPackage?, error: Error?) {
+        
+    }
+
     func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
         
     }

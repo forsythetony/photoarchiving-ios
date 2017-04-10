@@ -34,6 +34,25 @@ fileprivate enum PAImageURLToDataError : Error {
             }
         }
     }
+    
+    
+}
+
+fileprivate enum PAUserCreateError : Error {
+    
+    case failedToCreateImageData
+    
+    var localizedDescription: String {
+        get {
+            switch self {
+            case .failedToCreateImageData:
+                return "Failed to create image data"
+            default:
+                return ""
+            }
+        }
+    }
+    
 }
 enum PAUserSignInStatus {
     case SignInSuccess, SignInFailed, FirebaseNotConfigured
@@ -47,6 +66,7 @@ protocol PADataManagerDelegate {
     func PADataManagerDidUpdateProgress( progress : Double )
     func PADataManagerDidDeleteStoryFromPhotograph( story : PAStory, photograph : PAPhotograph )
     func PADataManagerDidDeletePhotograph( photograph : PAPhotograph )
+    func PADataManagerDidCreateUser( new_user : PAUserUploadPackage?, error : Error? )
 }
 
 
@@ -1017,6 +1037,97 @@ extension PADataManager {
         decrementValueAtPath(path: String.init(format: "users/%@/%@", currentUserID, Keys.User.storiesUploaded))
         
         self.delegate?.PADataManagerDidDeleteStoryFromPhotograph(story: story, photograph: photograph)
+        
+    }
+    
+    
+    func createNewUser( new_user : PAUserUploadPackage ) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let user_endpoint_path = String.init(format: "%@/%@", Keys.Database.users, new_user.uid)
+        
+        
+        let user_endpoint_ref = database_ref!.child(user_endpoint_path)
+        
+        if let user_profile_image = new_user.profileImageTemp {
+            
+            
+            let storage_ref_path = "images/"
+            
+            let store_ref = storage_ref!.child(storage_ref_path)
+            
+            guard let image_data = UIImageJPEGRepresentation(user_profile_image, 1.0) else {
+                let error = PAUserCreateError.failedToCreateImageData
+                
+                let error_message = String.init(format: "Error adding new user -> %@", "Couldn't create the image data")
+                
+                print( error_message.PAPadWithNewlines(padCount: 2) )
+                
+                self.delegate?.PADataManagerDidCreateUser(new_user: nil, error: error)
+                return
+            }
+            
+            store_ref.put(image_data, metadata: nil, completion: { (storage_metadata, error) in
+                
+                if let error = error {
+                    let error_message = String.init(format: "Error adding new user -> %@", error.localizedDescription)
+                    
+                    print( error_message.PAPadWithNewlines(padCount: 2) )
+                    
+                    self.delegate?.PADataManagerDidCreateUser(new_user: nil, error: error)
+                    return
+                }
+                
+                guard let store_data = storage_metadata else {
+                    print( "Err".PAPadWithNewlines() )
+                    return
+                }
+                
+                new_user.profileImageURL = store_data.downloadURL()?.absoluteString ?? ""
+                
+                user_endpoint_ref.setValue(new_user.jsonCompatibleArray) { (error, ref) in
+                    
+                    if let error = error {
+                        let error_message = String.init(format: "Error adding new user -> %@", error.localizedDescription)
+                        
+                        print( error_message.PAPadWithNewlines(padCount: 2) )
+                        
+                        self.delegate?.PADataManagerDidCreateUser(new_user: nil, error: error)
+                        return
+                    }
+                    
+                    let success_message = String.init(format: "Successfully added user with uid (%@) to the database!", new_user.uid)
+                    
+                    print( success_message.PAPadWithNewlines(padCount: 2) )
+                    
+                    
+                    self.delegate?.PADataManagerDidCreateUser(new_user: new_user, error: nil)
+                }
+            })
+        }
+        else {
+            user_endpoint_ref.setValue(new_user.jsonCompatibleArray) { (error, ref) in
+                
+                if let error = error {
+                    let error_message = String.init(format: "Error adding new user -> %@", error.localizedDescription)
+                    
+                    print( error_message.PAPadWithNewlines(padCount: 2) )
+                    
+                    self.delegate?.PADataManagerDidCreateUser(new_user: nil, error: error)
+                    return
+                }
+                
+                let success_message = String.init(format: "Successfully added user with uid (%@) to the database!", new_user.uid)
+                
+                print( success_message.PAPadWithNewlines(padCount: 2) )
+                
+                
+                self.delegate?.PADataManagerDidCreateUser(new_user: new_user, error: nil)
+            }
+        }
+        
+        
         
     }
 }

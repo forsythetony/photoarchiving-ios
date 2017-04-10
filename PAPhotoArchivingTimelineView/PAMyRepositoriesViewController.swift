@@ -305,6 +305,10 @@ class PAMyRepositoriesViewController: UIViewController {
 }
 
 extension PAMyRepositoriesViewController : PADataManagerDelegate {
+    func PADataManagerDidCreateUser(new_user: PAUserUploadPackage?, error: Error?) {
+        
+    }
+
     internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
         
     }

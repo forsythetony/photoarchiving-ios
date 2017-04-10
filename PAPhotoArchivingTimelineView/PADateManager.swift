@@ -212,7 +212,14 @@ class PADateManager {
     
 }
 
-
+extension PADateManager {
+    
+    static var defaultBirthdate : Date {
+        let default_birthdate_int = 1993
+        
+        return PADateManager.sharedInstance.getDateFromYearInt(year: default_birthdate_int)
+    }
+}
 class PANumberManager {
     
 

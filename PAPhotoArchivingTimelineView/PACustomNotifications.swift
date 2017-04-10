@@ -38,6 +38,8 @@ enum Notifications : String, NotificationName {
     case didUpdateRepository
     
     case storyDidRetrieveUploaderProfileURL
+    
+    case didCreateNewUser
 }
 
 enum PhotoUploadStatus : String {

@@ -38,6 +38,17 @@ class PAHomeViewController: UIViewController {
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        _setupListeners()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        _removeListeners()
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -212,6 +223,36 @@ class PAHomeViewController: UIViewController {
         
         self.notificationsTableView.endUpdates()
     }
+    
+    
+    private func _setupListeners() {
+        
+        
+        let d = NotificationCenter.default
+        
+        d.addObserver(  self,
+                        selector: #selector(PAHomeViewController.didReceiveNewUserNotification(note:)),
+                        name: Notifications.didCreateNewUser.name, 
+                        object: nil)
+        
+    }
+    
+    private func _removeListeners() {
+        
+        let d = NotificationCenter.default
+        
+        let notificationNames = [
+            Notifications.didCreateNewUser.name
+        ]
+        
+        d.PARemoveAllNotificationsWithName(listener: self, names: notificationNames)
+    }
+    
+    func didReceiveNewUserNotification( note : Notification) {
+        
+        
+        let globalUser = PAGlobalUser.sharedInstace
+    }
 }
 
 /*
@@ -296,6 +337,8 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
             self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToRegister, sender: nil)
         })
     }
+    
+    
 }
 
 extension PAHomeViewController : PARegisterControllerDelegate {
@@ -314,8 +357,21 @@ extension PAHomeViewController : PARegisterControllerDelegate {
         
         print("\nI could not sign in the user!")
     }
+    
+    func PARegisterViewControllerDidCancelSignUp() {
+        
+        self.presentedViewController?.dismiss(animated: false, completion: {
+            self.performSegue(withIdentifier: Constants.SegueIDs.SegueFromHomeToSignInPage, sender: nil)
+        })
+        
+    }
 }
 extension PAHomeViewController : PADataManagerDelegate {
+    
+    func PADataManagerDidCreateUser(new_user: PAUserUploadPackage?, error: Error?) {
+        
+    }
+    
     internal func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
         
     }
