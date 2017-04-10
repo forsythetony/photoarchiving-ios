@@ -32,6 +32,12 @@ class RegisterPageViewController: FormViewController {
     private var _selectedImageURL : URL?
     private var backgroundImageView : UIImageView!
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        _setFormFirstResponder()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -119,6 +125,16 @@ class RegisterPageViewController: FormViewController {
         ])
         
     }
+    private func _setFormFirstResponder() {
+        
+        let first_responder_tag = FieldTags.email.rawValue
+        
+        
+        let row : BaseRow! = form.rowBy(tag: first_responder_tag)
+        
+        row.baseCell.cellBecomeFirstResponder()
+    }
+    
     private func _setupForm() {
         
         

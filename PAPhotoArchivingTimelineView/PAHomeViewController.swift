@@ -157,6 +157,8 @@ class PAHomeViewController: UIViewController {
     
     private func _setup() {
         
+        self.title = "Home"
+        
         _setupNavigationBar()
         _setupPanelButton()
         _setupTableView()
@@ -228,32 +230,14 @@ class PAHomeViewController: UIViewController {
     private func _setupListeners() {
         
         
-        let d = NotificationCenter.default
-        
-        d.addObserver(  self,
-                        selector: #selector(PAHomeViewController.didReceiveNewUserNotification(note:)),
-                        name: Notifications.didCreateNewUser.name, 
-                        object: nil)
+        let _ = NotificationCenter.default
         
     }
     
     private func _removeListeners() {
         
-        let d = NotificationCenter.default
+        let _ = NotificationCenter.default
         
-        let notificationNames = [
-            Notifications.didCreateNewUser.name
-        ]
-        
-        d.PARemoveAllNotificationsWithName(listener: self, names: notificationNames)
-    }
-    
-    func didReceiveNewUserNotification( note : Notification) {
-        
-        
-        let globalUser = PAGlobalUser.sharedInstace
-        
-        globalUser.reloadGlobalUser()
         
     }
 }
@@ -331,7 +315,7 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
         
         //  If the login was successful then begin to load the data for the user's
         //  home page
-        self.loadData()
+        PAGlobalUser.sharedInstace.reloadGlobalUser()
     }
     
     func PALoginViewControllerUserDidClickSignUp() {

@@ -180,22 +180,7 @@ extension LoginViewController : PADataManagerDelegate {
         }
         
         
-        /*
-        guard signInStatus != .FirebaseNotConfigured else {
-            
-            let alertCont = UIAlertController(title: "Error", message: "Firebase Not Configured", preferredStyle: .alert)
-            
-            alertCont.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: { (action) in
-                alertCont.dismiss(animated: true, completion: nil)
-            }))
-            
-            alertCont.show(self, sender: nil)
-            
-            return
-        }
-        */
-        
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
+       self.delegate?.PALoginViewControllerDidSignInSuccessfully()
     }
     
 }
