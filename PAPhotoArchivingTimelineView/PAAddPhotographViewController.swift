@@ -27,9 +27,7 @@ fileprivate struct InitialValues {
     var photoTitle          : String!
     var photoDescription    : String!
     var confSliderSteps     : UInt!
-    
-    
-    
+
 }
 
 class PAAddPhotoViewController : FormViewController {
