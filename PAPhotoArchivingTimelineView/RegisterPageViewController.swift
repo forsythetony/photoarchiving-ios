@@ -14,7 +14,7 @@ import SCLAlertView
 import SwiftSpinner
 
 protocol PARegisterControllerDelegate {
-    func PARegisterControllerDidSuccessfullySignInUser( user : FIRUser )
+    func PARegisterControllerDidSuccessfullySignInUser()
     func PARegisterControllerCouldNotSignInUser()
     func PARegisterViewControllerDidCancelSignUp()
 }
@@ -569,11 +569,9 @@ extension RegisterPageViewController : PADataManagerDelegate {
         self.displaySuccessMessage(success_message: success_message) { 
             
             
-            self.presentingViewController?.dismiss(animated: true, completion: nil)
             
-            let note = Notification(name: Notifications.didCreateNewUser.name)
             
-            NotificationCenter.default.post(note)
+            self.delegate?.PARegisterControllerDidSuccessfullySignInUser()
         }
         
         

@@ -100,6 +100,14 @@ class PAGlobalUser {
             setupWithUserID(uid: FIRAuth.auth()!.currentUser!.uid)
         }
     }
+    
+    func reloadGlobalUser() {
+        
+        _isConfigured = false
+        currentCounter = 0
+        
+        _setupTimer()
+    }
     func _setupTimer() {
         
         _configTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(PAGlobalUser.timerFire), userInfo: nil, repeats: true)

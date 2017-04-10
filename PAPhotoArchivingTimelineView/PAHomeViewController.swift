@@ -252,6 +252,9 @@ class PAHomeViewController: UIViewController {
         
         
         let globalUser = PAGlobalUser.sharedInstace
+        
+        globalUser.reloadGlobalUser()
+        
     }
 }
 
@@ -343,14 +346,12 @@ extension PAHomeViewController : PALoginViewControllerDelegate {
 
 extension PAHomeViewController : PARegisterControllerDelegate {
     
-    func PARegisterControllerDidSuccessfullySignInUser(user: FIRUser) {
+    func PARegisterControllerDidSuccessfullySignInUser() {
         
         //  First dismiss the register view controller that is being presented
         self.presentedViewController?.dismiss(animated: true, completion: nil)
         
-        //  If the registration/login was successful then we can load the data
-        //  on the home page
-        self.loadData()
+        PAGlobalUser.sharedInstace.reloadGlobalUser()
     }
     
     func PARegisterControllerCouldNotSignInUser() {
