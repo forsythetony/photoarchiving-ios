@@ -79,10 +79,26 @@ class PAAddPhotoViewController : FormViewController {
     
     private func _setup() {
         
+        _setupTableviewConstraints()
         _setupInitialValues()
         _setupForm()
     }
     
+    private func _setupTableviewConstraints() {
+        
+        
+        guard let t = tableView else { return }
+        
+        
+        t.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            t.topAnchor.constraint(equalTo: self.view.topAnchor, constant: Constants.statusBarHeight),
+            t.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0),
+            t.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0.0),
+            t.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0.0)
+            ])
+    }
     private func _setupForm() {
         
         form +++ Section( SectionTitles.photograph.rawValue )
@@ -444,7 +460,7 @@ extension PAAddPhotoViewController {
     
     override var prefersStatusBarHidden: Bool {
         get {
-            return true
+            return false
         }
     }
 }

@@ -151,6 +151,8 @@ struct Keys {
 
 struct Constants {
     
+    static let statusBarHeight : CGFloat = 20.0
+    
     static let trueString   = "true"
     static let falseString  = "false"
     

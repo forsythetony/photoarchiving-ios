@@ -10,6 +10,7 @@ import Foundation
 
 import Eureka
 import SCLAlertView
+import SwiftSpinner
 
 fileprivate struct FormKeys {
     static let choosePhotoButton = "choosePhotoButton"
@@ -76,10 +77,8 @@ class PAEditRepositoryViewController : FormViewController {
     private func _setupForm() {
         
         //  DEFAULTS
-        let default_start_date = self.dateMan.getDateFromYearInt(year: 1900)
-        let default_end_date = self.dateMan.getDateFromYearInt(year: 2000)
-        let default_repo_title = "A new repository"
-        let default_description = "Some description"
+        let default_start_date  = self.dateMan.getDateFromYearInt(year: 1900)
+        let default_end_date    = self.dateMan.getDateFromYearInt(year: 2000)
         
         form +++ Section("General Information") { section in
             
@@ -143,6 +142,7 @@ class PAEditRepositoryViewController : FormViewController {
                         
                         if let r = self?.newRepository {
                             
+                            SwiftSpinner.show("Updating")
                             PADataManager.sharedInstance.updateRepository(repo: r)
                         }
                     }
@@ -264,6 +264,8 @@ class PAEditRepositoryViewController : FormViewController {
     }
     
     func didReceiveSucessfulUpdateNotification( note : Notification ) {
+        
+        SwiftSpinner.hide()
         
         let alert = SCLAlertView()
         

@@ -16,6 +16,9 @@ enum PAUploadStatus {
 }
 
 
+enum PARepositoryUpdateError : Error {
+    case i
+}
 fileprivate enum PAImageURLToDataError : Error {
     case invalidURL
     case dataCreationError( creationError : Error )
@@ -730,6 +733,37 @@ extension PADataManager {
         NotificationCenter.default.post(note)
     }
     
+    func updateRepository( repo : PARepository, handler : @escaping ((PARepositoryUpdateError?) -> Void)) {
+        
+        guard isConfigured else { return }
+        
+        
+        let repo_ref = database_ref!.child(String.init(format: "repositories/%@", repo.uid))
+        
+        let date_man = PADateManager.sharedInstance
+        
+        if let start_date = repo.startDate {
+            let start_date_str = date_man.getDateString(date: start_date, formatType: .FirebaseFull)
+            
+            repo_ref.child(Keys.Repository.startDate).setValue(start_date_str)
+        }
+        
+        if let end_date = repo.endDate {
+            let end_date_str = date_man.getDateString(date: end_date, formatType: .FirebaseFull)
+            
+            repo_ref.child(Keys.Repository.endDate).setValue(end_date_str)
+        }
+        
+        repo_ref.child(Keys.Repository.title).setValue(repo.title)
+        repo_ref.child(Keys.Repository.longDescription).setValue(repo.longDescription)
+        
+        
+        let note = Notification(name: Notifications.didUpdateRepository.name)
+        
+        NotificationCenter.default.post(note)
+        
+        handler(nil)
+    }
     func deleteRepository( repo : PARepository ) {
         
         guard isConfigured else { return }
