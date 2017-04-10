@@ -287,6 +287,10 @@ extension PASidePanelViewController : UITableViewDelegate, UITableViewDataSource
             
         case .profile:
             performSegue(withIdentifier: Constants.SegueIDs.SegueFromMenuToMyProfile, sender: nil)
+            
+        case .people:
+            performSegue(withIdentifier: Constants.SegueIDs.SegueFromMenuToPeople, sender: nil)
+            
         default:
             break
         }

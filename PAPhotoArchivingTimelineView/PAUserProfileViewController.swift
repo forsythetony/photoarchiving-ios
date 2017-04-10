@@ -35,6 +35,7 @@ class PAUserProfileViewController: FormViewController {
         case birthdate = "birthdate"
     }
     private var edit_button : UIBarButtonItem!
+    private var subscribe_button : UIBarButtonItem!
     
     var isEditingForm : Bool = false {
         didSet {
@@ -42,8 +43,26 @@ class PAUserProfileViewController: FormViewController {
             updateEditButton()
         }
     }
-    var user : PAUser {
+    
+    var setUser : PAUser?
+    
+    
+    fileprivate var canEdit : Bool {
+        
+        if user.uid == PAGlobalUser.sharedInstace.userID {
+            return true
+        }
+        
+        return false
+    }
+    
+    fileprivate var user : PAUser {
         get {
+            
+            if let u = setUser {
+                return u
+            }
+            
             return PAGlobalUser.sharedInstace.user
         }
     }
@@ -92,11 +111,28 @@ class PAUserProfileViewController: FormViewController {
     
     private func _viewSetup() {
         
-        _setupPanelButton()
-        _setupEditButton()
+        if canEdit {
+            _setupPanelButton()
+        }
+        else {
+            _setupBackButton()
+        }
+        
+        if !canEdit {
+            _setupSubscribeButton()
+        }
+        else {
+            _setupEditButton()
+        }
+        
         _setupNavBar()
         
-        self.title = "Me"
+        if !canEdit {
+            self.title = user.firstName
+        }
+        else {
+            self.title = "Me"
+        }
     }
     
     private func _setupNavBar() {
@@ -108,19 +144,46 @@ class PAUserProfileViewController: FormViewController {
     }
     private func _setupPanelButton() {
         
+        guard canEdit else { return }
+        
         let panel_button = UIBarButtonItem(image: #imageLiteral(resourceName: "panel_button_white"), landscapeImagePhone: nil, style: .plain, target: self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)))
         panel_button.tintColor = Color.white
         
         navigationItem.leftBarButtonItem = panel_button
     }
+    private func _setupBackButton() {
+        
+        let bb = UIBarButtonItem(image: #imageLiteral(resourceName: "back_button_white"), style: .plain, target: self, action: #selector(PAUserProfileViewController.didTapBackButton(sender:)))
+        
+        bb.tintColor = Color.PAWhiteOne
+        
+        navigationItem.leftBarButtonItem = bb
+    }
+    func didTapBackButton( sender : UIBarButtonItem ) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     private func _setupEditButton() {
         
+        guard canEdit else { return }
         edit_button = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(PAUserProfileViewController.didTapEditButton))
         edit_button.tintColor = Color.white
         edit_button.setTitleTextAttributes([NSForegroundColorAttributeName : Color.white], for: .normal)
         
         navigationItem.rightBarButtonItem = edit_button
         
+        
+    }
+    
+    private func _setupSubscribeButton() {
+        subscribe_button = UIBarButtonItem(title: (user.isMyFriend ? "Unsubscribe" : "Subscribe"), style: .plain, target: self, action: #selector(PAUserProfileViewController.didTapSubscribeButton(sender:)))
+        subscribe_button.tintColor = Color.white
+        subscribe_button.setTitleTextAttributes([NSForegroundColorAttributeName : Color.white], for: .normal)
+        
+        navigationItem.rightBarButtonItem = subscribe_button
+    }
+    
+    func didTapSubscribeButton( sender : UIBarButtonItem ) {
         
     }
     private func _navigationSetup() {

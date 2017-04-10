@@ -446,11 +446,72 @@
                         <segue destination="bbP-fq-V4Y" kind="custom" identifier="segueFromMenuToHome" customClass="SWRevealViewControllerSeguePushController" id="Vpu-UX-0J5"/>
                         <segue destination="QYi-wm-pTl" kind="custom" identifier="segueFromSidePanelToMyRepositories" customClass="SWRevealViewControllerSeguePushController" id="i8x-ll-jXr"/>
                         <segue destination="0Ee-SA-voh" kind="custom" identifier="segueFromMenuToMyProfile" customClass="SWRevealViewControllerSeguePushController" id="KaL-95-u0B"/>
+                        <segue destination="2jy-Ik-8Wi" kind="custom" identifier="segueFromMenuToPeopleViewControler" customClass="SWRevealViewControllerSeguePushController" id="ssL-lM-am8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHB-YD-Fih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2446" y="1092"/>
+        </scene>
+        <!--People View Controller-->
+        <scene sceneID="5vc-T4-act">
+            <objects>
+                <viewController id="zhq-3i-3Bh" customClass="PAPeopleViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2tw-d9-Bkh"/>
+                        <viewControllerLayoutGuide type="bottom" id="IAj-PY-yz9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rad-il-btR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="V9R-3L-aGe">
+                                <rect key="frame" x="112.5" y="72" width="150" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="aUO-gD-muv"/>
+                                    <constraint firstAttribute="height" constant="28" id="xdU-57-7to"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iLu-TT-na9">
+                                <rect key="frame" x="16" y="107" width="359" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="JMx-K1-3ad"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LOW-ch-hNZ">
+                                <rect key="frame" x="16" y="151" width="343" height="516"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LOW-ch-hNZ" firstAttribute="top" secondItem="iLu-TT-na9" secondAttribute="bottom" id="7bf-pZ-1M6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iLu-TT-na9" secondAttribute="trailing" constant="-16" id="BbW-9X-kya"/>
+                            <constraint firstItem="iLu-TT-na9" firstAttribute="leading" secondItem="Rad-il-btR" secondAttribute="leadingMargin" id="Hg3-2Z-scm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LOW-ch-hNZ" secondAttribute="trailing" id="NWq-5a-Sxc"/>
+                            <constraint firstItem="iLu-TT-na9" firstAttribute="top" secondItem="V9R-3L-aGe" secondAttribute="bottom" constant="7" id="Zsu-fK-kYE"/>
+                            <constraint firstItem="IAj-PY-yz9" firstAttribute="top" secondItem="LOW-ch-hNZ" secondAttribute="bottom" id="gxC-6Z-STR"/>
+                            <constraint firstItem="LOW-ch-hNZ" firstAttribute="leading" secondItem="Rad-il-btR" secondAttribute="leadingMargin" id="me4-NI-7Ic"/>
+                            <constraint firstItem="V9R-3L-aGe" firstAttribute="top" secondItem="2tw-d9-Bkh" secondAttribute="bottom" constant="8" id="wrc-c5-RXT"/>
+                            <constraint firstItem="V9R-3L-aGe" firstAttribute="centerX" secondItem="Rad-il-btR" secondAttribute="centerX" id="ysj-n8-N60"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="6bw-Kv-bKo"/>
+                    <connections>
+                        <outlet property="peopleSearchBar" destination="iLu-TT-na9" id="qTb-vW-crf"/>
+                        <outlet property="resultsTableView" destination="LOW-ch-hNZ" id="9DE-d2-NnY"/>
+                        <outlet property="searchScopeControl" destination="V9R-3L-aGe" id="N4i-Bx-fXP"/>
+                        <segue destination="znZ-sC-7uL" kind="show" identifier="segueFromPeopleToUserProfile" id="xxD-1f-D4e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WBJ-pr-mro" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1248.8" y="517.6911544227886"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="qpA-mk-k5f">
@@ -628,6 +689,24 @@
             </objects>
             <point key="canvasLocation" x="310" y="1233"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ewi-d9-DJD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2jy-Ik-8Wi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VEr-FW-Y79">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zhq-3i-3Bh" kind="relationship" relationship="rootViewController" id="k6C-mq-fye"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hi4-k3-CGL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="310" y="518"/>
+        </scene>
     </scenes>
     <resources>
         <image name="back_button_white" width="22" height="22"/>
@@ -636,6 +715,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vpu-UX-0J5"/>
+        <segue reference="xxD-1f-D4e"/>
         <segue reference="mMB-3v-HdP"/>
         <segue reference="emV-7I-n6M"/>
     </inferredMetricsTieBreakers>

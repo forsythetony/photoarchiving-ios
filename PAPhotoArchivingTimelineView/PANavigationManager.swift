@@ -10,13 +10,13 @@ import Foundation
 
 
 enum PANavigationPages : String {
-    case home = "Home"
-    case repositories = "Repositories"
-    case myRepositories = "My Repositories"
-    case profile = "My Profile"
-    case people = "People"
-    case settings = "Settings"
-    case unkown = "Unknown"
+    case home               = "Home"
+    case repositories       = "Repositories"
+    case myRepositories     = "My Repositories"
+    case profile            = "My Profile"
+    case people             = "People"
+    case settings           = "Settings"
+    case unkown             = "Unknown"
 }
 
 class PANavigationManager {

@@ -43,6 +43,8 @@ class PAUser : PAPerson {
     var storiesUploaded : Int?
     var photosUploaded : Int?
     
+    var isMyFriend = false
+    
     
     
 }
@@ -104,6 +106,8 @@ extension PAUser {
         
         n.dateJoined    = snapData.getFirebaseDateValue(k: Keys.User.dateJoined)
         n.birthDate     = snapData.getFirebaseDateValue(k: Keys.User.birthDate)
+        
+        n.isMyFriend = PAGlobalUser.sharedInstace.isUserFriendsWith(user_id: n.uid)
         
         return n
     }

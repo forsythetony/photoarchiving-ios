@@ -1579,6 +1579,21 @@ extension PADataManager {
 
         return package
     }
+    
+    
+    func pullAllUsers( handler : @escaping ((PAUser) -> Void)) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let users_ref = database_ref!.child(Keys.Database.users)
+        
+        users_ref.observe(.childAdded, with: { (snapshot) in
+            
+            if let new_user = PAUser.UserWithSnapshot(snap: snapshot) {
+                handler(new_user)
+            }
+        })
+    }
 }
 
 
@@ -1643,6 +1658,20 @@ extension PADataManager {
         let created_repos_ref = database_ref!.child(created_repos_path)
         
         created_repos_ref.observe(.childAdded, with: { (snapshot) in
+            
+            handler(snapshot.key)
+        })
+    }
+    
+    func beginObservingFriendIDsForUser( user_id : String, handler : @escaping ((String) -> Void)) {
+        
+        guard checkIsConfigured() else { return }
+        
+        let user_friends_path = String.init(format: "%@/%@/%@/", Keys.Database.users, user_id, Keys.User.friends)
+        
+        let user_friends_ref = database_ref!.child(user_friends_path)
+        
+        user_friends_ref.observe(.childAdded, with: { (snapshot) in
             
             handler(snapshot.key)
         })

@@ -23,6 +23,7 @@ class PAGlobalUser {
     
     private var _joinedRepositories = [String]()
     private var _createdRepositories = [String]()
+    private var _friendIDs = [String]()
     
     lazy var timerFireLimit : Int = {
        
@@ -220,6 +221,7 @@ class PAGlobalUser {
         
         gatherJoinedRepositories()
         gatherCreatedRepositories()
+        gatherFriends()
     }
     
     func gatherJoinedRepositories() {
@@ -234,6 +236,18 @@ class PAGlobalUser {
             
             self._createdRepositories.append(createdRepoID)
         }
+    }
+    
+    func gatherFriends() {
+        
+        PADataManager.sharedInstance.beginObservingFriendIDsForUser(user_id: userID) { (friendID) in
+            self._friendIDs.append(friendID)
+        }
+    }
+    
+    func isUserFriendsWith( user_id : String ) -> Bool {
+        
+        return _friendIDs.contains(user_id)
     }
     func doesUserHaveJoinedRepository( repo_id : String ) -> Bool {
         

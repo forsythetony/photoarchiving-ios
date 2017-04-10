@@ -204,8 +204,8 @@ struct Constants {
         static let SegueFromMenuToMyRepositories        = "segueFromSidePanelToMyRepositories"
         static let SegueFromMyRepositoriesToTimeline    = "segueFromMyRepositoriesViewToTimelineView"
         static let SegueFromMenuToMyProfile             = "segueFromMenuToMyProfile"
-        
-        //static let SegueFromTimelineViewToAddPhotograph = "seguefromtimelineviewtoaddphotograph"
+        static let SegueFromMenuToPeople                = "segueFromMenuToPeopleViewControler"
+        static let SegueFromPeopleToUserProfile         = "segueFromPeopleToUserProfile"
         
     }
     
