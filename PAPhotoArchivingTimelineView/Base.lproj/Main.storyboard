@@ -560,16 +560,7 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4zE-2d-HcR">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -635,24 +626,6 @@
             </objects>
             <point key="canvasLocation" x="310" y="3943"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="i63-Vm-xru">
-            <objects>
-                <viewController id="gWw-Pv-Jhw" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zIq-NU-aBP"/>
-                        <viewControllerLayoutGuide type="bottom" id="oD2-LI-YVy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kCe-ku-Nou">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NwW-98-sjh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3394" y="921"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="1DB-11-tqx">
             <objects>
@@ -715,8 +688,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vpu-UX-0J5"/>
-        <segue reference="xxD-1f-D4e"/>
         <segue reference="mMB-3v-HdP"/>
-        <segue reference="emV-7I-n6M"/>
+        <segue reference="R9I-vE-Uxn"/>
+        <segue reference="xxD-1f-D4e"/>
     </inferredMetricsTieBreakers>
 </document>
