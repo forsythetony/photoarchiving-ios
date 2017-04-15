@@ -361,6 +361,9 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
                 cell.textLabel?.textColor   = PAColors.dangerText.colorVal
             }
             .onCellSelection{ [ weak self ] (cell,row) in
+                
+                
+                self?.showDeletePhotographNotification()
             }
             <<< ButtonRow() {
                 $0.title = "Exit"
@@ -687,6 +690,22 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
         
         
     }
+    
+    
+    private func showDeletePhotographNotification() {
+        
+        
+        
+        //  FIXME:
+        //      Put some logic in here to ask the user if they really
+        //      want to delete the photograph THEN put some logic in
+        //      callback to actually make the call to the datamanager
+        //      to delete the photograph
+        
+        /*
+            -------lOgIc hEre DuUuUuUuUuUuUdDddddeee ~+-~-~-~-~~~~~~
+        */
+    }
 }
 
 extension BaseRow {
@@ -701,6 +720,7 @@ extension BaseRow {
         self.evaluateDisabled()
     }
 }
+
 extension PAPhotoInformationViewControllerv2 : PAPhotoInformationHeaderDelegate {
     
     func PAPhotoInformationHeaderDidTap() {

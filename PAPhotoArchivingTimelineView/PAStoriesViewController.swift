@@ -315,7 +315,23 @@ extension PAStoriesViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        
+        //  TEST:
+        //      Make sure only users that have uploaded the story can delete it
+        if      let story = self.currentPhotograph?.stories[indexPath.row],
+                let photograph = self.currentPhotograph
+        {
+            if let story_uploader_id = story.uploaderID {
+                
+                if story_uploader_id == PAGlobalUser.sharedInstace.userID {
+                    return true
+                }
+            }
+        }
+        
+        
+        
+        return false
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
