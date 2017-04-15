@@ -50,6 +50,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
         case addStory
         case sliderRow
         case locationConfSlider
+        case deletePhotograph
     }
     
     static let STORYBOARD_ID = "PAPhotoInformationViewControllerv2StoryboardID"
@@ -63,6 +64,26 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
     }
     
     var editingPhotograph : PAPhotograph?
+    
+    var canEditPhotograph : Bool {
+        get {
+            let default_can_edit = false
+            
+            let data_man = PAGlobalUser.sharedInstace
+            
+            if let curr_user_id = currentPhotograph?.uploaderID {
+                
+                if curr_user_id == data_man.userID {
+                    return true
+                }
+                
+                return default_can_edit
+            }
+            
+            return default_can_edit
+        }
+    }
+    
     
     var didSetImage = false
     fileprivate var isEditingForm = false {
@@ -303,18 +324,43 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
             <<< ButtonRow() {
                 $0.title = "Edit"
                 $0.tag = ButtonIDs.edit.rawValue
+                
+                if self.canEditPhotograph {
+                    $0.showAndEnable()
                 }
-                .cellUpdate { cell, row in
-                    
-                    
+                else {
+                    $0.hideAndDisable()
                 }
-                .onCellSelection{ [ weak self ] (cell,row) in
-                    
-                    self?.isEditingForm = true
-                    
-                    self?.setupEditingPhoto()
-                    
-                    self?.updateFields()
+            }
+            .cellUpdate { cell, row in
+                
+                
+            }
+            .onCellSelection{ [ weak self ] (cell,row) in
+                
+                self?.isEditingForm = true
+                
+                self?.setupEditingPhoto()
+                
+                self?.updateFields()
+            }
+            <<< ButtonRow() {
+                
+                $0.title = "Delete Photograph"
+                $0.tag = ButtonIDs.deletePhotograph.rawValue
+                
+                if self.canEditPhotograph {
+                    $0.showAndEnable()
+                }
+                else {
+                    $0.hideAndDisable()
+                }
+            }
+            .cellUpdate { cell, row in
+                
+                cell.textLabel?.textColor   = PAColors.dangerText.colorVal
+            }
+            .onCellSelection{ [ weak self ] (cell,row) in
             }
             <<< ButtonRow() {
                 $0.title = "Exit"
@@ -355,6 +401,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
         
         let submit  = getBaseRow(buttonID: .submit)
         let edit    = getBaseRow(buttonID: .edit)
+        let delete  = getBaseRow(buttonID: .deletePhotograph)
         let cancel  = getBaseRow(buttonID: .cancel)
         let exit    = getBaseRow(buttonID: .exit)
         let viewStories = getBaseRow(buttonID: .viewStories)
@@ -367,6 +414,7 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
             
             submit?.showAndEnable()
             edit?.hideAndDisable()
+            delete?.showAndEnable()
             cancel?.showAndEnable()
             exit?.showAndEnable()
             viewStories?.hideAndDisable()
@@ -377,7 +425,16 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
         }
         else {
             submit?.hideAndDisable()
-            edit?.showAndEnable()
+            
+            if canEditPhotograph {
+                edit?.showAndEnable()
+                delete?.showAndEnable()
+            }
+            else {
+                edit?.hideAndDisable()
+                delete?.hideAndDisable()
+            }
+            
             cancel?.hideAndDisable()
             exit?.showAndEnable()
             viewStories?.showAndEnable()
