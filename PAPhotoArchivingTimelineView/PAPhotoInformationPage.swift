@@ -86,6 +86,9 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
     
     
     var didSetImage = false
+    
+    let dataMan = PADataManager.sharedInstance
+    
     fileprivate var isEditingForm = false {
         didSet {
             updateButtons()
@@ -694,17 +697,24 @@ class PAPhotoInformationViewControllerv2 : FormViewController {
     
     private func showDeletePhotographNotification() {
         
+        let alert = SCLAlertView()
         
         
-        //  FIXME:
-        //      Put some logic in here to ask the user if they really
-        //      want to delete the photograph THEN put some logic in
-        //      callback to actually make the call to the datamanager
-        //      to delete the photograph
+        //  TEST:
+        //      Need to test this component to make sure that it actually works.
+        alert.addButton("Delete") { 
+            
+            if  let curr_photo = self.currentPhotograph,
+                let curr_repo = self.currentRepository
+            {
+                
+                self.dataMan.delegate = self
+                self.dataMan.deletePhotograph(photo: curr_photo, repo: curr_repo)
+                
+            }
+        }
         
-        /*
-            -------lOgIc hEre DuUuUuUuUuUuUdDddddeee ~+-~-~-~-~~~~~~
-        */
+        alert.showWarning("ARE YOU SURE?", subTitle: "Are you sure you want to deleete this photograph?")
     }
 }
 
@@ -750,3 +760,52 @@ extension PAPhotoInformationViewControllerv2 : PALocationCellDelegate {
         }
     }
 }
+
+
+extension PAPhotoInformationViewControllerv2 : PADataManagerDelegate {
+    
+    func PADataManagerDidUpdateProgress(progress: Double) {
+        
+    }
+    
+    func PADataMangerDidConfigure() {
+        
+    }
+    
+    func PADataManagerDidFinishUploadingStory(storyID: String) {
+        
+    }
+    
+    func PADataManagerDidDeletePhotograph(photograph: PAPhotograph) {
+        
+        let success_alert = SCLAlertView()
+        
+        let alert_title = "Success!"
+        let alert_sub = String.init(format: "Successfully deleted the photograph with title -> %@", photograph.title)
+        
+        
+        success_alert.showSuccess(alert_title, subTitle: alert_sub).setDismissBlock {
+            self.presentingViewController?.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
+    func PADataManagerDidGetNewRepository(_ newRepository: PARepository) {
+        
+    }
+    
+    func PADataManagerDidSignInUserWithStatus(_ signInStatus: PAUserSignInStatus) {
+        
+    }
+    
+    func PADataManagerDidCreateUser(new_user: PAUserUploadPackage?, error: Error?) {
+        
+    }
+    
+    func PADataManagerDidDeleteStoryFromPhotograph(story: PAStory, photograph: PAPhotograph) {
+        
+    }
+    
+    
+}
+
