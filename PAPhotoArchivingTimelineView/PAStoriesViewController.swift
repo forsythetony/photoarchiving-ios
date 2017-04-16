@@ -416,7 +416,7 @@ extension PAStoriesViewController : PAPhotographDelegate {
 extension PAStoriesViewController : GCKRemoteMediaClientListener {
     
     
-    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus) {
+    func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
         
         
     }

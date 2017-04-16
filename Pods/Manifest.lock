@@ -31,9 +31,9 @@ PODS:
   - FirebaseStorage (1.1.0):
     - FirebaseAnalytics (~> 3.7)
     - GTMSessionFetcher/Core (~> 1.1)
-  - google-cast-sdk (3.3.0):
-    - google-cast-sdk/Core (= 3.3.0)
-  - google-cast-sdk/Core (3.3.0)
+  - google-cast-sdk (3.4.0):
+    - google-cast-sdk/Core (= 3.4.0)
+  - google-cast-sdk/Core (3.4.0)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
@@ -47,7 +47,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - ImageRow (1.0.0):
     - Eureka (~> 2.0.0-beta.1)
-  - Kingfisher (3.6.1)
+  - Kingfisher (3.6.2)
   - SCLAlertView (0.7.0)
   - SnapKit (3.2.0)
   - Spring (1.0.3)
@@ -90,11 +90,11 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
-  google-cast-sdk: da1989cbc1b9ff7b50ddb9dae5b1969d95a65a0f
+  google-cast-sdk: 35da95f568b50d72628014f3320e2f3240bf2a7a
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
   ImageRow: 1e37db26f61a0c4ad3bc9a3a803c32d968782857
-  Kingfisher: 2f31cb75f3e98d3d4c406cbdcd9b263e956cfa67
+  Kingfisher: 2c94e72c6830622c71d06adf4ea024c37d316830
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
@@ -104,4 +104,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1b4ee6af8bfc1d860acdde683af627071136ba39
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
