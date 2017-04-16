@@ -206,6 +206,7 @@ struct Constants {
         static let SegueFromMenuToMyProfile             = "segueFromMenuToMyProfile"
         static let SegueFromMenuToPeople                = "segueFromMenuToPeopleViewControler"
         static let SegueFromPeopleToUserProfile         = "segueFromPeopleToUserProfile"
+        static let segueFromMenuToSetting               = "segueFromMenuToSetting"
         
     }
     

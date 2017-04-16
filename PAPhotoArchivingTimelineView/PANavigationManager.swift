@@ -16,6 +16,7 @@ enum PANavigationPages : String {
     case profile            = "My Profile"
     case people             = "People"
     case settings           = "Settings"
+    case about              = "About"
     case unkown             = "Unknown"
 }
 
@@ -30,6 +31,7 @@ class PANavigationManager {
         PANavigationPages.people,
         PANavigationPages.profile,
         PANavigationPages.settings
+        //PANavigationPages.about
         ]
     
     var currentIndex : Int = 0

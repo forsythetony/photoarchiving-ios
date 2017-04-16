@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2wN-bQ-ueK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2wN-bQ-ueK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -447,6 +447,7 @@
                         <segue destination="QYi-wm-pTl" kind="custom" identifier="segueFromSidePanelToMyRepositories" customClass="SWRevealViewControllerSeguePushController" id="i8x-ll-jXr"/>
                         <segue destination="0Ee-SA-voh" kind="custom" identifier="segueFromMenuToMyProfile" customClass="SWRevealViewControllerSeguePushController" id="KaL-95-u0B"/>
                         <segue destination="2jy-Ik-8Wi" kind="custom" identifier="segueFromMenuToPeopleViewControler" customClass="SWRevealViewControllerSeguePushController" id="ssL-lM-am8"/>
+                        <segue destination="ZWR-AD-VjU" kind="custom" identifier="segueFromMenuToSetting" customClass="SWRevealViewControllerSeguePushController" id="HHF-pu-944"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHB-YD-Fih" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -625,6 +626,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vuW-3W-aBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="310" y="3943"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="c4w-rg-Q9T">
+            <objects>
+                <navigationController id="ZWR-AD-VjU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ebq-D2-i9h">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="OTi-C3-DXL" kind="relationship" relationship="rootViewController" id="NEQ-Ar-BEq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lZ9-0b-6CI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2461" y="2222"/>
+        </scene>
+        <!--About-->
+        <scene sceneID="651-lc-d5o">
+            <objects>
+                <viewController id="OTi-C3-DXL" customClass="PAAboutViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="H53-R8-6Xm"/>
+                        <viewControllerLayoutGuide type="bottom" id="ycW-VU-5cj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jak-Si-9xz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Duu-oQ-OsX">
+                                <rect key="frame" x="16" y="72" width="343" height="195"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ned-yp-rE6">
+                                <rect key="frame" x="16" y="391" width="343" height="206"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Duu-oQ-OsX" firstAttribute="leading" secondItem="Jak-Si-9xz" secondAttribute="leadingMargin" id="BbW-gl-4st"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ned-yp-rE6" secondAttribute="trailing" id="GdO-TS-xCn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Duu-oQ-OsX" secondAttribute="trailing" id="UhO-UD-cWP"/>
+                            <constraint firstItem="ned-yp-rE6" firstAttribute="leading" secondItem="Jak-Si-9xz" secondAttribute="leadingMargin" id="gC0-jI-atM"/>
+                            <constraint firstItem="ycW-VU-5cj" firstAttribute="top" secondItem="ned-yp-rE6" secondAttribute="bottom" id="oVB-bD-Zs8"/>
+                            <constraint firstItem="Duu-oQ-OsX" firstAttribute="top" secondItem="H53-R8-6Xm" secondAttribute="bottom" id="tMh-ZL-zUA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="About" id="dI9-ex-qgh"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CXw-Fd-S2v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1490" y="2335"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1DB-11-tqx">
