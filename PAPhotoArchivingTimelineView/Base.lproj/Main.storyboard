@@ -617,7 +617,7 @@
             </objects>
             <point key="canvasLocation" x="-3394" y="2302"/>
         </scene>
-        <!--Setting Page-->
+        <!--About Page-->
         <scene sceneID="Odl-IU-AVJ">
             <objects>
                 <viewController id="q4X-Cf-0u0" customClass="PASettingsViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
@@ -632,10 +632,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gun-gS-5KC">
                                 <rect key="frame" x="16" y="64" width="343" height="218"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1g6-bT-Ywb">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="    New version !!!!      New version !!!!     New version !!!!        New version !!!!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1g6-bT-Ywb">
                                 <rect key="frame" x="26" y="379" width="333" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -652,11 +651,11 @@
                             <constraint firstItem="1g6-bT-Ywb" firstAttribute="top" secondItem="gun-gS-5KC" secondAttribute="bottom" constant="97" id="ynW-Y8-2Xm"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Setting Page" id="a8I-0c-pLS"/>
+                    <navigationItem key="navigationItem" title="About Page" prompt="" id="a8I-0c-pLS"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QfP-hR-Hln" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-951.20000000000005" y="2564.1679160419794"/>
+            <point key="canvasLocation" x="-1415" y="2731"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LpU-Kl-Rds">

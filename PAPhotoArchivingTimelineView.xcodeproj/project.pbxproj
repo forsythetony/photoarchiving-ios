@@ -362,7 +362,7 @@
 		25CFCD541E4D308F00263353 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B7497F681E9C15E10065C65C /* PASettingsViewController.swift */,
+				B7CE220B1E9DADF6009FEB58 /* About */,
 				25FFBFC51E9BAB4E003CB23D /* People */,
 				252711EB1E96B3F200E656CF /* User Profile */,
 				256AB01A1E89732500FD9779 /* Current Uploads */,
@@ -561,6 +561,14 @@
 				136D67FD9F4E483185F1462A /* Pods-PAPhotoArchivingTimelineViewUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B7CE220B1E9DADF6009FEB58 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				B7497F681E9C15E10065C65C /* PASettingsViewController.swift */,
+			);
+			name = About;
 			sourceTree = "<group>";
 		};
 		D718B8ACA843CCD6901870B7 /* Frameworks */ = {

@@ -159,6 +159,7 @@ class PAUserProfileViewController: FormViewController {
         
         navigationItem.leftBarButtonItem = bb
     }
+    
     func didTapBackButton( sender : UIBarButtonItem ) {
         self.navigationController?.popViewController(animated: true)
     }
