@@ -646,7 +646,7 @@
         <!--About-->
         <scene sceneID="651-lc-d5o">
             <objects>
-                <viewController id="OTi-C3-DXL" customClass="PAAboutViewController" sceneMemberID="viewController">
+                <viewController id="OTi-C3-DXL" customClass="PASettingsViewController" customModule="PAPhotoArchivingTimelineView" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H53-R8-6Xm"/>
                         <viewControllerLayoutGuide type="bottom" id="ycW-VU-5cj"/>
@@ -658,10 +658,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Duu-oQ-OsX">
                                 <rect key="frame" x="16" y="72" width="343" height="195"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ned-yp-rE6">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" text="adsfsf" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ned-yp-rE6">
                                 <rect key="frame" x="16" y="391" width="343" height="206"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -677,6 +676,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="About" id="dI9-ex-qgh"/>
+                    <connections>
+                        <outlet property="imageView" destination="Duu-oQ-OsX" id="t5T-ro-2YE"/>
+                        <outlet property="text" destination="ned-yp-rE6" id="jNA-Sn-6O4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CXw-Fd-S2v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -10,11 +10,16 @@ import UIKit
 
 class PASettingsViewController: UIViewController {
     
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var text: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         _setupNavigationBar()
         // Do any additional setup after loading the view.
         _setupPanelButton()
+        
+    
     }
     
     override func didReceiveMemoryWarning() {
