@@ -101,7 +101,7 @@ class PAPeopleViewController: UIViewController {
         searchScopeControl.removeAllSegments()
         
         searchScopeControl.insertSegment(withTitle: "All", at: 0, animated: false)
-        searchScopeControl.insertSegment(withTitle: "People", at: 1, animated: false)
+        searchScopeControl.insertSegment(withTitle: "Friends", at: 1, animated: false)
         
         searchScopeControl.addTarget(self, action: #selector(PAPeopleViewController.segmentedControlDidUpdate(sender:)), for: .valueChanged)
         searchScopeControl.selectedSegmentIndex = 0

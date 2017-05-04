@@ -197,6 +197,8 @@ class PAHomeViewController: UIViewController {
             _beginObservingNotifications()
         }
         else {
+            
+            dataMan.delegate = self
             dataMan.configure()
         }
     }

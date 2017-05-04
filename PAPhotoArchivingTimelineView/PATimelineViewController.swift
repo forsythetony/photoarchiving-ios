@@ -99,7 +99,7 @@ class PATimelineViewController: UIViewController {
     private func _setup() {
         _setupBackButton()
         _setupCast()
-        _setupAddButton()
+        //_setupAddButton()
     }
     
     private func _setupListeners() {
